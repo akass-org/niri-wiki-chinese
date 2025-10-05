@@ -1,5 +1,5 @@
-Things to keep in mind with layer-shell components (bars, launchers, etc.):
+使用层壳（layer-shell）组件（如任务栏、启动器等）时需要注意以下事项：
 
-1. When a full-screen window is active and covers the entire screen, it will render above the top layer, and it will be prioritized for keyboard focus. If your launcher uses the top layer, and you try to run it while looking at a full-screen window, it won't show up. Only the overlay layer will show up on top of full-screen windows.
-1. Components on the bottom and background layers will receive *on-demand* keyboard focus as expected. However, they will only receive *exclusive* keyboard focus when there are no windows on the workspace.
-1. When opening the [Overview](./Overview.md), components on the bottom and background layers will zoom out and remain on the workspaces, while the top and overlay layers remain on top of the Overview. So, if you want the bar to remain on top, put it on the *top* layer.
+1. 当一个全屏窗口处于活动状态并铺满整个屏幕时，它会在顶部（top）层之上渲染，并且会优先接收键盘焦点。因此，如果您的启动器位于顶部层，当您在全屏窗口界面尝试唤醒启动器时将无法显示。只有覆盖（overlay）层的组件会显示在全屏窗口的上方。
+1. 位于底部（bottom）和背景（background）层级的组件可按预期接收*按需*键盘焦点。但是，只有在工作区中不存在任何窗口时，它们才能获得*独占*键盘焦点。
+1. 当开启[全局概览](./Overview.md)时，底部和背景层级的组件将缩小并保留在工作区上，而顶部和覆盖层则保留在概览的最上层。因此，如果您希望状态栏持续置顶，请将其设置为*顶部*层级。
