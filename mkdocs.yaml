@@ -45,6 +45,7 @@ markdown_extensions:
   - pymdownx.keys
   - toc:
       permalink: '#'
+  - attr_list
 plugins:
   - search
 hooks:
