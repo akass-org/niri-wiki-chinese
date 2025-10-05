@@ -10,13 +10,13 @@
 
 如果您不使用显示管理器，应该在 TTY 运行 `niri-session`（systemd/dinit）或 `niri --session`（其他）。
 `--session` 标志会让 niri 将其环境变量全局导入到系统管理器和 D-Bus，并启动其 D-Bus 服务。
-`niri-session` 脚本将额外将 niri 作为 systemd/dinit 服务启动，该服务会启动某些服务（如门户）所需的图形会话目标。
+`niri-session` 脚本将额外将 niri 作为 systemd/dinit 服务启动，该服务会启动某些服务（如 Portals）所需的图形会话目标。
 
 您也可以在现有的桌面会话中运行 `niri`。
 然后它将作为一个窗口打开，您可以在其中试用它。
 请注意，此窗口模式主要用于开发，因此存在一些错误（特别是快捷键方面的问题）。
 
-接下来，请参阅 [重要软件列表](./Important-Software.md)，了解正常桌面使用所需的软件，如通知守护进程和门户。
+接下来，请参阅 [重要软件列表](./Important-Software.md)，了解正常桌面使用所需的软件，如通知守护进程和 Portals。
 同时，查看 [配置介绍](./Configuration:-Introduction.md) 页面开始配置 niri。
 在那里您可以找到包含所有选项的详细文档和示例的其他页面的链接。
 最后，[Xwayland](./Xwayland.md) 页面解释了如何在 niri 上运行 X11 应用程序。
