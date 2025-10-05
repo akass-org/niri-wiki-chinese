@@ -20,7 +20,7 @@ https://github.com/user-attachments/assets/379a5d1f-acdb-4c11-b36c-e85fd91f0995
 
 > [!TIP]
 > 概览需要在每个工作区下方绘制背景。
-> 因此，图层外壳（layer-shell）界面的运作机制是这样的：*背景（background）* 和 *底部（bottom）* 层会随工作区同步缩放，而 *顶部（top）* 和 *覆盖（overlay）* 层则始终保持在全局概览界面的最顶层。
+> 因此，层壳（layer-shell）界面的运作机制是这样的：*背景（background）* 和 *底部（bottom）* 层会随工作区同步缩放，而 *顶部（top）* 和 *覆盖（overlay）* 层则始终保持在全局概览界面的最顶层。
 >
 > 将您的状态栏放在 *顶部* 层级。
 
@@ -76,7 +76,7 @@ gestures {
 
 ### 自定义背景
 
-除了上文提及的自定义背景颜色设置之外，您还可以通过[图层规则](./Configuration:-Layer-Rules.md#place-within-backdrop)将图层外壳壁纸置于底层背景，例如：
+除了上文提及的自定义背景颜色设置之外，您还可以通过[图层规则](./Configuration:-Layer-Rules.md#place-within-backdrop)将层壳壁纸置于底层背景，例如：
 
 ```kdl
 // 将 swaybg 放入概览背景中。
