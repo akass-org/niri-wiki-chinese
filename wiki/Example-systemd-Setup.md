@@ -1,22 +1,22 @@
-When starting niri from a display manager like GDM, or otherwise through the `niri-session` binary, it runs as a systemd service.
-This provides the necessary systemd integration to run programs like `mako` and services like `xdg-desktop-portal` bound to the graphical session.
+当从 GDM 等显示管理器启动 niri，或通过 `niri-session` 二进制文件启动时，它会作为 systemd 服务运行。
+这提供了必要的 systemd 集成，用于运行绑定到图形会话的程序（如 `mako`）和服务（如 `xdg-desktop-portal`）。
 
-Here's an example on how you might set up [`mako`](https://github.com/emersion/mako), [`waybar`](https://github.com/Alexays/Waybar), [`swaybg`](https://github.com/swaywm/swaybg) and [`swayidle`](https://github.com/swaywm/swayidle) to run as systemd services with niri.
-Unlike [`spawn-at-startup`](./Configuration:-Miscellaneous.md#spawn-at-startup), this lets you easily monitor their status and output, and restart or reload them.
+以下是如何将 [`mako`](https://github.com/emersion/mako)、[`waybar`](https://github.com/Alexays/Waybar)、[`swaybg`](https://github.com/swaywm/swaybg) 和 [`swayidle`](https://github.com/swaywm/swayidle) 设置为与 niri 一起作为 systemd 服务运行的示例。
+与 [`spawn-at-startup`](./Configuration:-Miscellaneous.md#spawn-at-startup) 不同，这使您可以轻松监控它们的状态和输出，并重新启动或重新加载它们。
 
-1. Install them, i.e. `sudo dnf install mako waybar swaybg swayidle`
-2. `mako` and `waybar` provide systemd units out of the box, so you can simply add them to the niri session:
+1. 安装它们，例如 `sudo dnf install mako waybar swaybg swayidle`
+2. `mako` 和 `waybar` 开箱即用地提供 systemd 单元，因此您可以简单地将它们添加到 niri 会话中：
 
     ```
     systemctl --user add-wants niri.service mako.service
     systemctl --user add-wants niri.service waybar.service
     ```
 
-    This will create links in `~/.config/systemd/user/niri.service.wants/`, a special systemd folder for services that need to start together with `niri.service`.
+    这将在 `~/.config/systemd/user/niri.service.wants/` 目录中创建链接，这是一个特殊的 systemd 文件夹，用于需要与 `niri.service` 一起启动的服务。
 
-3. `swaybg` does not provide a systemd unit, since you need to pass the background image as a command-line argument.
-    So we will make our own.
-    Create `~/.config/systemd/user/swaybg.service` with the following contents:
+3. `swaybg` 不提供 systemd 单元，因为您需要将背景图像作为命令行参数传递。
+    因此，我们将自己创建一个。
+    使用以下内容创建 `~/.config/systemd/user/swaybg.service`：
 
     ```systemd
     [Unit]
@@ -29,19 +29,19 @@ Unlike [`spawn-at-startup`](./Configuration:-Miscellaneous.md#spawn-at-startup),
     Restart=on-failure
     ```
 
-    Replace the image path with the one you want.
-    `%h` is expanded to your home directory.
+    将图像路径替换为您想要的路径。
+    `%h` 会被展开为你的主（home）目录路径。
 
-    After editing `swaybg.service`, run `systemctl --user daemon-reload` so systemd picks up the changes in the file.
+    在编辑 `swaybg.service` 后，运行 `systemctl --user daemon-reload` 以便 systemd 获取文件中的更改。
 
-    Now, add it to the niri session:
+    现在，将其添加到 niri 会话中：
 
     ```
     systemctl --user add-wants niri.service swaybg.service
     ```
 
-4. `swayidle` similarly does not provide a service, so we will also make our own.
-    Create `~/.config/systemd/user/swayidle.service` with the following contents:
+4. `swayidle` 同样不提供 service，因此我们也需要自己创建一个。
+    使用以下内容创建 `~/.config/systemd/user/swayidle.service`：
 
     ```systemd
     [Unit]
@@ -54,22 +54,21 @@ Unlike [`spawn-at-startup`](./Configuration:-Miscellaneous.md#spawn-at-startup),
     Restart=on-failure
     ```
 
-    Then, run `systemctl --user daemon-reload` and add it to the niri session:
+    然后，运行 `systemctl --user daemon-reload` ，并将其添加到 niri 会话中：
 
     ```
     systemctl --user add-wants niri.service swayidle.service
     ```
 
-That's it!
-Now these three utilities will be started together with the niri session and stopped when it exits.
-You can also restart them with a command like `systemctl --user restart waybar.service`, for example after editing their config files.
+就是这样！
+现在这三个工具将与 niri 会话一起启动，并在退出时停止。
+您还可以在编辑其配置文件后，使用类似 `systemctl --user restart waybar.service` 的命令重启它们。
 
-To remove a service from niri startup, remove its symbolic link from `~/.config/systemd/user/niri.service.wants/`.
-Then, run `systemctl --user daemon-reload`.
+要从 niri 的启动中移除某个服务，只要将其符号链接从 `~/.config/systemd/user/niri.service.wants/` 目录中移除。然后运行 `systemctl --user daemon-reload` 即可。
 
-### Running Programs Across Logout
+### 在注销后运行程序
 
-When running niri as a session, exiting it (logging out) will kill all programs that you've started within. However, sometimes you want a program, like `tmux`, `dtach` or similar, to persist in this case. To do this, run it in a transient systemd scope:
+当把 niri 作为会话运行时，退出它（注销）将终止您在其中启动的所有程序。但是，有时候您希望某个程序（如 `tmux`、`dtach` 之类的）在注销后仍然保持运行。为此，可以把它放到一个临时的 systemd scope 中运行：
 
 ```
 systemd-run --user --scope tmux new-session
