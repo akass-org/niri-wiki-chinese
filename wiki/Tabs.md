@@ -1,13 +1,13 @@
-### Overview
+### 概述
 
 <sup>Since: 25.02</sup>
 
-You can switch a column to present windows as tabs, rather than as vertical tiles.
-All tabs in a column have the same window size, so this is useful to get more vertical space.
+您可以将列（column）中的窗口切换为标签页形式显示，替代原有的垂直平铺布局。
+同一列中所有标签页的窗口尺寸完全一致，这一特性尤其有利于获得更多垂直空间。
 
-![Terminal with a tab indicator on the left.](https://github.com/user-attachments/assets/0e94ac0d-796d-4f85-a264-c105ef41c13f)
+![左侧带有标签指示符的终端。](https://github.com/user-attachments/assets/0e94ac0d-796d-4f85-a264-c105ef41c13f)
 
-Use this bind to toggle a column between normal and tabbed display:
+可以使用以下快捷键绑定在常规显示模式和标签页显示模式之间切换l列布局：
 
 ```kdl
 binds {
@@ -15,21 +15,21 @@ binds {
 }
 ```
 
-All other binds remain the same: switch tabs with `focus-window-down/up`, add or remove windows with `consume-window-into-column`/`expel-window-from-column`, and so on.
+所有其他快捷键绑定保持不变：使用 `focus-window-down/up` 切换标签页，使用 `consume-window-into-column`/`expel-window-from-column` 添加或移除窗口，等等。
 
-Unlike regular columns, tabbed columns can go full-screen with multiple windows.
+与常规列不同，标签页列可以全屏显示多个窗口。
 
-### Tab indicator
+### 标签指示器
 
-Tabbed columns show a tab indicator on the side.
-You can click on the indicator to switch tabs.
+标签页列在侧面显示一个标签指示器。
+您可以点击指示器来切换标签页。
 
-See the [`tab-indicator` section in the layout section](./Configuration:-Layout.md#tab-indicator) to configure it.
+有关配置，请参见[布局部分中的 `tab-indicator` 小节](./Configuration:-Layout.md#tab-indicator)。
 
-By default, the indicator draws "outside" the column, so it can overlay other windows or go off-screen.
-The `place-within-column` flag puts the indicator "inside" the column, adjusting the window size to make space for it.
-This is especially useful for thicker tab indicators, or when you have very small gaps.
+默认情况下，指示器会绘制在列的"外部"，因此可能会叠加在其他窗口上或超出屏幕范围。
+启用 `place-within-column` 标志后，指示器将置于列的"内部"，系统会调整窗口大小以为其留出空间。
+这一特性对于较厚的标签指示器或间隙极小的布局尤为实用。
 
-| Default | `place-within-column` |
+| 默认 | `place-within-column` |
 | --- | --- |
-| ![A screenshot showing 4 windows, with the middle column being focused. The tab indicator overflows onto the left column](https://github.com/user-attachments/assets/c2f51f50-3d87-403a-8beb-cbbe5ec5c880) | ![A screenshot showing 4 windows, with the middle column being focused. The tab indicator is contained within its respective column](https://github.com/user-attachments/assets/f1797cd0-d518-4be6-95b4-3540523c4370) |
+| ![截图显示4个窗口，中间列处于聚焦状态。标签指示器溢出到左侧列](https://github.com/user-attachments/assets/c2f51f50-3d87-403a-8beb-cbbe5ec5c880) | ![截图显示4个窗口，中间列处于聚焦状态。标签指示器包含在其各自的列内](https://github.com/user-attachments/assets/f1797cd0-d518-4be6-95b4-3540523c4370) |
