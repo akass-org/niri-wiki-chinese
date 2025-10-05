@@ -1,12 +1,12 @@
-### High VRAM usage fix
+### 高显存占用修复
 
-Presently, there is a quirk in the NVIDIA drivers that affects niri's VRAM usage (the driver does not properly release VRAM back into the pool). Niri *should* use on the order of 100 MiB of VRAM (as checked in [nvtop](https://github.com/Syllo/nvtop)); if you see anywhere close to 1 GiB of VRAM in use, you are likely hitting this issue (heap not returning freed buffers to the driver).
+目前，NVIDIA 驱动中存在一个怪异问题，它会影响 niri 的显存占用情况（驱动无法正确将显存释放回资源池）。Niri *理应* 使用大约 100 MiB 的显存（可通过 [nvtop](https://github.com/Syllo/nvtop) 查验）；如果您观察到占用的显存量接近 1 GiB，则很可能遇到了这个问题（堆内存未将已释放的缓冲区返还给驱动）。
 
-Luckily, you can mitigate this by configuring the NVIDIA drivers with a per-process application profile as follows:
+好在您可以通过为 NVIDIA 驱动配置进程级应用配置文件来缓解此问题，方法如下：
 
-* `sudo mkdir -p /etc/nvidia/nvidia-application-profiles-rc.d` to make the config dir if it does not exist (it most likely does not if you are reading this)
-* write the following JSON blob to set the `GLVidHeapReuseRatio` config value for the `niri` process into the file `/etc/nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool-in-wayland-compositors.json`:
-    
+* 如果配置目录不存在（如果您正在阅读本文，则很可能不存在），请运行 `sudo mkdir -p /etc/nvidia/nvidia-application-profiles-rc.d` 来创建它
+* 将以下 JSON 内容写入 `/etc/nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool-in-wayland-compositors.json` 文件，为 `niri` 进程设置 `GLVidHeapReuseRatio` 参数：
+
     ```json
     {
         "rules": [
@@ -31,20 +31,20 @@ Luckily, you can mitigate this by configuring the NVIDIA drivers with a per-proc
         ]
     }
     ```
-    
-    (The file in `/etc/nvidia/nvidia-application-profiles-rc.d/` can be named anything, and does not actually need an extension).
 
-Restart niri after writing the config file to apply the change.
+    （`/etc/nvidia/nvidia-application-profiles-rc.d/` 目录下的文件可以任意命名，实际上不需要扩展名）。
 
-The upstream issue that this solution was pulled from is [here](https://github.com/NVIDIA/egl-wayland/issues/126#issuecomment-2379945259). There is a (slim) chance that NVIDIA updates their built-in application profiles to apply this to niri automatically; it is unlikely that the underlying heuristic will see a proper fix.
+写入配置文件后请重启 niri 以应用更改。
 
-The fix shipped in the driver at the time of writing uses a value of 0, while the initial config posted by an Nvidia engineer approximately a year prior used a value of 1. 
+此解决方案源自上游问题的讨论，位于[此处](https://github.com/NVIDIA/egl-wayland/issues/126#issuecomment-2379945259)。NVIDIA 有（微小的）可能更新其内置的应用程序配置文件，以自动为 niri 应用此设置；但底层启发式算法获得根本性修复的可能性较低。
 
-### Screencast flickering fix
+在撰写本文时，驱动程序中提供的修复方案采用参数值 0，而大约一年前由 Nvidia 工程师发布的初始配置使用的参数值为 1。
+
+### 屏幕录制闪烁修复
 
 <sup>Until: 25.08</sup>
 
-If you have screencast glitches or flickering on NVIDIA, set this in the niri config:
+如果您在 NVIDIA 设备上遇到屏幕录制画面异常或闪烁，请在 niri 配置中设置以下内容：
 
 ```kdl,must-fail
 debug {
@@ -52,4 +52,4 @@ debug {
 }
 ```
 
-This debug flag has since been removed because the problem was properly fixed in niri.
+由于该问题已在 niri 中得到彻底修复，此调试标志现已被移除。
