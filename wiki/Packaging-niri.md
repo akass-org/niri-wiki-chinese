@@ -1,21 +1,21 @@
-### Overview
+### 概述
 
-When building niri, check `Cargo.toml` for a list of build features.
-For example, you can replace systemd integration with dinit integration using `cargo build --release --no-default-features --features dinit,dbus,xdp-gnome-screencast`.
-The defaults however should work fine for most distributions.
+在构建 niri 时，请查阅 `Cargo.toml` 以了解构建特性列表。
+例如，您可以使用 `cargo build --release --no-default-features --features dinit,dbus,xdp-gnome-screencast` 将 systemd 集成替换为 dinit 集成。
+不过，默认特性应该适用于大多数发行版。
 
 > [!WARNING]
-> Do NOT build with `--all-features`!
+> 请 不要 使用 `--all-features` 构建！
 >
-> Some features are meant only for development use.
-> For example, one of the features enables collection of profiling data into a memory buffer that will grow indefinitely until you run out of memory.
+> 某些特性仅供开发使用。
+> 例如，其中一个特性会启用性能分析数据的收集，数据会被存入一个内存缓冲区，并无限增长，直至耗尽所有内存。
 
-The `niri-visual-tests` sub-crate/binary is development-only and should not be packaged.
+`niri-visual-tests` 这个 sub-crate/二进制文件 仅供开发使用，不应被打包。
 
-The recommended way to package niri is so that it runs as a standalone desktop session.
-To do that, put files into the correct directories according to this table.
+推荐将 niri 打包为独立的桌面会话运行。
+为此，请根据下表将文件放入正确的目录中。
 
-| File | Destination |
+| 文件 | 目标路径 |
 | ---- | ----------- |
 | `target/release/niri` | `/usr/bin/` |
 | `resources/niri-session` | `/usr/bin/` |
@@ -26,63 +26,63 @@ To do that, put files into the correct directories according to this table.
 | `resources/dinit/niri` (dinit) | `/usr/lib/dinit.d/user/` |
 | `resources/dinit/niri-shutdown` (dinit) | `/usr/lib/dinit.d/user/` |
 
-Doing this will make niri appear in GDM and other display managers.
+这样做将使 niri 出现在 GDM 和其他显示管理器的会话选择中。
 
-See the [Integrating niri](./Integrating-niri.md) page for further information on distribution integration.
+有关发行版集成的更多信息，请参阅 [集成 niri](./Integrating-niri.md) 页面。
 
-### Running tests
+### 运行测试
 
-A bulk of our tests spawn niri compositor instances and test Wayland clients.
-This does not require a graphical session, however due to test parallelism, it can run into file descriptor limits on high core count systems.
+我们的大部分测试会启动 niri 合成器实例并测试 Wayland 客户端。
+这不需要图形会话，但由于测试并行性，在核心数较多的系统上可能会遇到文件描述符限制。
 
-If you run into this problem, you may need to limit not just the Rust test harness thread count, but also the Rayon thread count, since some niri tests use internal Rayon threading:
+如果您遇到此问题，您可能不仅需要限制 Rust 测试工具的线程数，还需要限制 Rayon 的线程数，因为某些 niri 测试使用了内部的 Rayon 线程：
 
 ```
 $ export RAYON_NUM_THREADS=2
-...proceed to run cargo test, perhaps with --test-threads=2
+...然后运行 cargo test，或许可以加上 --test-threads=2
 ```
 
-Don't forget to exclude the development-only `niri-visual-tests` crate when running tests.
+运行测试时，别忘了排除仅供开发使用的 `niri-visual-tests` crate。
 
-Some tests require surfaceless EGL to be available at test time.
-If this is problematic, you can skip them like so:
+某些测试要求在测试时系统中已提供无界面 EGL 支持。
+如果这有问题，您可以像这样跳过它们：
 
 ```
 $ cargo test -- --skip=::egl
 ```
 
-You may also want to set the `RUN_SLOW_TESTS=1` environment variable to run the slower tests.
+您可能还需要设置环境变量 `RUN_SLOW_TESTS=1` 来运行较慢的测试。
 
-### Version string
+### 版本字符串
 
-The niri version string includes its version and commit hash:
+niri 版本字符串包含其版本号和提交哈希：
 
 ```
 $ niri --version
 niri 25.01 (e35c630)
 ```
 
-When building in a packaging system, there's usually no repository, so the commit hash is unavailable and the version will show "unknown commit".
-In this case, please set the commit hash manually:
+在打包系统中构建时，通常没有代码仓库，因此无法获取提交哈希，版本将显示为 "unknown commit"。
+在这种情况下，请手动设置提交哈希：
 
 ```
 $ export NIRI_BUILD_COMMIT="e35c630"
-...proceed to build niri
+...然后继续构建 niri
 ```
 
-You can also override the version string entirely, in this case please make sure the corresponding niri version stays intact:
+您也可以完全覆盖版本字符串，在这种情况下，请确保相应的 niri 版本信息保持完整：
 
 ```
 $ export NIRI_BUILD_VERSION_STRING="25.01-1 (e35c630)"
-...proceed to build niri
+...然后继续构建 niri
 ```
 
-Remember to set this variable for both `cargo build` and `cargo install` since the latter will rebuild niri if the environment changes.
+请记住，对于 `cargo build` 和 `cargo install` 都要设置此环境变量，因为如果环境发生变化，后者将会重新构建 niri。
 
-### Panics
+### 崩溃回溯（Panics）
 
-Good panic backtraces are required for diagnosing niri crashes.
-Please use the `niri panic` command to test that your package produces good backtraces.
+清晰刻度可读的崩溃（panic）回溯对于诊断 niri 崩溃（crash）至关重要。
+请使用 `niri panic` 命令来测试您的软件包是否能生成良好的回溯信息。
 
 ```
 $ niri panic
@@ -110,28 +110,28 @@ stack backtrace:
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
 ```
 
-Important things to look for:
+需要关注的重点事项：
 
-- The panic message is there: "overflow when subtracting durations".
-- The backtrace goes all the way up to `main` and includes `cause_panic`.
-- The backtrace includes the file and line number for `cause_panic`: `at /.../src/utils/mod.rs:382:13`.
+- 崩溃消息存在：“减去持续时间时溢出（overflow when subtracting durations）”。
+- 回溯一直追溯到 `main` 函数，并包含 `cause_panic`。
+- 回溯包含 `cause_panic` 的文件和行号信息：`at /.../src/utils/mod.rs:382:13`。
 
-If possible, please ensure that your niri package on its own has good panics, i.e. *without* installing debuginfo or other packages.
-The user likely won't have debuginfo installed when their compositor first crashes, and we really want to be able to diagnose and fix all crashes right away.
+如果可以的话，请确保您的 niri 软件包本身具有良好的崩溃回溯，即*无需*安装调试信息或其他包。
+当用户的合成器首次崩溃时，他们很可能没有安装 debuginfo，而我们非常希望能够立即诊断并修复所有崩溃。
 
-### Rust dependencies
+### Rust 依赖项
 
-Every niri release comes with a vendored dependencies archive from `cargo vendor`.
-You can use it to build the corresponding niri release completely offline.
+每个 niri 版本都附带一个通过 `cargo vendor` 生成的依赖项归档文件。
+您可以使用它来完全离线地构建相应的 niri 版本。
 
-If you don't want to use vendored dependencies, consider following the niri release's `Cargo.lock`.
-It contains the exact dependency versions that I used when testing the release.
+如果您不想使用打包的依赖项，请考虑遵循 niri 发布版本中的 `Cargo.lock`。
+它包含了我在测试该发布版本时使用的确切依赖版本。
 
-If you need to change the versions of some dependencies, pay extra attention to `smithay` and `smithay-drm-extras` commit hash.
-These crates don't currently have regular stable releases, so niri uses git snapshots.
-Upstream frequently has breaking changes (API and behavior), so you're strongly advised to use the exact commit hash from the niri release's `Cargo.lock`.
+如果您需要更改某些依赖项的版本，请特别注意 `smithay` 和 `smithay-drm-extras` 的提交哈希。
+这些 crate 目前没有定期的稳定版本发布，因此 niri 使用 git 快照。
+上游经常有破坏性变更（API 和行为），因此强烈建议您使用 niri 发布版本 `Cargo.lock` 中的确切提交哈希。
 
-### Shell completions
+### Shell 自动补全
 
-You can generate shell completions for several shells via `niri completions <SHELL>`, i.e. `niri completions bash`.
-See `niri completions -h` for a full list.
+您可以通过 `niri completions <SHELL>` 为多个 shell 生成自动补全脚本，例如 `niri completions bash`。
+完整列表请参见 `niri completions -h`。
