@@ -10,7 +10,7 @@
 
 Portals **要求** [将 niri 作为会话运行](./Getting-Started.md)，这意味着通过 `niri-session` 脚本或显示管理器启动。您需要安装以下 portals：
 
-* `xdg-desktop-portal-gtk`：实现大多数基本功能，这是"默认回退 portal"。
+* `xdg-desktop-portal-gtk`：实现大多数基本功能，这是“默认回退 portal”。
 * `xdg-desktop-portal-gnome`：支持屏幕录制所必需的。
 * `gnome-keyring`：实现 Secret portal，某些应用程序需要它才能正常工作。
 

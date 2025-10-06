@@ -30,7 +30,7 @@
     ```
 
     将图像路径替换为您想要的路径。
-    `%h` 会被展开为你的主（home）目录路径。
+    `%h` 会被展开为您的主（home）目录路径。
 
     在编辑 `swaybg.service` 后，运行 `systemctl --user daemon-reload` 以便 systemd 获取文件中的更改。
 

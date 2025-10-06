@@ -8,7 +8,7 @@
 我们实现了 `org.freedesktop.a11y.KeyboardMonitor` D-Bus 接口，以便 Orca 监听和捕获键盘按键，并通过 [AccessKit](https://accesskit.dev) 暴露主要的 niri UI 元素。
 具体来说，niri 将会播报：
 
-- 工作区切换，例如当您切换到第二个工作区时，它会播报"工作区 2"；
+- 工作区切换，例如当您切换到第二个工作区时，它会播报“工作区 2”；
 - 退出确认对话框（默认通过 <kbd>Super</kbd><kbd>Shift</kbd><kbd>E</kbd> 触发）；
 - 进入截图界面和全局概览（niri 会在这些元素获得焦点时进行播报，目前暂无其他功能）；
 - 每当发生配置解析错误时；
