@@ -1,99 +1,99 @@
-### Overview
+### 概述
 
-There are several gestures in niri.
+niri 支持多种手势操作。
 
-Also see the [gestures configuration](./Configuration:-Gestures.md) wiki page.
+另请参阅 [手势配置](./Configuration:-Gestures.md) wiki 页面。
 
-### Mouse
+### 鼠标
 
-#### Interactive Move
+#### 交互式移动
 
 <sup>Since: 0.1.10</sup>
 
-You can move windows by holding <kbd>Mod</kbd> and the left mouse button.
+你可以通过按住 <kbd>Mod</kbd> 键和鼠标左键来移动窗口。
 
-You can customize the look of the window insertion preview in the [`insert-hint` layout config](./Configuration:-Layout.md#insert-hint).
+你可以在 [`insert-hint` 布局配置](./Configuration:-Layout.md#insert-hint) 中自定义窗口插入预览的外观。
 
-<sup>Since: 25.01</sup> Right click while moving to toggle between floating and tiling layout to put the window into.
+<sup>Since: 25.01</sup> 移动时右键点击，可在浮动和平铺布局之间切换，以将窗口放入。
 
-#### Interactive Resize
-
-<sup>Since: 0.1.6</sup>
-
-You can resize windows by holding <kbd>Mod</kbd> and the right mouse button.
-
-#### Reset Window Height
+#### 交互式调整大小
 
 <sup>Since: 0.1.6</sup>
 
-If you double-click on a top or bottom tiled window resize edge, the window height will reset to automatic.
+你可以通过按住 <kbd>Mod</kbd> 键和鼠标右键来调整窗口大小。
 
-This works with both window-initiated resizes (when using client-side decorations), and niri-initiated <kbd>Mod</kbd> + right click resizes.
-
-#### Toggle Full Width
+#### 重置窗口高度
 
 <sup>Since: 0.1.6</sup>
 
-If you double-click on a left or right tiled window resize edge, the column will expand to the full workspace width.
+如果您在平铺窗口的顶部或底部调整边缘上双击，窗口高度将重置为自动高度。
 
-This works with both window-initiated resizes (when using client-side decorations), and niri-initiated <kbd>Mod</kbd> + right click resizes.
+此功能同时适用于窗口发起的调整大小（当使用客户端装饰时）和 niri 发起的 <kbd>Mod</kbd> + 右键点击调整大小。
 
-#### Horizontal View Movement
+#### 切换全宽模式
 
 <sup>Since: 0.1.6</sup>
 
-Move the view horizontally by holding <kbd>Mod</kbd> and the middle mouse button (or the wheel) and dragging the mouse horizontally.
+如果您在平铺窗口的左侧或右侧调整边缘上双击，该列将扩展至工作区的完整宽度。
 
-#### Workspace Switch
+此功能同时适用于窗口发起的调整大小（当使用客户端装饰时）和 niri 发起的 <kbd>Mod</kbd> + 右键点击调整大小。
+
+#### 水平移动视图
+
+<sup>Since: 0.1.6</sup>
+
+通过按住 <kbd>Mod</kbd> 键和鼠标中键（或滚轮）并水平拖动鼠标来水平移动视图。
+
+#### 工作区切换
 
 <sup>Since: 0.1.7</sup>
 
-Switch workspaces by holding <kbd>Mod</kbd> and the middle mouse button (or the wheel) and dragging the mouse vertically.
+通过按住 <kbd>Mod</kbd> 键和鼠标中键（或滚轮）并垂直拖动鼠标来切换工作区。
 
-### Touchpad
+### 触控板
 
-#### Workspace Switch
+#### 工作区切换
 
-Switch workspaces with three-finger vertical swipes.
+使用三指垂直滑动切换工作区。
 
-#### Horizontal View Movement
+#### 水平视图移动
 
-Move the view horizontally with three-finger horizontal swipes.
+使用三指水平滑动来水平移动视图。
 
-#### Open and Close the Overview
+#### 打开和关闭全局概览
 
 <sup>Since: 25.05</sup>
 
-Open and close the overview with a four-finger vertical swipe.
+使用四指垂直滑动来打开和关闭概览。
 
-### All Pointing Devices
+### 所有指针设备
 
-#### Drag-and-Drop Edge View Scroll
+#### 拖放时触边滚动视图
 
 <sup>Since: 25.02</sup>
 
-Scroll the tiling view when moving the mouse cursor against a monitor edge during drag-and-drop (DnD).
-Also works on a touchscreen.
+在拖放（DnD）操作期间，将鼠标光标移到显示器边缘时，可以滚动平铺视图。
+在触摸屏上同样有效。
 
-#### Drag-and-Drop Edge Workspace Switch
-
-<sup>Since: 25.05</sup>
-
-Scroll the workspaces up/down when moving the mouse cursor against a monitor edge during drag-and-drop (DnD) while in the overview.
-Also works on a touchscreen.
-
-#### Drag-and-Drop Hold to Activate
+#### 拖放时触边切换工作区
 
 <sup>Since: 25.05</sup>
 
-While drag-and-dropping, hold your mouse over a window to activate it.
-This will bring a floating window to the top for example.
+在全局概览中进行拖放操作时，将鼠标光标移动到显示器边缘可以向上/向下滚动工作区。
+在触摸屏上同样有效。
 
-In the overview, you can also hold the mouse over a workspace to switch to it.
-
-#### Hot Corner to Toggle the Overview
+#### 拖放时悬停激活
 
 <sup>Since: 25.05</sup>
 
-Put your mouse at the very top-left corner of a monitor to toggle the overview.
-Also works during drag-and-dropping something.
+在拖放过程中，将鼠标悬停在某个窗口上可以激活该窗口。
+例如，这会将一个浮动窗口置于顶层。
+
+在全局概览中，你也可以将鼠标悬停在工作区上来切换到该工作区。
+
+#### 热区触发全局概览
+
+<sup>Since: 25.05</sup>
+
+将鼠标移至显示器的左上角可以切换全局概览。
+在拖放操作期间同样有效。
