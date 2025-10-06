@@ -47,7 +47,8 @@ markdown_extensions:
       permalink: '#'
   - attr_list
 plugins:
-  - search
+  - search:
+      separator: '[\s\u200b\-]'
 hooks:
   - hooks/shortcodes.py
   - hooks/remove-must-fail.py
