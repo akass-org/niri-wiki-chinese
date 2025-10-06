@@ -35,7 +35,7 @@ Niri 与标准的 systemd 自启动机制兼容。
 默认的 [niri.service](https://github.com/YaLTeR/niri/blob/main/resources/niri.service) 会启动 `graphical-session.target` 以及 `xdg-desktop-autostart.target`。
 
 若要在不编辑 niri 配置的情况下让程序在 niri 启动时运行，您可以将程序的 .desktop 文件链接到 `~/.config/autostart/`，或使用带有 `WantedBy=graphical-session.target` 的 .service 文件。
-有关示例，请参阅[systemd 服务配置示例](./Example-systemd-Setup.md)页面。
+有关示例，请参阅[systemd 配置示例](./Example-systemd-Setup.md)页面。
 
 如果这种方式不方便，您也可以在 niri 配置中添加 [`spawn-at-startup`](./Configuration:-Miscellaneous.md#spawn-at-startup) 行。
 
