@@ -6,7 +6,7 @@
 请注意，目前这将阻止窗口边缘调整大小的光标手柄出现。
 您仍然可以通过按住 <kbd>Mod</kbd> 和鼠标右键来调整窗口大小。
 
-### 为什么透明窗口会被着色？/ 为什么边框/焦点环会透过半透明窗口显示出来？
+### 为什么透明窗口会被着色？/ 为什么边框/焦点环会透过半透明窗口显示出来？ {#why-are-transparent-windows-tinted-why-is-the-borderfocus-ring-showing-up-through-semitransparent-windows}
 
 在配置文件的顶层取消注释 [`prefer-no-csd` 设置](./Configuration:-Miscellaneous.md#prefer-no-csd)，然后重新启动您的应用程序。
 niri 将会在同意省略其客户端装饰的窗口周围绘制焦点环和边框。
@@ -47,7 +47,7 @@ hotkey-overlay {
 
 请注意，您可以通过传递正确的参数，让许多 Electron 应用程序（如 VSCode）在 Wayland 上原生运行，例如 `code --ozone-platform-hint=auto`。
 
-### 为什么 niri 不像其他合成器那样直接集成 Xwayland？
+### 为什么 niri 不像其他合成器那样直接集成 Xwayland？ {#why-doesnt-niri-integrate-xwayland-like-other-compositors}
 
 这是多种因素共同作用的结果：
 
