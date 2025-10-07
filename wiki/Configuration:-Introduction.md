@@ -1,88 +1,88 @@
-### Per-Section Documentation
+### 分段配置文档
 
-You can find documentation for various sections of the config on these wiki pages:
+您可以在这些 wiki 页面中找到配置文件各个部分的详细文档：
 
-* [`input {}`](./Configuration:-Input.md)
-* [`output "eDP-1" {}`](./Configuration:-Outputs.md)
-* [`binds {}`](./Configuration:-Key-Bindings.md)
-* [`switch-events {}`](./Configuration:-Switch-Events.md)
-* [`layout {}`](./Configuration:-Layout.md)
-* [top-level options](./Configuration:-Miscellaneous.md)
-* [`window-rule {}`](./Configuration:-Window-Rules.md)
-* [`layer-rule {}`](./Configuration:-Layer-Rules.md)
-* [`animations {}`](./Configuration:-Animations.md)
-* [`gestures {}`](./Configuration:-Gestures.md)
+* [输入 `input {}`](./Configuration:-Input.md)
+* [输出 `output "eDP-1" {}`](./Configuration:-Outputs.md)
+* [按键绑定 `binds {}`](./Configuration:-Key-Bindings.md)
+* [切换事件 `switch-events {}`](./Configuration:-Switch-Events.md)
+* [布局 `layout {}`](./Configuration:-Layout.md)
+* [顶部层级选项](./Configuration:-Miscellaneous.md)
+* [窗口规则 `window-rule {}`](./Configuration:-Window-Rules.md)
+* [层级规则 `layer-rule {}`](./Configuration:-Layer-Rules.md)
+* [动画 `animations {}`](./Configuration:-Animations.md)
+* [手势 `gestures {}`](./Configuration:-Gestures.md)
 * [`debug {}`](./Configuration:-Debug-Options.md)
-* [`include "other.kdl"`](./Configuration:-Include.md)
+* [包含其他配置 `include "other.kdl"`](./Configuration:-Include.md)
 
-### Loading
+### 加载
 
-Niri will load configuration from `$XDG_CONFIG_HOME/niri/config.kdl` or `~/.config/niri/config.kdl`, falling back to `/etc/niri/config.kdl`.
-If both of these files are missing, niri will create `$XDG_CONFIG_HOME/niri/config.kdl` with the contents of [the default configuration file](https://github.com/YaLTeR/niri/blob/main/resources/default-config.kdl), which are embedded into the niri binary at build time.
-Please use the default configuration file as the starting point for your custom configuration.
+Niri 将从 `$XDG_CONFIG_HOME/niri/config.kdl` 或 `~/.config/niri/config.kdl` 加载配置，如果这两个文件都不存在，则会回退到 `/etc/niri/config.kdl`。
+如果这两个文件都缺失，niri 将使用在构建时已嵌入到 niri 二进制文件中的 [默认配置文件](https://github.com/YaLTeR/niri/blob/main/resources/default-config.kdl) 的内容创建 `$XDG_CONFIG_HOME/niri/config.kdl`容。
+请使用默认配置文件作为自定义配置的起点。
 
-The configuration is live-reloaded.
-Simply edit and save the config file, and your changes will be applied.
-This includes key bindings, output settings like mode, window rules, and everything else.
+配置支持实时重载。
+只需编辑并保存配置文件，您的更改就会立即生效。
+这包括按键绑定、输出设置（如模式）、窗口规则以及所有其他配置。
 
-You can run `niri validate` to parse the config and see any errors.
+您可以运行 `niri validate` 来解析配置并查看任何错误。
 
-To use a different config file path, pass it in the `--config` or `-c` argument to `niri`.
+要使用不同的配置文件路径，请通过 `--config` 或 `-c` 参数将其传递给 `niri`。
 
-You can also set `$NIRI_CONFIG` to the path of the config file.
-`--config` always takes precedence.
-If `--config` or `$NIRI_CONFIG` doesn't point to a real file, the config will not be loaded.
-If `$NIRI_CONFIG` is set to an empty string, it is ignored and the default config location is used instead.
+您也可以设置 `$NIRI_CONFIG` 环境变量指向配置文件路径。
+`--config` 参数的优先级始终最高。
+如果 `--config` 或 `$NIRI_CONFIG` 指向的不是一个实际存在的文件，则配置将不会被加载。
+如果 `$NIRI_CONFIG` 被设置为空字符串，它将被忽略，转而使用默认的配置位置。
 
-### Syntax
+### 语法
 
-The config is written in [KDL].
+配置文件使用 [KDL] 编写。
 
-#### Comments
+#### 注释
 
-Lines starting with `//` are comments; they are ignored.
+以 `//` 开头的行是注释；它们会被忽略。
 
-Also, you can put `/-` in front of a section to comment out the entire section:
+此外，您可以在一个代码块前加上 `/-` 来注释掉整个代码块：
 
 ```kdl
 /-output "eDP-1" {
-    // Everything inside here is ignored.
-    // The display won't be turned off
-    // as the whole section is commented out.
+    // 这里面的所有内容都会被忽略。
+    // 显示器不会被关闭，
+    // 因为整个代码块都被注释掉了。
     off
 }
 ```
 
-#### Flags
+#### 标志
 
-Toggle options in niri are commonly represented as flags.
-Writing out the flag enables it, and omitting it or commenting it out disables it.
-For example:
+niri 中的切换选项通常表示为标志。
+写入该标志则启用它，省略或注释掉它则禁用它。
+例如：
 
 ```kdl
-// "Focus follows mouse" is enabled.
+// “焦点跟随鼠标”已启用。
 input {
     focus-follows-mouse
 
-    // Other settings...
+    // 其他设置...
 }
 ```
 
 ```kdl
-// "Focus follows mouse" is disabled.
+// “焦点跟随鼠标”已禁用。
 input {
     // focus-follows-mouse
 
-    // Other settings...
+    // 其他设置...
 }
 ```
 
-#### Sections
+#### 配置段
 
-Most sections cannot be repeated. For example:
+大多数配置段不能重复出现。例如：
 
 ```kdl
-// This is valid: every section appears once.
+// 这是有效的：每个配置段只出现一次。
 input {
     keyboard {
         // ...
@@ -95,7 +95,7 @@ input {
 ```
 
 ```kdl,must-fail
-// This is NOT valid: input section appears twice.
+// 这是无效的：input 配置段出现了两次。
 input {
     keyboard {
         // ...
@@ -109,7 +109,7 @@ input {
 }
 ```
 
-Exceptions are, for example, sections that configure different devices by name:
+例外情况也有，是那些通过名称来配置不同设备的配置段，例如：
 
 <!-- NOTE: this may break in the future -->
 ```kdl
@@ -117,35 +117,35 @@ output "eDP-1" {
     // ...
 }
 
-// This is valid: this section configures a different output.
+// 这是有效的：此配置段配置的是另一个输出。
 output "HDMI-A-1" {
     // ...
 }
 
-// This is NOT valid: "eDP-1" already appeared above.
-// It will either throw a config parsing error, or otherwise not work.
+// 这是无效的：“eDP-1” 已经在上面出现过了。
+// 这会导致配置解析错误，或者无法正常工作。
 output "eDP-1" {
     // ...
 }
 ```
 
-### Defaults
+### 默认值
 
-Omitting most of the sections of the config file will leave you with the default values for that section.
-A notable exception is [`binds {}`](./Configuration:-Key-Bindings.md): they do not get filled with defaults, so make sure you do not erase this section.
+省略配置文件中的大部分配置段将使用该配置段的默认值。
+一个显著的例外是 [`binds {}`](./Configuration:-Key-Bindings.md)：它们不会填充默认的按键绑定，因此请确保不要删除这个配置段。
 
-### Breaking Change Policy
+### 破坏性变更策略
 
-As a rule, niri updates should not break existing config files.
-(For example, the default config from niri v0.1.0 still parses fine on v25.02 as I'm writing this.)
+通常情况下，niri 的更新不应破坏现有的配置文件。
+（举个栗子，在我撰写本文时，niri v0.1.0 的默认配置文件在 v25.02 上仍然可以正常解析。）
 
-Exceptions can be made for parsing bugs.
-For example, niri used to accept multiple binds to the same key, but this was not intended and did not do anything (the first bind was always used).
-A patch release changed niri from silently accepting this to causing a parsing failure.
-This is not a blanket rule, I will consider the potential impact of every breaking change like this before deciding to carry on with it.
+对于解析错误（bug），可能会作为例外处理。
+例如，niri 曾经允许对同一个按键设置多个绑定，但这并非设计本意，也没有任何作用（总是使用第一个绑定）。
+某个补丁版本改变了 niri 的行为，从静默接受此错误变更为抛出解析失败。
+这并不是一条硬性规定，在决定进行此类破坏性变更之前，我会仔细评估其潜在影响。
 
-Keep in mind that the breaking change policy applies only to niri releases.
-Commits between releases can and do occasionally break the config as new features are ironed out.
-However, I do try to limit these, since several people are running git builds.
+请注意，破坏性变更策略仅适用于 niri 的正式发布版本。
+在版本之间的提交中，随着新功能的完善和调整，偶尔可能会破坏配置文件的兼容性。
+然而，我会尽量限制这种情况，因为有不少人正在使用 git 构建版本。
 
 [KDL]: https://kdl.dev/
