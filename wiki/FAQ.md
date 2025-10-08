@@ -118,7 +118,7 @@ Firefox 似乎首先会以一个通用的 Firefox 标题打开 Bitwarden 窗口�
 您可以通过启动一个新的屏幕锁定程序来恢复。
 一种方法是切换到另一个 TTY（使用如 <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>F3</kbd> 这样的快捷键），然后针对 niri 的 Wayland 显示启动一个屏幕锁定程序，例如 `WAYLAND_DISPLAY=wayland-1 swaylock`。
 
-另一种方法是在您的屏幕锁定程序快捷键绑定上设置 `allow-when-locked=true`，然后您可以在红屏上按下该快捷键来启动一个新的屏幕锁定程序。
+另一种方法是在您的屏幕锁定程序绑定上设置 `allow-when-locked=true`，然后您可以在红屏上按下该快捷键来启动一个新的屏幕锁定程序。
 ```kdl
 binds {
     Super+Alt+L allow-when-locked=true { spawn "swaylock"; }

@@ -7,7 +7,7 @@
 
 ![左侧带有标签指示符的终端。](https://github.com/user-attachments/assets/0e94ac0d-796d-4f85-a264-c105ef41c13f)
 
-可以使用以下快捷键绑定在常规显示模式和标签页显示模式之间切换l列布局：
+可以使用以下的绑定在常规显示模式和标签页显示模式之间切换l列布局：
 
 ```kdl
 binds {
@@ -15,7 +15,7 @@ binds {
 }
 ```
 
-所有其他快捷键绑定保持不变：使用 `focus-window-down/up` 切换标签页，使用 `consume-window-into-column`/`expel-window-from-column` 添加或移除窗口，等等。
+所有其他绑定保持不变：使用 `focus-window-down/up` 切换标签页，使用 `consume-window-into-column`/`expel-window-from-column` 添加或移除窗口，等等。
 
 与常规列不同，标签页列可以全屏显示多个窗口。
 

@@ -41,6 +41,7 @@ layer-rule {
     block-out-from "screencast"
 }
 ```
+
 有关更多详细信息和示例，请参阅[相应的 wiki 部分](./Configuration:-Window-Rules.md#block-out-from)。
 
 ### 动态屏幕录制目标
@@ -53,7 +54,7 @@ Niri 提供了一个特殊的屏幕录制流，您可以动态更改它。
 ![显示 niri Dynamic Cast Target 的屏幕录制对话框。](https://github.com/user-attachments/assets/e236ce74-98ec-4f3a-a99b-29ac1ff324dd)
 
 选择该选项后，它将作为一个空的、透明的视频流启动。
-然后，您可以使用以下快捷键绑定来更改它显示的内容：
+然后，您可以使用以下几个绑定来更改它显示的内容：
 
 - `set-dynamic-cast-window` 录制当前焦点窗口。
 - `set-dynamic-cast-monitor` 录制当前焦点显示器。
@@ -121,7 +122,7 @@ window-rule {
 在录制 Google Slides 这类基于浏览器的演示文稿时，您通常希望隐藏浏览器界面，这就需要将浏览器设为全屏模式。
 但这样做有时很不方便，例如，当您使用超宽屏显示器时，或者您只是想让浏览器窗口小一点，而不占用整个显示器。
 
-`toggle-windowed-fullscreen` 这个快捷键绑定就是为了解决这个问题。
+`toggle-windowed-fullscreen` 这个绑定就是为了解决这个问题。
 它会让应用程序以为自己进入了全屏模式，但实际上它仍然是一个普通窗口，您可以自由调整其大小并将其放置在任意位置。
 
 ```kdl
@@ -130,7 +131,7 @@ binds {
 }
 ```
 
-请注意，并非所有应用程序都会响应全屏操作，因此可能有时候您使用了这个快捷键绑定，却看起来无事发生。
+请注意，并非所有应用程序都会响应全屏操作，因此可能有时候您使用了这个绑定，却看起来无事发生。
 
 下面是一个示例，显示了一个窗口化全屏的 Google Slides [演示文稿](https://youtu.be/Kmz8ODolnDg)，以及演讲者视图和会议应用程序：
 

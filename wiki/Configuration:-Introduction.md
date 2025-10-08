@@ -4,7 +4,7 @@
 
 * [输入 `input {}`](./Configuration:-Input.md)
 * [输出 `output "eDP-1" {}`](./Configuration:-Outputs.md)
-* [按键绑定 `binds {}`](./Configuration:-Key-Bindings.md)
+* [绑定 `binds {}`](./Configuration:-Key-Bindings.md)
 * [切换事件 `switch-events {}`](./Configuration:-Switch-Events.md)
 * [布局 `layout {}`](./Configuration:-Layout.md)
 * [顶部层级选项](./Configuration:-Miscellaneous.md)
