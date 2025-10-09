@@ -1,12 +1,12 @@
-### Overview
+### 概述
 
-In this section you can configure input devices like keyboard and mouse, and some input-related options.
+在本节中，您可以配置键盘和鼠标等输入设备，以及一些与输入相关的选项。
 
-There's a section for each device type: `keyboard`, `touchpad`, `mouse`, `trackpoint`, `tablet`, `touch`.
-Settings in those sections will apply to every device of that type.
-Currently, there's no way to configure specific devices individually (but that is planned).
+每种设备类型都有对应的配置段：`keyboard`（键盘）、`touchpad`（触摸板）、`mouse`（鼠标）、`trackpoint`（指点杆）、`tablet`（数位板）、`touch`（触摸屏）。
+这些配置段中的设置将应用于该类型的所有设备。
+目前，尚无法为特定设备单独进行配置（但此功能已在计划中）。
 
-All settings at a glance:
+所有设置一览：
 
 ```kdl
 input {
@@ -109,13 +109,13 @@ input {
 }
 ```
 
-### Keyboard
+### 键盘
 
-#### Layout
+#### 布局
 
-In the `xkb` section, you can set layout, variant, options, model and rules.
-These are passed directly to libxkbcommon, which is also used by most other Wayland compositors.
-See the `xkeyboard-config(7)` manual for more information.
+在 `xkb` 配置段中，您可以设置布局（layout）、变体（variant）、选项（options）、型号（model）和规则（rules）。
+这些设置将会直接传递给 libxkbcommon，大多数其他 Wayland 合成器也使用改库。
+有关更多信息，请参阅 `xkeyboard-config(7)` 手册。
 
 ```kdl
 input {
@@ -133,8 +133,8 @@ input {
 >
 > <sup>Since: 25.02</sup>
 >
-> Alternatively, you can directly set a path to a .xkb file containing an xkb keymap.
-> This overrides all other xkb settings.
+> 或者，您可以直接设置包含 xkb 键盘映射的 .xkb 文件的路径。
+> 这将覆盖所有其他 xkb 设置。
 >
 > ```kdl
 > input {
@@ -150,9 +150,9 @@ input {
 >
 > <sup>Since: 25.08</sup>
 >
-> If the `xkb` section is empty (like it is by default), niri will fetch xkb settings from systemd-localed at `org.freedesktop.locale1` over D-Bus.
-> This way, for example, system installers can dynamically set the niri keyboard layout.
-> You can see this layout in `localectl` and change it with `localectl set-x11-keymap`, for example:
+> 如果 `xkb` 配置段为空（默认情况下就是空的），niri 将通过 D-Bus 从 systemd-localed 的 `org.freedesktop.locale1` 服务获取 xkb 设置。
+> 通过这种方式，例如系统安装程序，就可以动态设置 niri 的键盘布局。
+> 您可以在 `localectl` 中查看此布局，并使用 `localectl set-x11-keymap` 进行更改，例如：
 >
 > ```sh
 > $ localectl set-x11-keymap "us" "" "colemak_dh_ortho" "compose:ralt,ctrl:nocaps"
@@ -169,16 +169,16 @@ input {
 >   X11 Options: compose:ralt,ctrl:nocaps
 > ```
 >
-> By default, `localectl` will set the TTY keymap to the closest match of the XKB keymap.
-> You can prevent that with a `--no-convert` flag, for example: `localectl set-x11-keymap --no-convert "us,ru"`.
+> 默认情况下，`localectl` 会将 TTY 键盘映射设置为最接近 XKB 键盘映射的匹配项。
+> 您可以使用 `--no-convert` 参数来阻止这种行为，例如：`localectl set-x11-keymap --no-convert "us,ru"`。
 >
-> These settings are picked up by some other programs too, like GDM.
+> 其他一些程序（如 GDM）也会采用这些设置。
 
-When using multiple layouts, niri can remember the current layout globally (the default) or per-window.
-You can control this with the `track-layout` option.
+当使用多个布局时，niri 可以全局记住当前布局（默认），也可以为每个窗口单独记忆。
+您可以使用 `track-layout` 选项来控制这一行为。
 
-- `global`: layout change is global for all windows.
-- `window`: layout is tracked for each window individually.
+- `global`：布局更改对所有窗口全局生效。
+- `window`：为每个窗口单独跟踪布局。
 
 ```kdl
 input {
@@ -188,10 +188,10 @@ input {
 }
 ```
 
-#### Repeat
+#### 重复
 
-Delay is in milliseconds before the keyboard repeat starts.
-Rate is in characters per second.
+延迟（repeat-delay）是指键盘开始重复按键前的等待时间，单位为毫秒。
+速率（repeat-rate）是指每秒重复的字符数。
 
 ```kdl
 input {
@@ -202,13 +202,13 @@ input {
 }
 ```
 
-#### Num Lock
+#### 数字锁定（Num Lock）
 
 <sup>Since: 25.05</sup>
 
-Set the `numlock` flag to turn on Num Lock automatically at startup.
+设置 `numlock` 标志可在启动时自动开启数字锁定。
 
-You might want to disable (comment out) `numlock` if you're using a laptop with a keyboard that overlays Num Lock keys on top of regular keys.
+如果您使用的笔记本电脑键盘将数字锁定键叠加在常规键位上，您可能需要禁用（注释掉）`numlock`。
 
 ```kdl
 input {
@@ -218,52 +218,52 @@ input {
 }
 ```
 
-### Pointing Devices
+### 指针设备
 
-Most settings for the pointing devices are passed directly to libinput.
-Other Wayland compositors also use libinput, so it's likely you will find the same settings there.
-For flags like `tap`, omit them or comment them out to disable the setting.
+指针设备的大多数设置都将直接传递给 libinput。
+其他 Wayland 合成器也使用 libinput，因此您很可能在那里找到相同的设置。
+对于 `tap` 这样的参数，省略它们或将其注释掉即可禁用该设置。
 
-A few settings are common between input devices:
+一些设置在输入设备之间是通用的：
 
-- `off`: if set, no events will be sent from this device.
+- `off`：如果设置，将不会从此设备发送任何事件。
 
-A few settings are common between `touchpad`, `mouse`, `trackpoint`, and `trackball`:
+一些设置在 `touchpad`（触摸板）、`mouse`（鼠标）、`trackpoint`（指点杆）和 `trackball`（轨迹球）之间是通用的：
 
-- `natural-scroll`: if set, inverts the scrolling direction.
-- `accel-speed`: pointer acceleration speed, valid values are from `-1.0` to `1.0` where the default is `0.0`.
-- `accel-profile`: can be `adaptive` (the default) or `flat` (disables pointer acceleration).
-- `scroll-method`: when to generate scroll events instead of pointer motion events, can be `no-scroll`, `two-finger`, `edge`, or `on-button-down`.
-  The default and supported methods vary depending on the device type.
-- `scroll-button`: <sup>Since: 0.1.10</sup> the button code used for the `on-button-down` scroll method. You can find it in `libinput debug-events`.
-- `scroll-button-lock`: <sup>Since: 25.08</sup> when enabled, the button does not need to be held down. Pressing once engages scrolling, pressing a second time disengages it, and double click acts as single click of the the underlying button.
-- `left-handed`: if set, changes the device to left-handed mode.
-- `middle-emulation`: emulate a middle mouse click by pressing left and right mouse buttons at once.
+- `natural-scroll`：如果设置，则反转滚动方向。
+- `accel-speed`：指针加速速度，有效值范围为 `-1.0` 到 `1.0`，默认为 `0.0`。
+- `accel-profile`：可以是 `adaptive`（自适应，默认值）或 `flat`（禁用指针加速）。
+- `scroll-method`：何时生成滚动事件而不是指针移动事件，可以是 `no-scroll`（无滚动）、`two-finger`（双指）、`edge`（边缘）或 `on-button-down`（按下按钮时）。
+  默认值和支持的方法因设备类型而异。
+- `scroll-button`：<sup>Since: 0.1.10</sup> 用于 `on-button-down` 滚动方法的按钮代码。您可以在 `libinput debug-events` 中找到它。
+- `scroll-button-lock`：<sup>Since: 25.08</sup> 启用后，无需持续按住按钮。按一次即可开始滚动，再按一次停止，双击则相当于单击底层按钮。
+- `left-handed`：如果设置，则将设备切换到左手模式。
+- `middle-emulation`：通过同时按下鼠标左键和右键来模拟中键点击。
 
-Settings specific to `touchpad`s:
+`touchpad`（触摸板）独有的设置：
 
-- `tap`: tap-to-click.
-- `dwt`: disable-when-typing.
-- `dwtp`: disable-when-trackpointing.
-- `drag`: <sup>Since: 25.05</sup> can be `true` or `false`, controls if tap-and-drag is enabled.
-- `drag-lock`: <sup>Since: 25.02</sup> if set, lifting the finger off for a short time while dragging will not drop the dragged item. See the [libinput documentation](https://wayland.freedesktop.org/libinput/doc/latest/tapping.html#tap-and-drag).
-- `tap-button-map`: can be `left-right-middle` or `left-middle-right`, controls which button corresponds to a two-finger tap and a three-finger tap.
-- `click-method`: can be `button-areas` or `clickfinger`, changes the [click method](https://wayland.freedesktop.org/libinput/doc/latest/clickpad-softbuttons.html).
-- `disabled-on-external-mouse`: do not send events while external pointer device is plugged in.
+- `tap`：轻触点击。
+- `dwt`：打字时禁用。
+- `dwtp`：使用指点杆时禁用。
+- `drag`：<sup>Since: 25.05</sup> 可以是 `true` 或 `false`，控制是否启用轻触拖拽。
+- `drag-lock`：<sup>Since: 25.02</sup> 如果设置，在拖拽过程中短暂抬起手指不会放下被拖拽的项目。请参阅 [libinput 文档](https://wayland.freedesktop.org/libinput/doc/latest/tapping.html#tap-and-drag)。
+- `tap-button-map`：可以是 `left-right-middle` 或 `left-middle-right`，控制哪个按钮对应双指轻触和三指轻触。
+- `click-method`：可以是 `button-areas` 或 `clickfinger`，更改[点击方法](https://wayland.freedesktop.org/libinput/doc/latest/clickpad-softbuttons.html)。
+- `disabled-on-external-mouse`：当插入外部指针设备时，不发送触控板事件。
 
-Settings specific to `touchpad` and `mouse`:
+`touchpad`（触摸板）和 `mouse`（鼠标）独有的设置：
 
-- `scroll-factor`: <sup>Since: 0.1.10</sup> scales the scrolling speed by this value.
+- `scroll-factor`：<sup>Since: 0.1.10</sup> 按此值缩放滚动速度。
 
-    <sup>Since: 25.08</sup> You can also override horizontal and vertical scroll factor separately like so: `scroll-factor horizontal=2.0 vertical=-1.0`
+    <sup>Since: 25.08</sup> 您还可以像这样分别覆盖水平和垂直滚动因子：`scroll-factor horizontal=2.0 vertical=-1.0`
 
-Settings specific to `tablet` and `touch`:
+`tablet`（数位板）和 `touch`（触摸屏）独有的设置：
 
-- `calibration-matrix`: set to six floating point numbers to change the calibration matrix. See the [`LIBINPUT_CALIBRATION_MATRIX` documentation](https://wayland.freedesktop.org/libinput/doc/latest/device-configuration-via-udev.html) for examples.
-    - <sup>Since: 25.02</sup> for `tablet`
-    - <sup>Since: next release</sup> for `touch`
+- `calibration-matrix`：设置为六个浮点数以更改校准矩阵。示例请参阅 [`LIBINPUT_CALIBRATION_MATRIX` 文档](https://wayland.freedesktop.org/libinput/doc/latest/device-configuration-via-udev.html)。
+    - <sup>Since: 25.02</sup> 适用于 `tablet`
+    - <sup>Since: next release</sup> 适用于 `touch`
 
-Tablets and touchscreens are absolute pointing devices that can be mapped to a specific output like so:
+数位板和触摸屏是绝对定位设备，可以映射到特定的输出，如下所示：
 
 ```kdl
 input {
@@ -277,18 +277,18 @@ input {
 }
 ```
 
-Valid output names are the same as the ones used for output configuration.
+有效的输出名称与输出配置中使用的名称相同。
 
-<sup>Since: 0.1.7</sup> When a tablet is not mapped to any output, it will map to the union of all connected outputs, without aspect ratio correction.
+<sup>Since: 0.1.7</sup> 当数位板未映射到任何输出时，它将映射到所有已连接输出的并集区域，不进行宽高比校正。
 
-### General Settings
+### 通用设置
 
-These settings are not specific to a particular input device.
+这些设置不针对于特定的输入设备。
 
 #### `disable-power-key-handling`
 
-By default, niri will take over the power button to make it sleep instead of power off.
-Set this if you would like to configure the power button elsewhere (i.e. `logind.conf`).
+默认情况下，niri 会接管电源按钮，使其进入睡眠状态而不是关机。
+如果您想在其他地方（如 `logind.conf`）配置电源按钮，请设置此项。
 
 ```kdl
 input {
@@ -298,9 +298,9 @@ input {
 
 #### `warp-mouse-to-focus`
 
-Makes the mouse warp to newly focused windows.
+使鼠标自动跳转到新获得焦点的窗口。
 
-Does not make the cursor visible if it had been hidden.
+如果光标原本是隐藏的，此设置也不会使其可见。
 
 ```kdl
 input {
@@ -308,14 +308,14 @@ input {
 }
 ```
 
-By default, the cursor warps *separately* horizontally and vertically.
-I.e. if moving the mouse only horizontally is enough to put it inside the newly focused window, then the mouse will move only horizontally, and not vertically.
+默认情况下，光标会*分别*在水平和垂直方向上进行跳转。
+也就是说，如果仅水平移动鼠标就足以使光标进入新获得焦点的窗口内，那么光标只会水平移动，而不进行垂直移动。
 
-<sup>Since: 25.05</sup> You can customize this with the `mode` property.
+<sup>Since: 25.05</sup> 您可以使用 `mode` 属性自定义此行为。
 
-- `mode="center-xy"`: warps by both X and Y coordinates together.
-So if the mouse was anywhere outside the newly focused window, it will warp to the center of the window.
-- `mode="center-xy-always"`: warps by both X and Y coordinates together, even if the mouse was already somewhere inside the newly focused window.
+- `mode="center-xy"`：同时在水平和垂直方向上进行跳转。
+因此，只要鼠标位于新获得焦点的窗口之外，它就会跳转到该窗口的中心。
+- `mode="center-xy-always"`：同时在水平和垂直方向上进行跳转，即使鼠标已经在新聚焦窗口内的某个位置。
 
 ```kdl
 input {
@@ -325,7 +325,7 @@ input {
 
 #### `focus-follows-mouse`
 
-Focuses windows and outputs automatically when moving the mouse over them.
+当鼠标移过窗口和输出时，自动使其获得焦点。
 
 ```kdl
 input {
@@ -333,30 +333,30 @@ input {
 }
 ```
 
-<sup>Since: 0.1.8</sup> You can optionally set `max-scroll-amount`.
-Then, focus-follows-mouse won't focus a window if it will result in the view scrolling more than the set amount.
-The value is a percentage of the working area width.
+<sup>Since: 0.1.8</sup> 您可以选择设置 `max-scroll-amount`。
+这样，如果 focus-follows-mouse 会导致视图滚动超过设定的量，则不会聚焦改窗口。
+该值是工作区宽度的百分比。
 
 ```kdl
 input {
-    // Allow focus-follows-mouse when it results in scrolling at most 10% of the screen.
+    // 当 focus-follows-mouse 导致滚动最多为屏幕的 10% 时允许。
     focus-follows-mouse max-scroll-amount="10%"
 }
 ```
 
 ```kdl
 input {
-    // Allow focus-follows-mouse only when it will not scroll the view.
+    // 仅当 focus-follows-mouse 不会滚动视图时才允许。
     focus-follows-mouse max-scroll-amount="0%"
 }
 ```
 
 #### `workspace-auto-back-and-forth`
 
-Normally, switching to the same workspace by index twice will do nothing (since you're already on that workspace).
-If this flag is enabled, switching to the same workspace by index twice will switch back to the previous workspace.
+通常，按索引两次切换到同一工作区不会执行任何操作（因为您已经在该工作区上）。
+如果启用此标志，通过索引第二次切换到同一个工作区时，将会切换回之前的工作区。
 
-Niri will correctly switch to the workspace you came from, even if workspaces were reordered in the meantime.
+即使工作空间在此期间被重新排序，Niri 也能正确地切换回您之前所在的工作区。
 
 ```kdl
 input {
@@ -364,21 +364,21 @@ input {
 }
 ```
 
-#### `mod-key`, `mod-key-nested`
+#### `mod-key`、`mod-key-nested`
 
 <sup>Since: 25.05</sup>
 
-Customize the `Mod` key for [key bindings](./Configuration:-Key-Bindings.md).
-Only valid modifiers are allowed, e.g. `Super`, `Alt`, `Mod3`, `Mod5`, `Ctrl`, `Shift`.
+自定义[按键绑定](./Configuration:-Key-Bindings.md)中的 `Mod` 键。
+只允许有效的修饰符，例如 `Super`、`Alt`、`Mod3`、`Mod5`、`Ctrl`、`Shift`。
 
-By default, `Mod` is equal to `Super` when running niri on a TTY, and to `Alt` when running niri as a nested winit window.
+默认情况下，在 TTY 上运行 niri 时，`Mod` 等同于 `Super`；在作为嵌套的 winit 窗口中运行 niri 时，`Mod` 等同于 `Alt`。
 
 > [!NOTE]
-> There are a lot of default bindings with Mod, none of them "make it through" to the underlying window.
-> You probably don't want to set `mod-key` to Ctrl or Shift, since Ctrl is commonly used for app hotkeys, and Shift is used for, well, regular typing.
+> 有很多使用 Mod 的默认绑定，它们都不会“穿透”到底层窗口。
+> 您可能不希望将 `mod-key` 设置为 Ctrl 或 Shift，因为 Ctrl 通常用于应用程序快捷键，而 Shift 用于常规输入。
 
 ```kdl
-// Switch the mod keys around: use Alt normally, and Super inside a nested window.
+// 切换 mod 键：正常情况下使用 Alt，在嵌套窗口内使用 Super。
 input {
     mod-key "Alt"
     mod-key-nested "Super"
