@@ -111,7 +111,7 @@ input {
 
 ### 键盘
 
-#### 布局
+#### 布局 {#layout}
 
 在 `xkb` 配置段中，您可以设置布局（layout）、变体（variant）、选项（options）、型号（model）和规则（rules）。
 这些设置将会直接传递给 libxkbcommon，大多数其他 Wayland 合成器也使用改库。
@@ -218,7 +218,7 @@ input {
 }
 ```
 
-### 指针设备
+### 指针设备 {#pointing-devices}
 
 指针设备的大多数设置都将直接传递给 libinput。
 其他 Wayland 合成器也使用 libinput，因此您很可能在那里找到相同的设置。
@@ -364,7 +364,7 @@ input {
 }
 ```
 
-#### `mod-key`、`mod-key-nested`
+#### `mod-key`、`mod-key-nested` {#mod-key-mod-key-nested}
 
 <sup>Since: 25.05</sup>
 
