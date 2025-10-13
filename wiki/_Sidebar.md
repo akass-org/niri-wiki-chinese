@@ -41,4 +41,4 @@
 * [Documenting niri](./Development:-Documenting-niri.md)
 * [Fractional Layout](./Development:-Fractional-Layout.md)
 * [Redraw Loop](./Development:-Redraw-Loop.md)
-* [Animation Timing](./Development:-Animation-Timing.md)
+* [动画时机](./Development:-Animation-Timing.md)

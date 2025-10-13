@@ -1,46 +1,27 @@
-> *Time, Dr. Freeman? Is it really that... time again?*
+> *时间，弗里曼博士？真的……又到那个时候了吗？*
 
-A compositor deals with one or more monitors on mostly fixed refresh cycles.
-For example, a 170 Hz monitor can draw a frame every ~5.88 ms.
+合成器会以固定的刷新周期处理一台或多台显示器。例如，一台 170 Hz 的显示器大约每 5.88 毫秒绘制一帧。
 
-Most of the time, the compositor doesn't actually redraw the monitor: when nothing changes on screen (e.g. you're reading a document and aren't moving your cursor), it would be wasteful to wake up the GPU to composite the same image.
-During an animation however, screen contents do change every frame.
-Niri will generally start drawing the next frame as soon as the previous one shows up on screen.
+大多数情况下，合成器实际上并不重新绘制显示器：当屏幕上没有变化时（例如你在阅读文档且没有移动光标），唤醒 GPU 来合成相同图像会非常浪费。但在动画过程中，屏幕内容每帧都会变化。Niri 通常会在前一帧显示在屏幕上后立即开始绘制下一帧。
 
-Since the monitor refresh cycle is fixed in most cases (even with VRR, there's a maximum refresh rate), the compositor can predict when the next frame will show up on the monitor, and render ongoing animations for that exact moment in time.
-This way, all animation frames are perfectly timed with no jitter, regardless of when exactly the rendering code had a chance to run.
-For example, even if the compositor has to process new window events, delaying the rendering by a few ms, the animation timing will remain exactly aligned to the monitor refresh cycle.
+由于大多数情况下显示器的刷新周期是固定的（即使有 VRR，也有最大刷新率），合成器可以预测下一帧何时会在显示器上显示，并渲染动画在那个精确时刻的状态。这样，所有动画帧都能完美地与显示器刷新周期同步，不会出现抖动，无论渲染代码什么时候运行。例如，即使合成器需要处理新的窗口事件，渲染延迟几毫秒，动画时间仍然会精确地与显示器刷新周期对齐。
 
-There are hence several properties that a compositor wants from its timing system.
+因此，合成器希望其计时系统具有多种属性。
 
-1. It should be possible to get the state of the animations at a specific time in the near future, for rendering a frame exactly timed to when the monitor will show it.
-    - This time override ability should be usable in tests to advance the time in a fully controlled fashion.
-1. Animations in response to user actions should begin at the moment when the action happens.
-   For example, pressing a workspace switch key should start the animation at the instant when the user pressed the key (rather than, say, slightly in the future where we predicted the next monitor frame, which we had already rendered by now).
-1. During the processing of a single action, querying the current time should return the exact same value.
-   Even if the processing finishes a few microseconds after it started, querying the time in the end should return the same thing.
-   This generally makes writing code much more sane; otherwise you'd need to for example avoid reading the position of some element twice in a row, since it could have moved by one pixel in-between, screwing with the logic.
-   Also, fetching the current system time [can be quite expensive](https://mastodon.online/@YaLTeR/109934977035721850) in terms of overhead.
-1. It should be reasonably easy to implement an animation slow-down preference, so all animations can be slowed down or sped up by the same factor.
+1. 应该能够获取近期特定时间的动画状态，以便在监视器显示时准确渲染一帧。
+    - 这种时间覆盖能力应该可以在测试中使用，以完全受控的方式推进时间。
+2. 响应用户操作的动画应该在操作发生的那一刻开始。例如，按下工作区切换键时，动画应该在用户按下该键的瞬间开始（而不是在我们预测下一个监视器帧的稍远一点的时间，下一个监视器帧现在已经渲染好了）。
+3. 在处理单个操作期间，查询当前时间应该返回完全相同的值。即使处理在开始后几微秒内完成，查询最终的时间也应该返回相同的值。这通常可以使代码编写更加合理；举个例子，如果不这样，您需要避免连续两次读取某个元素的位置，因为它可能在两次读取之间移动了一个像素，从而扰乱逻辑。此外，获取当前系统时间的开销[可能相当高昂](https://mastodon.online/@YaLTeR/109934977035721850)。
+4. 实现动画减速偏好应该相当容易，因此所有动画都可以按照相同的因子减慢或加快。
 
-The solution in niri is a `LazyClock`, a clock that remembers one timestamp.
-Initially, the timestamp is empty, so when you ask `LazyClock` for the current time, it will fetch and return the system time, and also remember it.
-Subsequently, it will keep returning the same timestamp that it had remembered.
+niri 的解决方案是使用 `LazyClock`，一个只记住一个时间戳的时钟。初始时，时间戳为空，因此当您向 `LazyClock` 请求当前时间时，它会获取并返回系统时间，并记住该时间。之后，它会一直返回之前记住的时间戳。
 
-You can also clear the timestamp, then `LazyClock` will fetch the system time anew when it's needed.
-In niri, the timestamp is cleared at the end of every event loop iteration, right before going to sleep waiting for new events.
-This way, anything that happens next (like a user key press) will fetch and use the most up-to-date timestamp as soon as one is needed, but then the processing code will keep getting the exact same timestamp, since `LazyClock` stores it.
+你还可以清除时间戳，这样 `LazyClock` 会在需要时重新获取系统时间。在 niri 中，时间戳会在每次事件循环迭代结束时清除，即进入休眠等待新事件之前。这样，接下来发生的任何事件（例如用户按键）都会在需要时立即获取并使用最新的时间戳，但由于 `LazyClock` 会存储该时间戳，因此处理代码将继续获取相同的时间戳。
 
-You can also just manually set the timestamp to a specific value.
-This is how we render a frame for the predicted time of when the monitor will show it.
-Also, this is used by tests: they simply always set the timestamp and never use the system time.
+您也可以手动将时间戳设置为特定值。这样，我们就能根据显示器预计的显示时间渲染帧。此外，测试也会用到这个方法：测试人员只需设置时间戳，而不会使用系统时间。
 
-Finally, there's an `AdjustableClock` wrapper on top that provides the ability to control the slow-down rate by modifying the timestamps returned by the clock.
+最后，在这之上有一个 `AdjustableClock` 包装器，它通过修改时钟返回的时间戳来控制减速率。
 
-An important detail is that with rate changes, timestamps from the `AdjustableClock` will drift away and become unrelated to the system time.
-However, our target timestamp (for rendering) comes from the system time, so the override works directly on the underlying `LazyClock`.
-That is, overriding the timestamp and then querying the `AdjustableClock` will return a *different* timestamp that is correct and consistent with the adjustments made by `AdjustableClock`.
-This is reflected in the API by naming the function `Clock::set_unadjusted()` (and there's also `Clock::now_unadjusted()` to get the raw timestamp).
+一个重要的细节是，随着速率的变化，来自 `AdjustableClock` 的时间戳会漂移，与系统时间变得无关。但是，我们的目标时间戳（用于渲染）来自系统时间，因此覆盖操作直接作用于底层的 `LazyClock` 。也就是说，覆盖时间戳然后查询 `AdjustableClock` 将返回一个正确的、与 `AdjustableClock` 所做的调整一致的其他时间戳。这在 API 中通过命名函数 `Clock::set_unadjusted()` 来体现（此外，还有 `Clock::now_unadjusted()` 来获取原始时间戳）。
 
-The clock is shared among all animations in niri through passing around and storing a reference-counted pointer.
-This way, overriding the time automatically applies to everything, whereas in tests we can use a separate clock per test so that they don't interfere with each other.
+在 niri 中，所有动画都通过传递和存储一个引用计数指针来共享时钟。这样，覆盖时间会自动应用于所有内容，而在测试中，我们可以为每个测试使用单独的时钟，这样它们就不会互相干扰。
