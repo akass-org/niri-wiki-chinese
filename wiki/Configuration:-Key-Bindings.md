@@ -1,12 +1,12 @@
-### Overview
+### 概述
 
-Key bindings are declared in the `binds {}` section of the config.
+按键绑定在配置文件的 `binds {}` 配置段中声明。
 
 > [!NOTE]
-> This is one of the few sections that *does not* get automatically filled with defaults if you omit it, so make sure to copy it from the default config.
+> 这是少数几个如果省略，*不会*自动填充默认配置的部分之一，因此请确保从默认配置中复制它。
 
-Each bind is a hotkey followed by one action enclosed in curly brackets.
-For example:
+每个绑定都由一个快捷键和一个用花括号括起来的动作组成。
+例如：
 
 ```kdl
 binds {
@@ -15,29 +15,29 @@ binds {
 }
 ```
 
-The hotkey consists of modifiers separated by `+` signs, followed by an XKB key name in the end.
+快捷键由 `+` 号分隔的修饰键组成和一个末尾的 XKB 按键名称组成。
 
-Valid modifiers are:
+有效的修饰键有：
 
-- `Ctrl` or `Control`;
-- `Shift`;
-- `Alt`;
-- `Super` or `Win`;
-- `ISO_Level3_Shift` or `Mod5`—this is the AltGr key on certain layouts;
-- `ISO_Level5_Shift`: can be used with an xkb lv5 option like `lv5:caps_switch`;
-- `Mod`.
+- `Ctrl` 或 `Control`；
+- `Shift`；
+- `Alt`；
+- `Super` 或 `Win`；
+- `ISO_Level3_Shift` 或 `Mod5` ——在某些布局下这是 AltGr 键；
+- `ISO_Level5_Shift`：可以与 xkb lv5 选项（如 `lv5:caps_switch`）一起搭配使用；
+- `Mod`。
 
-`Mod` is a special modifier that is equal to `Super` when running niri on a TTY, and to `Alt` when running niri as a nested winit window.
-This way, you can test niri in a window without causing too many conflicts with the host compositor's key bindings.
-For this reason, most of the default keys use the `Mod` modifier.
+`Mod` 是一个特殊的修饰键，当 niri 在 TTY 中运行时，它等同于 `Super`；当 niri 作为嵌套的 winit 窗口运行时，它等同于 `Alt`。
+这样的话，您就可以在窗口中测试 niri，而不会与宿主机合成器的按键绑定产生太多冲突。
+因此，大部分默认快捷键都使用了 `Mod` 修饰键。
 
-<sup>Since: 25.05</sup> You can customize the `Mod` key [in the `input` section of the config](./Configuration:-Input.md#mod-key-mod-key-nested).
+<sup>Since: 25.05</sup> 您可以在配置文件的 [`input` 配置段](./Configuration:-Input.md#mod-key-mod-key-nested)中自定义 `Mod` 键。
 
 > [!TIP]
-> To find an XKB name for a particular key, you may use a program like [`wev`](https://git.sr.ht/~sircmpwn/wev).
+> 要查找特定键的 XKB 名称，您可以使用像 [`wev`](https://git.sr.ht/~sircmpwn/wev) 这类程序。
 >
-> Open it from a terminal and press the key that you want to detect.
-> In the terminal, you will see output like this:
+> 在终端中打开它，然后按下您想要检测的键。
+> 在终端中，您会看到类似这样的输出：
 >
 > ```
 > [14:     wl_keyboard] key: serial: 757775; time: 44940343; key: 113; state: 1 (pressed)
@@ -50,20 +50,20 @@ For this reason, most of the default keys use the `Mod` modifier.
 >                       sym: Right        (65363), utf8: ''
 > ```
 >
-> Here, look at `sym: Left` and `sym: Right`: these are the key names.
-> I was pressing the left and the right arrow in this example.
+> 在这里，请看 `sym: Left` 和 `sym: Right`：这些就是按键名称。
+> 在这个例子中，我按下的是左键和右键。
 >
-> Keep in mind that binding shifted keys requires spelling out Shift and the unshifted version of the key, according to your XKB layout.
-> For example, on the US QWERTY layout, <kbd>&lt;</kbd> is on <kbd>Shift</kbd> + <kbd>,</kbd>, so to bind it, you spell out something like `Mod+Shift+Comma`.
+> 请注意，绑定 Shift 组合键时，需要根据您的 XKB 布局，明确写出 Shift 以及该键未按下 Shift 时的原始名称。
+> 例如，在美式 QWERTY 布局中，<kbd>&lt;</kbd> 位于 <kbd>Shift</kbd> + <kbd>,</kbd> 上，因此要绑定它，您需要写成类似 `Mod+Shift+Comma` 的内容。
 >
-> As another example, if you've configured the French [BÉPO](https://en.wikipedia.org/wiki/B%C3%89PO) XKB layout, your <kbd>&lt;</kbd> is on <kbd>AltGr</kbd> + <kbd>«</kbd>.
-> <kbd>AltGr</kbd> is `ISO_Level3_Shift`, or equivalently `Mod5`, so to bind it, you spell out something like `Mod+Mod5+guillemotleft`.
+> 再举一个例子，如果您配置了法语服 [BÉPO](https://en.wikipedia.org/wiki/B%C3%89PO) XKB 布局，您的 <kbd>&lt;</kbd> 位于 <kbd>AltGr</kbd> + <kbd>«</kbd> 上。
+> <kbd>AltGr</kbd> 是 `ISO_Level3_Shift`，或等效的 `Mod5`，因此要绑定它，您需要写成类似 `Mod+Mod5+guillemotleft` 的内容。
 >
-> When resolving latin keys, niri will search for the *first* configured XKB layout that has the latin key.
-> So for example with US QWERTY and RU layouts configured, US QWERTY will be used for latin binds.
+> 在解析拉丁字母键时，niri 会搜索**第一个*配置了该拉丁字母键的 XKB 布局。
+> 所以举个例子，如果同时配置了美式 QWERTY 和俄语 (RU) 布局，那么拉丁字母的快捷键将使用美式 QWERTY 布局来解析。
 
-<sup>Since: 0.1.8</sup> Binds will repeat by default (i.e. holding down a bind will make it trigger repeatedly).
-You can disable that for specific binds with `repeat=false`:
+<sup>Since: 0.1.8</sup> 绑定默认会重复（即按住绑定键会使其重复触发）。
+您可以使用 `repeat=false` 为特定绑定禁用此功能：
 
 ```kdl
 binds {
@@ -71,7 +71,7 @@ binds {
 }
 ```
 
-Binds can also have a cooldown, which will rate-limit the bind and prevent it from repeatedly triggering too quickly.
+绑定也可以设置冷却时间，这将限制绑定的触发速率，防止其过快地重复触发。
 
 ```kdl
 binds {
@@ -79,12 +79,12 @@ binds {
 }
 ```
 
-This is mostly useful for the scroll bindings.
+这主要用于滚动类的绑定。
 
-### Scroll Bindings
+### 滚动绑定
 
-You can bind mouse wheel scroll ticks using the following syntax.
-These binds will change direction based on the `natural-scroll` setting.
+您可以使用以下语法来绑定鼠标滚轮的滚动事件。
+这些绑定的方向会根据 `natural-scroll` 设置而改变。
 
 ```kdl
 binds {
@@ -95,10 +95,10 @@ binds {
 }
 ```
 
-Similarly, you can bind touchpad scroll "ticks".
-Touchpad scrolling is continuous, so for these binds it is split into discrete intervals based on distance travelled.
+类似地，您可以绑定触摸板滚动“刻度”。
+触摸板的滚动是连续的，因此对于这些绑定，它会根据移动的距离分成离散的间隔。
 
-These binds are also affected by touchpad's `natural-scroll`, so these example binds are "inverted", since niri has `natural-scroll` enabled for touchpads by default.
+这些绑定也受触摸板的 `natural-scroll` 影响，因此这些示例绑定是“反向”的，因为 niri 默认为触摸板启用了 `natural-scroll`。
 
 ```kdl
 binds {
@@ -107,14 +107,14 @@ binds {
 }
 ```
 
-Both mouse wheel and touchpad scroll binds will prevent applications from receiving any scroll events when their modifiers are held down.
-For example, if you have a `Mod+WheelScrollDown` bind, then while holding `Mod`, all mouse wheel scrolling will be consumed by niri.
+当鼠标滚轮和触摸板滚动绑定的修饰键被按下时，应用程序将无法接收到任何滚动事件。
+例如，假设您有一个 `Mod+WheelScrollDown` 绑定，那么在按住 `Mod` 时，所有鼠标滚轮滚动都将被 niri 捕获。
 
-### Mouse Click Bindings
+### 鼠标点击绑定
 
 <sup>Since: 25.01</sup>
 
-You can bind mouse clicks using the following syntax.
+您可以使用以下语法来绑定鼠标点击。
 
 ```kdl
 binds {
@@ -126,27 +126,27 @@ binds {
 }
 ```
 
-Mouse clicks operate on the window that was focused at the time of the click, not the window you're clicking.
+鼠标点击操作的是点击的那一刻已获得焦点的窗口，而不是您正在点击的窗口。
 
-Note that binding `Mod+MouseLeft` or `Mod+MouseRight` will override the corresponding gesture (moving or resizing the window).
+请注意，绑定 `Mod+MouseLeft` 或 `Mod+MouseRight` 将覆盖相应的手势操作（移动或调整窗口大小）。
 
-### Custom Hotkey Overlay Titles
+### 自定义快捷键悬浮窗标题 {#custom-hotkey-overlay-titles}
 
 <sup>Since: 25.02</sup>
 
-The hotkey overlay (the Important Hotkeys dialog) shows a hardcoded list of binds.
-You can customize this list using the `hotkey-overlay-title` property.
+快捷键悬浮窗（即重要快捷键对话框）会显示一个硬编码的绑定列表。
+您可以使用 `hotkey-overlay-title` 属性来自定义此列表。
 
-To add a bind to the hotkey overlay, set the property to the title that you want to show:
+要将一个绑定添加到悬浮窗里，请将该属性设置为您想要显示的标题：
 ```kdl
 binds {
-    Mod+Shift+S hotkey-overlay-title="Toggle Dark/Light Style" { spawn "some-script.sh"; }
+    Mod+Shift+S hotkey-overlay-title="切换深色/浅色样式" { spawn "some-script.sh"; }
 }
 ```
 
-Binds with custom titles are listed after the hardcoded binds and before non-customized Spawn binds.
+带有自定义标题的快捷键会列在硬编码快捷键之后，以及未自定义的 Spawn 快捷键之前。
 
-To remove a hardcoded bind from the hotkey overlay, set the property to null:
+要从快捷键悬浮窗中移除硬编码的绑定，请将该属性设置为 null：
 ```kdl
 binds {
     Mod+Q hotkey-overlay-title=null { close-window; }
@@ -154,41 +154,41 @@ binds {
 ```
 
 > [!TIP]
-> When multiple key combinations are bound to the same action:
-> - If any of the binds has a custom hotkey overlay title, niri will show that bind.
-> - Otherwise, if any of the binds has a null title, niri will hide the bind.
-> - Otherwise, niri will show the first key combination.
+> 当多个按键组合绑定到同一操作时：
+> - 如果其中任何一个绑定具有自定义的悬浮窗标题，niri 将显示该绑定。
+> - 否则，如果其中任何一个绑定标题为 null，则 niri 将隐藏该绑定。
+> - 否则，niri 将显示第一个按键组合。
 
-Custom titles support [Pango markup](https://docs.gtk.org/Pango/pango_markup.html):
+自定义标题支持 [Pango 标记语言](https://docs.gtk.org/Pango/pango_markup.html)：
 
 ```kdl
 binds {
-    Mod+Shift+S hotkey-overlay-title="<b>Toggle</b> <span foreground='red'>Dark</span>/Light Style" { spawn "some-script.sh"; }
+    Mod+Shift+S hotkey-overlay-title="<b>切换</b> <span foreground='red'>深色</span>/浅色样式" { spawn "some-script.sh"; }
 }
 ```
 
-![Custom markup example.](https://github.com/user-attachments/assets/2a2ba914-bfa7-4dfa-bb5e-49839034765d)
+![自定义标记示例。](https://github.com/user-attachments/assets/2a2ba914-bfa7-4dfa-bb5e-49839034765d)
 
-### Actions
+### 动作
 
-Every action that you can bind is also available for programmatic invocation via `niri msg action`.
-Run `niri msg action` to get a full list of actions along with their short descriptions.
+您可以绑定的每个动作，也都可通过 `niri msg action` 命令以编程方式化调用。
+运行 `niri msg action` 可获取一份包含所有动作及其简短描述的完整列表。
 
-Here are a few actions that benefit from more explanation.
+以下是一些需要更多解释的动作。
 
 #### `spawn`
 
-Run a program.
+启动一个程序。
 
-`spawn` accepts a path to the program binary as the first argument, followed by arguments to the program.
-For example:
+`spawn` 接受程序二进制文件的路径作为第一个参数，随后是程序的参数。
+例如：
 
 ```kdl
 binds {
-    // Run alacritty.
+    // 启动 alacritty。
     Mod+T { spawn "alacritty"; }
 
-    // Run `wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+`.
+    // 启动 `wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+`。
     XF86AudioRaiseVolume { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
 }
 ```
@@ -197,55 +197,55 @@ binds {
 >
 > <sup>Since: 0.1.5</sup>
 >
-> Spawn bindings have a special `allow-when-locked=true` property that makes them work even while the session is locked:
+> Spawn 绑定有一个特殊的 `allow-when-locked=true` 属性，使其即使在会话锁定时也能工作：
 >
 > ```kdl
 > binds {
->     // This mute bind will work even when the session is locked.
+>     // 即使在会话锁定时，此静音绑定也能工作。
 >     XF86AudioMute allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
 > }
 > ```
 
-For `spawn`, niri *does not* use a shell to run commands, which means that you need to manually separate arguments.
-See [`spawn-sh`](#spawn-sh) below for an action that uses a shell.
+对于 `spawn`，niri *不会* 通过 Shell 来运行命令，这意味着您需要手动分隔参数。
+有关使用 Shell 的动作，请参阅下面的 [`spawn-sh`](#spawn-sh)。
 
 ```kdl
 binds {
-    // Correct: every argument is in its own quotes.
+    // 正确：每个参数都用独立的引号括起来。
     Mod+T { spawn "alacritty" "-e" "/usr/bin/fish"; }
 
-    // Wrong: will interpret the whole `alacritty -e /usr/bin/fish` string as the binary path.
+    // 错误：这会将整个 `alacritty -e /usr/bin/fish` 字符串解释为二进制文件路径。
     Mod+D { spawn "alacritty -e /usr/bin/fish"; }
 
-    // Wrong: will pass `-e /usr/bin/fish` as one argument, which alacritty won't understand.
+    // 错误：这会将 `-e /usr/bin/fish` 作为单个参数传递，alacritty 将无法理解。
     Mod+Q { spawn "alacritty" "-e /usr/bin/fish"; }
 }
 ```
 
-This also means that you cannot expand environment variables or `~`.
-If you need this, you can run the command through a shell manually.
+这也意味着您无法展开环境变量或 `~`。
+如果需要这类功能，您可以手动通过运行 Shell 来执行命令。
 
 ```kdl
 binds {
-    // Wrong: no shell expansion here. These strings will be passed literally to the program.
+    // 错误：此处没有 shell 展开。这些字符串将按原样传递给程序。
     Mod+T { spawn "grim" "-o" "$MAIN_OUTPUT" "~/screenshot.png"; }
 
-    // Correct: run this through a shell manually so that it can expand the arguments.
-    // Note that the entire command is passed as a SINGLE argument,
-    // because shell will do its own argument splitting by whitespace.
+    // 正确：手动通过 shell 运行此命令，以便它可以展开参数。
+    // 请注意，整个命令是作为 单个 参数传递的，
+    // 因为 shell 将根据自己的规则按空格分隔参数。
     Mod+D { spawn "sh" "-c" "grim -o $MAIN_OUTPUT ~/screenshot.png"; }
 
-    // You can also use a shell to run multiple commands,
-    // use pipes, process substitution, and so on.
+    // 您还可以使用 shell 运行多个命令，
+    // 使用管道、进程替换等。
     Mod+Q { spawn "sh" "-c" "notify-send clipboard \"$(wl-paste)\""; }
 }
 ```
 
-As a special case, niri will expand `~` to the home directory *only* at the beginning of the program name.
+作为一种特殊情况，niri 只会在程序名称的开头将 `~` 扩展到主目录。
 
 ```kdl
 binds {
-    // This will work: one ~ at the very beginning.
+    // 这将工作：一个 ~ 在最开头。
     Mod+T { spawn "~/scripts/do-something.sh"; }
 }
 ```
@@ -254,36 +254,36 @@ binds {
 
 <sup>Since: 25.08</sup>
 
-Run a command through the shell.
+通过 shell 运行命令。
 
-The argument is a single string that is passed verbatim to `sh`.
-You can use shell variables, pipelines, `~` expansion, and everything else as expected.
+其参数是一个直接传递给 `sh` 的字符串。
+您可以使用 shell 变量、管道、`~` 展开以及所有其他期望的所有功能。
 
 ```kdl
 binds {
-    // Works with spawn-sh: all arguments in the same string.
+    // 适用于 spawn-sh：所有参数在同一字符串中。
     Mod+D { spawn-sh "alacritty -e /usr/bin/fish"; }
 
-    // Works with spawn-sh: shell variable ($MAIN_OUTPUT), ~ expansion.
+    // 适用于 spawn-sh：shell 变量（$MAIN_OUTPUT）、~ 展开。
     Mod+T { spawn-sh "grim -o $MAIN_OUTPUT ~/screenshot.png"; }
 
-    // Works with spawn-sh: process substitution.
+    // 适用于 spawn-sh：进程替换。
     Mod+Q { spawn-sh "notify-send clipboard \"$(wl-paste)\""; }
 
-    // Works with spawn-sh: multiple commands.
+    // 适用于 spawn-sh：多个命令。
     Super+Alt+S { spawn-sh "pkill orca || exec orca"; }
 }
 ```
 
-`spawn-sh "some command"` is equivalent to `spawn "sh" "-c" "some command"`—it's just a less confusing shorthand.
-Keep in mind that going through the shell incurs a tiny performance penalty compared to directly `spawn`ing some binary.
+`spawn-sh "some command"` 等同于 `spawn "sh" "-c" "some command"` ——这只是一个更不易令人混淆的简写。
+请注意，与直接 `spawn` 某个二进制文件相比，通过 shell 启动则会产生微小的性能开销。
 
-Using `sh` is hardcoded, consistent with other compositors.
-If you want a different shell, write it out using `spawn`, e.g. `spawn "fish" "-c" "some fish command"`.
+使用 `sh` 是硬编码的，这与其他合成器一致。
+如果您想要不同的 shell，请使用 `spawn` 写出来，例如 `spawn "fish" "-c" "某个 fish 命令"`。
 
 #### `quit`
 
-Exit niri after showing a confirmation dialog to avoid accidentally triggering it.
+退出 niri，但会先显示确认对话框以避免意外触发。
 
 ```kdl
 binds {
@@ -291,7 +291,7 @@ binds {
 }
 ```
 
-If you want to skip the confirmation dialog, set the flag like so:
+如果您想跳过确认对话框，请按如下方式设置参数：
 
 ```kdl
 binds {
@@ -303,7 +303,7 @@ binds {
 
 <sup>Since: 0.1.6</sup>
 
-Freeze the screen for a brief moment then crossfade to the new contents.
+短暂冻结屏幕，然后淡入到新内容。
 
 ```kdl
 binds {
@@ -311,18 +311,18 @@ binds {
 }
 ```
 
-This action is mainly useful to trigger from scripts changing the system theme or style (between light and dark for example).
-It makes transitions like this, where windows change their style one by one, look smooth and synchronized.
+此动作主要用于从更改系统主题或样式（例如在深色和浅色之间切换）的脚本中触发。
+它使诸如窗口逐个更改样式之类的过渡看起来平滑且同步。
 
-For example, using the GNOME color scheme setting:
+例如，使用 GNOME 颜色方案设置：
 
 ```shell
 niri msg action do-screen-transition
 dconf write /org/gnome/desktop/interface/color-scheme "\"prefer-dark\""
 ```
 
-By default, the screen is frozen for 250 ms to give windows time to redraw, before the crossfade.
-You can set this delay like this:
+默认情况下，屏幕会冻结 250 毫秒以给窗口时间重绘，然后进行淡入淡出。
+您可以像这样设置此延迟：
 
 ```kdl
 binds {
@@ -330,7 +330,7 @@ binds {
 }
 ```
 
-Or, in scripts:
+或者，在脚本中：
 
 ```shell
 niri msg action do-screen-transition --delay-ms 100
@@ -340,8 +340,8 @@ niri msg action do-screen-transition --delay-ms 100
 
 <sup>Since: 25.02</sup>
 
-Toggle the opacity window rule of the focused window.
-This only has an effect if the window's opacity window rule is already set to semitransparent.
+切换聚焦窗口的不透明度窗口规则。
+只有当窗口的不透明度规则已设置为半透明时，此操作才有效。
 
 ```kdl
 binds {
@@ -351,14 +351,14 @@ binds {
 
 #### `screenshot`, `screenshot-screen`, `screenshot-window`
 
-Actions for taking screenshots.
+用于截取屏幕截图的动作。
 
-- `screenshot`: opens the built-in interactive screenshot UI.
-- `screenshot-screen`, `screenshow-window`: takes a screenshot of the focused screen or window respectively.
+- `screenshot`：打开内置的交互式截图界面。
+- `screenshot-screen`, `screenshow-window`：分别对聚焦的屏幕或窗口进行截图。
 
-The screenshot is both stored to the clipboard and saved to disk, according to the [`screenshot-path` option](./Configuration:-Miscellaneous.md#screenshot-path).
+截图会根据 [`screenshot-path` 选项](./Configuration:-Miscellaneous.md#screenshot-path)同时存储到剪贴板和保存到磁盘。
 
-<sup>Since: 25.02</sup> You can disable saving to disk for a specific bind with the `write-to-disk=false` property:
+<sup>Since: 25.02</sup> 您可以使用 `write-to-disk=false` 属性为特定绑定禁用保存到磁盘：
 
 ```kdl
 binds {
@@ -367,17 +367,17 @@ binds {
 }
 ```
 
-In the interactive screenshot UI, pressing <kbd>Ctrl</kbd><kbd>C</kbd> will copy the screenshot to the clipboard without writing it to disk.
+在交互式截图界面中，按下 <kbd>Ctrl</kbd><kbd>C</kbd> 可以将截图复制到剪贴板，而不写入磁盘。
 
-<sup>Since: 25.05</sup> You can hide the mouse pointer in screenshots with the `show-pointer=false` property:
+<sup>Since: 25.05</sup> 您可以使用 `show-pointer=false` 属性在截图中隐藏鼠标指针：
 
 ```kdl
 binds {
-    // The pointer will be hidden by default
-    // (you can still show it by pressing P).
+    // 指针将默认隐藏
+    //（您仍然可以按 P 显示它）。
     Print { screenshot show-pointer=false; }
 
-    // The pointer will be hidden on the screenshot.
+    // 指针将在截图中隐藏。
     Ctrl+Print { screenshot-screen show-pointer=false; }
 }
 ```
@@ -386,9 +386,9 @@ binds {
 
 <sup>Since: 25.02</sup>
 
-Applications such as remote-desktop clients and software KVM switches may request that niri stops processing its keyboard shortcuts so that they may, for example, forward the key presses as-is to a remote machine.
-`toggle-keyboard-shortcuts-inhibit` is an escape hatch that toggles the inhibitor.
-It's a good idea to bind it, so a buggy application can't hold your session hostage.
+一些应用程序，如远程桌面客户端和软件 KVM 切换器，可能会请求 niri 停止处理自身的键盘快捷键，以便它们能够（比如说）将按键按原样转发到远程机器。
+`toggle-keyboard-shortcuts-inhibit` 是一个切换抑制器的逃生舱口。
+最好为其绑定一个快捷键，这样有问题的应用程序就无法劫持您的会话。
 
 ```kdl
 binds {
@@ -396,12 +396,12 @@ binds {
 }
 ```
 
-You can also make certain binds ignore inhibiting with the `allow-inhibiting=false` property.
-They will always be handled by niri and never passed to the window.
+您还可以使用 `allow-inhibiting=false` 属性使某些绑定忽略抑制。
+它们将始终由 niri 处理，永远不会传递给窗口。
 
 ```kdl
 binds {
-    // This bind will always work, even when using a virtual machine.
+    // 此绑定将始终有效，即使在使用虚拟机时也是如此。
     Super+Alt+L allow-inhibiting=false { spawn "swaylock"; }
 }
 ```
