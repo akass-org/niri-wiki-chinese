@@ -1,10 +1,10 @@
-### Overview
+### 概述
 
 <sup>Since: 0.1.10</sup>
 
-Switch event bindings are declared in the `switch-events {}` section of the config.
+开关事件绑定在配置文件的 `switch-events {}` 部分中声明。
 
-Here are all the events that you can bind at a glance:
+以下是您可以绑定的所有事件一览：
 
 ```kdl
 switch-events {
@@ -15,17 +15,17 @@ switch-events {
 }
 ```
 
-The syntax is similar to key bindings.
-Currently, only the [`spawn` action](./Configuration:-Key-Bindings.md#spawn) are supported.
+其语法与按键绑定类似。
+目前，仅支持 [`spawn` 动作](./Configuration:-Key-Bindings.md#spawn)。
 
 > [!NOTE]
-> In contrast to key bindings, switch event bindings are *always* executed, even when the session is locked.
+> 与按键绑定不同，开关事件绑定*始终*会被执行，即使会话被锁定也不例外。
 
 ### `lid-close`, `lid-open`
 
-These events correspond to closing and opening of the laptop lid.
+这些事件对应于笔记本电脑盖的关闭和打开。
 
-Note that niri will already automatically turn the internal laptop monitor on and off in accordance with the laptop lid.
+请注意，niri 已经会根据笔记本电脑盖的状态自动开启或关闭笔记本电脑内置的显示器。
 
 ```kdl
 switch-events {
@@ -36,8 +36,8 @@ switch-events {
 
 ### `tablet-mode-on`, `tablet-mode-off`
 
-These events trigger when a convertible laptop goes into or out of tablet mode.
-In tablet mode, the keyboard and mouse are usually inaccessible, so you can use these events to activate the on-screen keyboard.
+当可转换形态的笔记本电脑进入或退出平板模式时，会触发这些事件。
+在平板模式下，键盘和鼠标通常无法使用，因此您可以使用这些事件来激活屏幕键盘。
 
 ```kdl
 switch-events {
