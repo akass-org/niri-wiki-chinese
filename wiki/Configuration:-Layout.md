@@ -1,8 +1,8 @@
-### Overview
+### 概述
 
-In the `layout {}` section you can change various settings that influence how windows are positioned and sized.
+在 `layout {}` 部分，您可以更改各种影响窗口定位和尺寸的设置。
 
-Here are the contents of this section at a glance:
+以下是此部分的概览：
 
 ```kdl
 layout {
@@ -97,17 +97,17 @@ layout {
 }
 ```
 
-<sup>Since: next release</sup> You can override these settings for specific [outputs](./Configuration:-Outputs.md#layout-config-overrides) and [named workspaces](./Configuration:-Named-Workspaces.md#layout-config-overrides).
+<sup>Since: next release</sup> 您可以为特定的[输出](./Configuration:-Outputs.md#layout-config-overrides)和[命名工作区](./Configuration:-Named-Workspaces.md#layout-config-overrides)覆写这些设置。
 
 ### `gaps`
 
-Set gaps around (inside and outside) windows in logical pixels.
+设置窗口周围（内部和外部）的间隙，以逻辑像素为单位。
 
-<sup>Since: 0.1.7</sup> You can use fractional values.
-The value will be rounded to physical pixels according to the scale factor of every output.
-For example, `gaps 0.5` on an output with `scale 2` will result in one physical-pixel wide gaps.
+<sup>Since: 0.1.7</sup> 您可以使用小数值。
+改值将会按照每个输出的缩放因子被四舍五入换算为物理像素值。
+例如，在 `scale 2` 的输出上使用 `gaps 0.5` 将产生 1 物理像素宽的间隙。
 
-<sup>Since: 0.1.8</sup> You can emulate "inner" vs. "outer" gaps with negative `struts` values (see the struts section below).
+<sup>Since: 0.1.8</sup> 您可以使用负的 `struts` 值来模拟"内部"与"外部"间隙（参见下面的 struts 部分）。
 
 ```kdl
 layout {
@@ -117,12 +117,12 @@ layout {
 
 ### `center-focused-column`
 
-When to center a column when changing focus.
-This can be set to:
+在切换焦点时，何时将列居中。
+可以设置为：
 
-- `"never"`: no special centering, focusing an off-screen column will scroll it to the left or right edge of the screen. This is the default.
-- `"always"`, the focused column will always be centered.
-- `"on-overflow"`, focusing a column will center it if it doesn't fit on screen together with the previously focused column.
+- `"never"`：没有特殊居中，聚焦屏幕外的列将使其滚动到屏幕的左边缘或右边缘。这是默认值。
+- `"always"`：聚焦的列将始终居中。
+- `"on-overflow"`：如果聚焦的列与先前聚焦的列一起无法在屏幕上完全显示，则使其居中。
 
 ```kdl
 layout {
@@ -134,7 +134,7 @@ layout {
 
 <sup>Since: 0.1.9</sup>
 
-If set, niri will always center a single column on a workspace, regardless of the `center-focused-column` option.
+如果设置了该项，niri 将始终使工作区上的单列居中，无论 `center-focused-column` 选项如何设置。
 
 ```kdl
 layout {
@@ -146,7 +146,7 @@ layout {
 
 <sup>Since: 25.01</sup>
 
-If set, niri will always add an empty workspace at the very start, in addition to the empty workspace at the very end.
+如果设置，niri 将始终在最开头添加一个空工作区，此外还在最末尾也保留一个空工作区。
 
 ```kdl
 layout {
@@ -158,16 +158,16 @@ layout {
 
 <sup>Since: 25.02</sup>
 
-Sets the default display mode for new columns.
-Can be `normal` or `tabbed`.
+设置新列的默认显示模式。
+可以是 `normal` 或 `tabbed`。
 
 ```kdl
-// Make all new columns tabbed by default.
+// 使所有新列默认为标签式。
 layout {
     default-column-display "tabbed"
 
-    // You may also want to hide the tab indicator
-    // when there's only a single window in a column.
+    // 您可能还希望在只有一个窗口的列中
+    // 隐藏标签指示器。
     tab-indicator {
         hide-when-single-tab
     }
@@ -176,17 +176,17 @@ layout {
 
 ### `preset-column-widths`
 
-Set the widths that the `switch-preset-column-width` action (Mod+R) toggles between.
+设置 `switch-preset-column-width` 动作（Mod+R）所切换的宽度。
 
-`proportion` sets the width as a fraction of the output width, taking gaps into account.
-For example, you can perfectly fit four windows sized `proportion 0.25` on an output, regardless of the gaps setting.
-The default preset widths are <sup>1</sup>&frasl;<sub>3</sub>, <sup>1</sup>&frasl;<sub>2</sub> and <sup>2</sup>&frasl;<sub>3</sub> of the output.
+`proportion` 将宽度设置为输出宽度的比例，并扣除了间隙。
+例如，无论间隙设置多大，您都可以在一个输出上完美放置四个 `proportion 0.25` 宽度的窗口。
+默认预设宽度是输出的 <sup>1</sup>&frasl;<sub>3</sub>, <sup>1</sup>&frasl;<sub>2</sub> 和 <sup>2</sup>&frasl;<sub>3</sub>。
 
-`fixed` sets the window width in logical pixels exactly.
+`fixed` 将窗口宽度精确设置为指定的逻辑像素数。
 
 ```kdl
 layout {
-    // Cycle between 1/3, 1/2, 2/3 of the output, and a fixed 1280 logical pixels.
+    // 在输出宽度的 1/3、1/2、2/3 以及固定的 1280 逻辑像素之间循环。
     preset-column-widths {
         proportion 0.33333
         proportion 0.5
@@ -198,46 +198,46 @@ layout {
 
 ### `default-column-width`
 
-Set the default width of the new windows.
+设置新窗口的默认宽度。
 
-The syntax is the same as in `preset-column-widths` above.
+语法与上面的 `preset-column-widths` 相同。
 
 ```kdl
 layout {
-    // Open new windows sized 1/3 of the output.
+    // 打开的新窗口的大小为输出的 1/3 。
     default-column-width { proportion 0.33333; }
 }
 ```
 
-You can also leave the brackets empty, then the windows themselves will decide their initial width.
+您也可以让括号留空，这样窗口将自行决定其初始宽度。
 
 ```kdl
 layout {
-    // New windows decide their initial width themselves.
+    // 新窗口自行决定其初始宽度。
     default-column-width {}
 }
 ```
 
 > [!NOTE]
-> `default-column-width {}` causes niri to send a (0, H) size in the initial configure request.
+> `default-column-width {}` 会导致 niri 在初始配置请求中发送 (0, H) 的尺寸。
 >
-> This is a bit [unclearly defined](https://gitlab.freedesktop.org/wayland/wayland-protocols/-/issues/155) in the Wayland protocol, so some clients may misinterpret it.
-> Either way, `default-column-width {}` is most useful for specific windows, in form of a [window rule](./Configuration:-Window-Rules.md#default-column-width) with the same syntax.
+> Wayland 协议里对此的[定义略显含糊](https://gitlab.freedesktop.org/wayland/wayland-protocols/-/issues/155)，因此某些客户端可能会误解。
+> 无论如何 ，`default-column-width {}` 最实用的场景还是针对特定窗口，以[窗口规则](./Configuration:-Window-Rules.md#default-column-width)的形式书写，语法完全一样。
 
 ### `preset-window-heights`
 
 <sup>Since: 0.1.9</sup>
 
-Set the heights that the `switch-preset-window-height` action (Mod+Shift+R) toggles between.
+设置 `switch-preset-window-height` 操作（Mod+Shift+R）所切换的高度。
 
-`proportion` sets the height as a fraction of the output height, taking gaps into account.
-The default preset heights are <sup>1</sup>&frasl;<sub>3</sub>, <sup>1</sup>&frasl;<sub>2</sub> and <sup>2</sup>&frasl;<sub>3</sub> of the output.
+`proportion` 将高度设置为输出高度的比例，扣除了间隙。
+默认预设高度是输出的 <sup>1</sup>&frasl;<sub>3</sub>, <sup>1</sup>&frasl;<sub>2</sub> 和 <sup>2</sup>&frasl;<sub>3</sub>。
 
-`fixed` sets the height in logical pixels exactly.
+`fixed` 将高度精确设置为指定的逻辑像素数。
 
 ```kdl
 layout {
-    // Cycle between 1/3, 1/2, 2/3 of the output, and a fixed 720 logical pixels.
+    // 在输出高度的 1/3、1/2、2/3 以及固定的 720 逻辑像素之间循环。
     preset-window-heights {
         proportion 0.33333
         proportion 0.5
@@ -247,43 +247,43 @@ layout {
 }
 ```
 
-### `focus-ring` and `border`
+### `focus-ring` 和 `border` {#focus-ring-and-border}
 
-Focus ring and border are drawn around windows and indicate the active window.
-They are very similar and have the same options.
+焦点环和边框绘制在窗口周围，指示当前的活动窗口。
+它们非常相似，并具有相同的配置选项。
 
-The difference is that the focus ring is drawn only around the active window, whereas borders are drawn around all windows and affect their sizes (windows shrink to make space for the borders).
+不同之处在于，焦点环仅绘制在活动窗口周围，而边框绘制在所有窗口周围，并会影响它们的大小（窗口会缩小以便为边框腾出空间）。
 
-| Focus Ring                | Border                |
-| ------------------------- | --------------------- |
-| ![Screenshot showing a focused image in the center row using focus ring](./img/focus-ring.png) | ![Screenshot showing a focused image in the center row using border, while top and bottom windows have the inactive color](./img/border.png) |
+| 焦点环                         | 边框                             |
+| ------------------------------ | -------------------------------- |
+| ![使用焦点环的中心行聚焦图像截图](./img/focus-ring.png) | ![使用边框的中心行聚焦图像截图，同时顶部和底部的窗口具有非活动颜色](./img/border.png) |
 
 > [!TIP]
-> By default, focus ring and border are rendered as a solid background rectangle behind windows.
-> That is, they will show up through semitransparent windows.
-> This is because windows using client-side decorations can have an arbitrary shape.
+> 默认情况下，焦点环和边框作为实心背景矩形在窗口后面渲染。
+> 也就是说，它们会透过半透明窗口显示出来。
+> 这是因为使用客户端装饰的窗口可以具有任意形状。
 >
-> If you don't like that, you should uncomment the [`prefer-no-csd` setting](./Configuration:-Miscellaneous.md#prefer-no-csd) at the top level of the config.
-> Niri will draw focus rings and borders *around* windows that agree to omit their client-side decorations.
+> 如果您不喜欢这样，您应该取消注释配置顶层的 [`prefer-no-csd` 设置](./Configuration:-Miscellaneous.md#prefer-no-csd)。
+> Niri 将在同意省略客户端装饰的窗口周围绘制焦点环和边框。
 >
-> Alternatively, you can override this behavior with the [`draw-border-with-background` window rule](./Configuration:-Window-Rules.md#draw-border-with-background).
+> 或者，您可以使用 [`draw-border-with-background` 窗口规则](./Configuration:-Window-Rules.md#draw-border-with-background) 覆写此行为。
 
-Focus ring and border have the following options.
+焦点环和边框具有以下选项。
 
 ```kdl
 layout {
-    // focus-ring has the same options.
+    // foces-ring 具有相同的选项。
     border {
-        // Uncomment this line to disable the border.
+        // 取消注释此行以禁用边框。
         // off
 
-        // Width of the border in logical pixels.
+        // 边框宽度，单位为逻辑像素。
         width 4
 
         active-color "#ffc87f"
         inactive-color "#505050"
 
-        // Color of the border around windows that request your attention.
+        // 请求您注意的窗口周围的边框颜色。
         urgent-color "#9b0000"
 
         // active-gradient from="#ffbb66" to="#ffc880" angle=45 relative-to="workspace-view"
@@ -292,13 +292,13 @@ layout {
 }
 ```
 
-#### Width
+#### 宽度
 
-Set the thickness of the border in logical pixels.
+设置边框的粗细，单位为逻辑像素。
 
-<sup>Since: 0.1.7</sup> You can use fractional values.
-The value will be rounded to physical pixels according to the scale factor of every output.
-For example, `width 0.5` on an output with `scale 2` will result in one physical-pixel thick borders.
+<sup>Since: 0.1.7</sup> 您可以使用小数值。
+该值将根据每个输出的缩放比例四舍五入到物理像素。
+例如，在 `scale 2` 的输出上使用 `width 0.5` 将得到一物理像素厚的边框。
 
 ```kdl
 layout {
@@ -308,28 +308,28 @@ layout {
 }
 ```
 
-#### Colors
+#### 颜色
 
-Colors can be set in a variety of ways:
+颜色可以通过多种方式设置：
 
-- CSS named colors: `"red"`
-- RGB hex: `"#rgb"`, `"#rgba"`, `"#rrggbb"`, `"#rrggbbaa"`
-- CSS-like notation: `"rgb(255, 127, 0)"`, `"rgba()"`, `"hsl()"` and a few others.
+- CSS 命名颜色：`"red"`
+- RGB 十六进制：`"#rgb"`, `"#rgba"`, `"#rrggbb"`
+- CSS 风格表示法：`"rgb(255, 127, 0)"`, `"rgba()"`, `"hsl()"` 等等。
 
-`active-color` is the color of the focus ring / border around the active window, and `inactive-color` is the color of the focus ring / border around all other windows.
+`active-color` 是活动窗口周围焦点环/边框的颜色，`inactive-color` 是所有其他窗口周围焦点环/边框的颜色。
 
-The *focus ring* is only drawn around the active window on each monitor, so with a single monitor you will never see its `inactive-color`.
-You will see it if you have multiple monitors, though.
+*焦点环*仅绘制在每个显示器的活动窗口周围，因此在单个显示器上您永远不会看到其 `inactive-color`。
+但是，如果您有多个显示器，则会看到它。
 
-There's also a *deprecated* syntax for setting colors with four numbers representing R, G, B and A: `active-color 127 200 255 255`.
+还有一种*已弃用*的语法，用四个数字分别代表 R、G、B 和 A 来表示颜色：`active-color 127 200 255 255`。
 
-#### Gradients
+#### 渐变
 
-Similarly to colors, you can set `active-gradient` and `inactive-gradient`, which will take precedence.
+与颜色类似，您可以设置 `active-gradient` 和 `inactive-gradient`，它们会优先生效。
 
-Gradients are rendered the same as CSS [`linear-gradient(angle, from, to)`](https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient).
-The angle works the same as in `linear-gradient`, and is optional, defaulting to `180` (top-to-bottom gradient).
-You can use any CSS linear-gradient tool on the web to set these up, like [css-gradient.com](https://www.css-gradient.com/).
+渐变的渲染方式与 CSS [`linear-gradient(angle, from, to)`](https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient) 完全一致。
+角度的规则与 `linear-gradient` 相同，是可选的，默认为 `180`（自上而下渐变）。
+您可以直接套用任何在线 CSS 渐变生成器的结果来设置，例如 [css-gradient.com](https://www.css-gradient.com/)。
 
 ```kdl
 layout {
@@ -339,13 +339,13 @@ layout {
 }
 ```
 
-Gradients can be colored relative to windows individually (the default), or to the whole view of the workspace.
-To do that, set `relative-to="workspace-view"`.
-Here's a visual example:
+渐变的颜色既可以相对于单个窗口计算（默认行为），也可以相对于整个工作区的可视区域计算。
+如需后者，请设置 `relative-to="workspace-view"`。
+图示如下：
 
-| Default                          | `relative-to="workspace-view"`                      |
+| 默认                             | `relative-to="workspace-view"`                      |
 | -------------------------------- | --------------------------------------------------- |
-| ![Screenshot displaying 4 windows, each with individual gradient borders](./img/gradients-default.png) | ![Screenshot displaying 4 windows, with a shared gradient across their borders](./img/gradients-relative-to-workspace-view.png) |
+| ![默认情况下的截图，显示4个窗口，每个都有独立的渐变边框](./img/gradients-default.png) | ![显示4个窗口的截图，其边框具有跨窗口的共享渐变效果](./img/gradients-relative-to-workspace-view.png) |
 
 ```kdl
 layout {
@@ -356,18 +356,18 @@ layout {
 }
 ```
 
-<sup>Since: 0.1.8</sup> You can set the gradient interpolation color space using syntax like `in="srgb-linear"` or `in="oklch longer hue"`.
-Supported color spaces are:
+<sup>Since: 0.1.8</sup> 您可以使用如 `in="srgb-linear"` 或 `in="oklch longer hue"` 这样的语法来设置渐变插值颜色空间。
+支持的颜色空间有：
 
-- `srgb` (the default),
-- `srgb-linear`,
-- `oklab`,
-- `oklch` with `shorter hue` or `longer hue` or `increasing hue` or `decreasing hue`.
+- `srgb`（默认），
+- `srgb-linear`，
+- `oklab`，
+- `oklch` 与 `longer hue` 或 `shorter hue`、`increasing hue`、`decreasing hue`。
 
-They are rendered the same as CSS.
-For example, `active-gradient from="#f00f" to="#0f05" angle=45 in="oklch longer hue"` will look the same as CSS `linear-gradient(45deg in oklch longer hue, #f00f, #0f05)`.
+它们的渲染效果与 CSS 完全一致。
+例如，`active-gradient from="#f00f" to="#0f05" angle=45 in="oklch longer hue"` 看起来就和这段 CSS `linear-gradient(45deg in oklch longer hue, #f00f, #0f05)` 相同。
 
-![Screenshot showing a window with a border using a gradient in the oklch color space](./img/gradients-oklch.png)
+![使用 oklch 颜色空间的渐变边框窗口截图](./img/gradients-oklch.png)
 
 ```kdl
 layout {
@@ -381,47 +381,47 @@ layout {
 
 <sup>Since: 25.02</sup>
 
-Shadow rendered behind a window.
+在窗口后面渲染的阴影。
 
-Set `on` to enable the shadow.
+设置 `on` 以启用阴影。
 
-`softness` controls the shadow softness/size in logical pixels, same as [CSS box-shadow] *blur radius*.
-Setting `softness 0` will give you hard shadows.
+`softness` 控制阴影的柔和度/大小，单位为逻辑像素，与 [CSS 盒阴影] 的*模糊半径*相同。
+设置 `softness 0` 将给产生硬阴影。
 
-`spread` is the distance to expand the window rectangle in logical pixels, same as CSS box-shadow spread.
-<sup>Since: 25.05</sup> Spread can be negative.
+`spread` 是窗口矩形向外扩展的距离，单位为逻辑像素，与 CSS 盒阴影扩展相同。
+<sup>Since: 25.05</sup> 扩展可以设为负值。
 
-`offset` moves the shadow relative to the window in logical pixels, same as CSS box-shadow offset.
-For example, `offset x=2 y=2` will move the shadow 2 logical pixels downwards and to the right.
+`offset` 相对于窗口移动阴影，单位为逻辑像素，与 CSS 盒阴影偏移相同。
+例如，`offset x=2 y=2` 会将阴影分别向下和向右移动 2 个逻辑像素。
 
-Set `draw-behind-window` to `true` to make shadows draw behind the window rather than just around it.
-Note that niri has no way of knowing about the CSD window corner radius.
-It has to assume that windows have square corners, leading to shadow artifacts inside the CSD rounded corners.
-This setting fixes those artifacts.
+将 `draw-behind-window` 设置为 `true` 可使阴影绘制在窗口后面，而不仅仅是窗口周围。
+请注意，niri 无法得知 CSD 窗口的圆角半径。
+它必须假设窗口具有直角，这会导致 CSD 圆角内部出现阴影伪影。
+此设置可修复这些伪影。
 
-However, instead you may want to set `prefer-no-csd` and/or `geometry-corner-radius`.
-Then, niri will know the corner radius and draw the shadow correctly, without having to draw it behind the window.
-These will also remove client-side shadows if the window draws any.
+但是，更推荐的做法是设置 `prefer-no-csd` 和/或 `geometry-corner-radius`。
+这样，niri 就能知道窗口的圆角半径，无需再把阴影绘制在窗口背后，也能正确渲染圆角阴影。
+同时，如果窗口自己带了客户端阴影，这两个选项还会把那些阴影一并去掉。
 
-`color` is the shadow color and opacity.
+`color` 是阴影的颜色和不透明度。
 
-`inactive-color` lets you override the shadow color for inactive windows; by default, a more transparent `color` is used.
+`inactive-color` 允许您覆写非活动窗口的阴影颜色；默认情况下，会使用更透明的 `color`。
 
-Shadow drawing will follow the window corner radius set with the [`geometry-corner-radius` window rule](./Configuration:-Window-Rules.md#geometry-corner-radius).
+阴影绘制将遵循 [`geometry-corner-radius` 窗口规则](./Configuration:-Window-Rules.md#geometry-corner-radius) 设置的窗口圆角半径。
 
 > [!NOTE]
-> Currently, shadow drawing only supports matching radius for all corners. If you set `geometry-corner-radius` to four values instead of one, the first (top-left) corner radius will be used for shadows.
+> 目前阴影绘制仅支持四个角统一半径。如果您将 `geometry-corner-radius` 设置为四个值而不是一个，阴影会直接取用第一个值（左上角）角的半径作为统一半径。
 
 ```kdl
-// Enable shadows.
+// 启用阴影。
 layout {
     shadow {
         on
     }
 }
 
-// Also ask windows to omit client-side decorations, so that
-// they don't draw their own window shadows.
+// 同时要求窗口省略客户端装饰，这样
+// 它们就不会绘制自己的窗口阴影。
 prefer-no-csd
 ```
 
@@ -431,43 +431,43 @@ prefer-no-csd
 
 <sup>Since: 25.02</sup>
 
-Controls the appearance of the tab indicator that appears next to columns in tabbed display mode.
+控制标签指示器的外观，该指示器出现在以标签形式显示的列旁边。
 
-Set `off` to hide the tab indicator.
+设置为 `off` 以隐藏标签指示器。
 
-Set `hide-when-single-tab` to hide the indicator for tabbed columns that only have a single window.
+设置 `hide-when-single-tab` 以隐藏仅有一个窗口的标签页列的指示器。
 
-Set `place-within-column` to put the tab indicator "within" the column, rather than outside.
-This will include it in column sizing and avoid overlaying adjacent columns.
+设置 `place-within-column` 将标签指示器放在列“内部”，而不是外部。
+这将使其包含在列尺寸的计算中，并避免与相邻列重叠。
 
-`gap` sets the gap between the tab indicator and the window in logical pixels.
-The gap can be negative, this will put the tab indicator on top of the window.
+`gap` 设置标签指示器与窗口之间的间隙，单位为逻辑像素。
+间隙可以为负，这会将标签指示器置于窗口上方。
 
-`width` sets the thickness of the indicator in logical pixels.
+`width` 设置指示器的粗细，单位为逻辑像素。
 
-`length` controls the length of the indicator.
-Set the `total-proportion` property to make tabs take up this much length relative to the window size.
-By default, the tab indicator has length equal to half of the window size, or `length total-proportion=0.5`.
+`length` 控制指示器的长度。
+将 `total-proportion` 属性设置成多少，指示器就占窗口长度的多大比例。
+默认情况下，标签指示器的长度是窗口大小的一半，即 `length total-proportion=0.5`。
 
-`position` sets the position of the tab indicator relative to the window.
-It can be `left`, `right`, `top`, or `bottom`.
+`position` 设置标签指示器相对于窗口的位置。
+可以是 `left`、`right`、`top` 或 `bottom`。
 
-`gaps-between-tabs` controls the gap between individual tabs in logical pixels.
+`gaps-between-tabs` 控制各个标签之间的间隙，单位为逻辑像素。
 
-`corner-radius` sets the rounded corner radius for tabs in the indicator in logical pixels.
-When `gaps-between-tabs` is zero, only the first and the last tabs have rounded corners, otherwise all tabs do.
+`corner-radius` 设置指示器中标签的圆角半径，单位为逻辑像素。
+当 `gaps-between-tabs` 为零时，只有第一个和最后一个标签有圆角，否则所有标签都有圆角。
 
-`active-color`, `inactive-color`, `urgent-color`, `active-gradient`, `inactive-gradient`, `urgent-gradient` let you override the colors for the tabs.
-They have the same semantics as the border and focus ring colors and gradients.
+`active-color`、`inactive-color`、`urgent-color`、`active-gradient`、`inactive-gradient`、`urgent-gradient` 允许您覆写标签的颜色。
+它们具有与边框和焦点环颜色、渐变相同的语义。
 
-Tab colors are picked in this order:
-1. Colors from the `tab-indicator` window rule, if set.
-1. Colors from the `tab-indicator` layout options, if set (you're here).
-1. If neither are set, niri picks the color matching the window border or focus ring, whichever one is active.
+标签颜色按以下顺序选取：
+1. 若通过 `tab-indicator` 窗口规则设置了颜色，则采用该设置。
+2. 若未设置窗口规则，则使用此处 `tab-indicator` 布局选项中的颜色（您正在看的这部分）。
+3. 若两者都未设置，niri 会退而采用当前窗口的边框或焦点环颜色，以正在生效的那一项为准。
 
 ```kdl
-// Make the tab indicator wider and match the window height,
-// also put it at the top and within the column.
+// 使标签指示器更宽，与列高匹配，
+// 同时将其放在顶部和列内部。
 layout {
     tab-indicator {
         width 8
@@ -481,13 +481,13 @@ layout {
 
 ### `insert-hint`
 
-<sup>Since: 0.1.10</sup> 
+<sup>Since: 0.1.10</sup>
 
-Settings for the window insert position hint during an interactive window move.
+交互式移动窗口期间窗口插入位置提示的设置。
 
-`off` disables the insert hint altogether.
+`off` 完全禁用插入提示。
 
-`color` and `gradient` let you change the color of the hint and have the same syntax as colors and gradients in border and focus ring.
+`color` 和 `gradient` 允许您更改提示的颜色，并且具有与边框和焦点环中的颜色和渐变相同的语法。
 
 ```kdl
 layout {
@@ -501,16 +501,16 @@ layout {
 
 ### `struts`
 
-Struts shrink the area occupied by windows, similarly to layer-shell panels.
-You can think of them as a kind of outer gaps.
-They are set in logical pixels.
+Struts 会缩小窗口所占用的区域，类似于 layer-shell 面板。
+您可以将其视为一种外部间隙。
+它们以逻辑像素为单位设置。
 
-Left and right struts will cause the next window to the side to always peek out slightly.
-Top and bottom struts will simply add outer gaps in addition to the area occupied by layer-shell panels and regular gaps.
+左右 struts 会让侧面的下一个窗口永远露出来一点点。
+上下 struts 只是简单地在 layer-shell 面板和常规间隙之外再额外加一道外间隙。
 
-<sup>Since: 0.1.7</sup> You can use fractional values.
-The value will be rounded to physical pixels according to the scale factor of every output.
-For example, `top 0.5` on an output with `scale 2` will result in one physical-pixel wide top strut.
+<sup>Since: 0.1.7</sup> 您可以使用小数值。
+该值将根据每个输出的缩放因子四舍五入为物理像素。
+例如，在 `scale 2` 的输出上使用 `top 0.5` 将导致 1 物理像素宽的顶部 strut。
 
 ```kdl
 layout {
@@ -523,13 +523,13 @@ layout {
 }
 ```
 
-![A screenshot illustrating the effects of struts, as explained in the second paragraph in this section](./img/struts.png)
+![一张展示 struts 效果的屏幕截图，如本节第二段所述](./img/struts.png)
 
-<sup>Since: 0.1.8</sup> You can use negative values.
-They will push the windows outwards, even outside the edges of the screen.
+<sup>Since: 0.1.8</sup> 您可以使用负值。
+它们会将窗口向外推，甚至推到屏幕边缘之外。
 
-You can use negative struts with matching gaps value to emulate "inner" vs. "outer" gaps.
-For example, use this for inner gaps without outer gaps:
+您可以把 struts 设为负数，在配合对应的 gaps 值，来模拟"内部"与"外部"间隙。
+例如，使用此设置可以实现内部间隙而无外部间隙：：
 
 ```kdl
 layout {
@@ -548,8 +548,8 @@ layout {
 
 <sup>Since: 25.05</sup>
 
-Set the default background color that niri draws for workspaces.
-This is visible when you're not using any background tools like swaybg.
+设置 niri 为工作区绘制的默认背景颜色。
+当您未使用任何背景工具（如 swaybg）时，就能看到这个颜色。
 
 ```kdl
 layout {
@@ -557,4 +557,4 @@ layout {
 }
 ```
 
-You can also set the color per-output [in the output config](./Configuration:-Outputs.md#layout-config-overrides).
+您还可以在每个输出的[输出配置](./Configuration:-Outputs.md#layout-config-overrides)中设置颜色。
