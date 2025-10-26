@@ -1,6 +1,6 @@
-This page documents all top-level options that don't otherwise have dedicated pages.
+本页记录了所有没有单独设页的顶级层级（top-level）配置选项。
 
-Here are all of these options at a glance:
+以下是所有这些选项的概览：
 
 ```kdl
 spawn-at-startup "waybar"
@@ -58,51 +58,51 @@ config-notification {
 
 ### `spawn-at-startup`
 
-Add lines like this to spawn processes at niri startup.
+添加类似这样的行，以便在 niri 启动时启动进程。
 
-`spawn-at-startup` accepts a path to the program binary as the first argument, followed by arguments to the program.
+`spawn-at-startup` 接受程序二进制文件的路径作为第一个参数，后跟程序的参数。
 
-This option works the same way as the [`spawn` key binding action](./Configuration:-Key-Bindings.md#spawn), so please read about all its subtleties there.
+此选项的工作方式与 [`spawn` 键绑定动作](./Configuration:-Key-Bindings.md#spawn)相同，因此请阅读该处以了解其所有细节。
 
 ```kdl
 spawn-at-startup "waybar"
 spawn-at-startup "alacritty"
 ```
 
-Note that running niri as a systemd session supports xdg-desktop-autostart out of the box, which may be more convenient to use.
-Thanks to this, apps that you configured to autostart in GNOME will also "just work" in niri, without any manual `spawn-at-startup` configuration.
+请注意，将 niri 作为 systemd 会话运行时，默认就支持 xdg-desktop-autostart，这可能更方便使用。
+得益于此，您在 GNOME 中配置为自启动的应用，在 niri 中也将“正常工作”，无需任何手动的 `spawn-at-startup` 配置。
 
 ### `spawn-sh-at-startup`
 
 <sup>Since: 25.08</sup>
 
-Add lines like this to run shell commands at niri startup.
+添加类似这样的行，以便在 niri 启动时运行 shell 命令。
 
-The argument is a single string that is passed verbatim to `sh`.
-You can use shell variables, pipelines, `~` expansion and everything else as expected.
+该参数是一个纯字符串，会原封不动地传递给 `sh`。
+因此，您可以如常使用 shell 变量、管道、`~` 展开以及其他所有功能。
 
-See detailed description in the docs for the [`spawn-sh` key binding action](./Configuration:-Key-Bindings.md#spawn-sh).
+请参阅 [`spawn-sh` 按键绑定动作](./Configuration:-Key-Bindings.md#spawn-sh)文档中的详细描述。
 
 ```kdl
-// Pass all arguments in the same string.
+// 在一个字符串中传递所有参数。
 spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 ```
 
 ### `prefer-no-csd`
 
-This flag will make niri ask the applications to omit their client-side decorations.
+此标志将使 niri 请求应用程序省略其客户端装饰。
 
-If an application will specifically ask for CSD, the request will be honored.
-Additionally, clients will be informed that they are tiled, removing some rounded corners.
+如果应用程序明确请求 CSD，则该请求将被接受。
+此外，客户端将被告知它们处于平铺状态，从而移除一些圆角。
 
-With `prefer-no-csd` set, applications that negotiate server-side decorations through the xdg-decoration protocol will have focus ring and border drawn around them *without* a solid colored background.
+设置 `prefer-no-csd` 后，通过 xdg-decoration 协议使用服务器端装饰的应用，将只绘制焦点环和边框，而*不会*有纯色背景。。
 
 > [!NOTE]
-> Unlike most other options, changing `prefer-no-csd` will not entirely affect already running applications.
-> It will make some windows rectangular, but won't remove the title bars.
-> This mainly has to do with niri working around a [bug in SDL2](https://github.com/libsdl-org/SDL/issues/8173) that prevents SDL2 applications from starting.
+> 与大多数其他选项不同，更改 `prefer-no-csd` 不会完全生效于正在运行的应用程序。
+> 它会使某些窗口变为矩形，但去不掉标题栏。
+> 这主要是因为 niri 为了绕过 [SDL2 中的一个 Bug](https://github.com/libsdl-org/SDL/issues/8173)，该 Bug 会阻止 SDL2 应用程序启动。
 >
-> Restart applications after changing `prefer-no-csd` in the config to fully apply it.
+> 在配置中更改 `prefer-no-csd` 后，请重启应用程序以完全应用更改。
 
 ```kdl
 prefer-no-csd
@@ -110,18 +110,18 @@ prefer-no-csd
 
 ### `screenshot-path`
 
-Set the path where screenshots are saved.
-A `~` at the front will be expanded to the home directory.
+设置截图保存的路径。
+开头的 `~` 将被展开为用户主目录。
 
-The path is formatted with `strftime(3)` to give you the screenshot date and time.
+该路径使用 `strftime(3)` 进行格式化，以便为您提供截图的日期和时间。
 
-Niri will create the last folder of the path if it doesn't exist.
+如果路径的最后一个文件夹不存在，Niri 将会创建它。
 
 ```kdl
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 ```
 
-You can also set this option to `null` to disable saving screenshots to disk.
+您也可以将此选项设置为 `null` 以禁用将截图保存到磁盘。
 
 ```kdl
 screenshot-path null
@@ -129,21 +129,21 @@ screenshot-path null
 
 ### `environment`
 
-Override environment variables for processes spawned by niri.
+覆写由 niri 启动的进程的环境变量。
 
 ```kdl
 environment {
-    // Set a variable like this:
+    // 像这样设置变量：
     // QT_QPA_PLATFORM "wayland"
 
-    // Remove a variable by using null as the value:
+    // 使用 null 值来移除变量：
     // DISPLAY null
 }
 ```
 
 ### `cursor`
 
-Change the theme and size of the cursor as well as set the `XCURSOR_THEME` and `XCURSOR_SIZE` environment variables.
+通过设置 `XCURSOR_THEME` 和 `XCURSOR_SIZE` 环境变量，来更改光标的主题和大小。
 
 ```kdl
 cursor {
@@ -156,11 +156,11 @@ cursor {
 
 <sup>Since: 0.1.10</sup>
 
-If set, hides the cursor when pressing a key on the keyboard.
+如果设置，则在按下键盘上的键时隐藏光标。
 
 > [!NOTE]
-> This setting might interfere with games running in Wine in native Wayland mode that use mouselook, such as first-person games.
-> If your character's point of view jumps down when you press a key and move the mouse simultaneously, try disabling this setting.
+> 此设置可能会干扰在原生 Wayland 模式下运行并使用鼠标视角的 Wine 游戏，例如第一人称游戏。
+> 如果当您同时按键和移动鼠标时，角色的视角会向下跳转，请尝试禁用此设置。
 
 ```kdl
 cursor {
@@ -172,11 +172,11 @@ cursor {
 
 <sup>Since: 0.1.10</sup>
 
-If set, the cursor will automatically hide once this number of milliseconds passes since the last cursor movement.
+如果设置，则自上次光标移动起经过此毫秒数后，光标将自动隐藏。
 
 ```kdl
 cursor {
-    // Hide the cursor after one second of inactivity.
+    // 在闲置一秒后隐藏光标。
     hide-after-inactive-ms 1000
 }
 ```
@@ -185,15 +185,15 @@ cursor {
 
 <sup>Since: 25.05</sup>
 
-Settings for the [Overview](./Overview.md).
+[桌面概览](./Overview.md)中的设置。
 
 #### `zoom`
 
-Control how much the workspaces zoom out in the overview.
-`zoom` ranges from 0 to 0.75 where lower values make everything smaller.
+控制在概览中工作区缩小的程度。
+`zoom` 的范围从 0 到 0.75，值越小，所有内容就越小。
 
 ```kdl
-// Make workspaces four times smaller than normal in the overview.
+// 在概览中使工作区比正常小四倍。
 overview {
     zoom 0.25
 }
@@ -201,31 +201,31 @@ overview {
 
 #### `backdrop-color`
 
-Set the backdrop color behind workspaces in the overview.
-The backdrop is also visible between workspaces when switching.
+设置概览中工作区背后的背景色。
+在切换工作区时，工作区之间也会显示此背景色。
 
-The alpha channel for this color will be ignored.
+此颜色的 Alpha 通道将会被忽略。
 
 ```kdl
-// Make the backdrop light.
+// 让背景亮一点。
 overview {
     backdrop-color "#777777"
 }
 ```
 
-You can also set the color per-output [in the output config](./Configuration:-Outputs.md#backdrop-color).
+您也可以在[输出配置](./Configuration:-Outputs.md#backdrop-color)中为每个输出单独设置颜色。
 
 #### `workspace-shadow`
 
-Control the shadow behind workspaces visible in the overview.
+控制在概览中可见的工作区背后的阴影。
 
-Settings here mirror the normal [`shadow` config in the layout section](./Configuration:-Layout.md#shadow), so check the documentation there.
+此处的配置项照抄了布局部分中常规的 [`shadow` 配置](./Configuration:-Layout.md#shadow)，因此请查看那里的文档说明。
 
-Workspace shadows are configured for a workspace size normalized to 1080 pixels tall, then zoomed out together with the workspace.
-Practically, this means that you'll want bigger spread, offset, and softness compared to window shadows.
+工作区阴影是先按高度为 1080 像素的标准工作区配置的，然后再随工作区一起缩放。
+因此这意味着实际使用时，您需要相较于窗口阴影设置更大的扩散、偏移和柔和度。
 
 ```kdl
-// Disable workspace shadows in the overview.
+// 在概览中禁用工作区阴影。
 overview {
     workspace-shadow {
         off
@@ -237,19 +237,19 @@ overview {
 
 <sup>Since: 25.08</sup>
 
-Settings for integration with [xwayland-satellite](https://github.com/Supreeeme/xwayland-satellite).
+与 [xwayland-satellite](https://github.com/Supreeeme/xwayland-satellite) 集成的设置。
 
-When a recent enough xwayland-satellite is detected, niri will create the X11 sockets and set `DISPLAY`, then automatically spawn `xwayland-satellite` when an X11 client tries to connect.
-If Xwayland dies, niri will keep watching the X11 socket and restart `xwayland-satellite` as needed.
-This is very similar to how built-in Xwayland works in other compositors.
+当检测到足够新的 xwayland-satellite 时，niri 会创建 X11 套接字并设置 `DISPLAY`，之后，一旦有 X11 客户端尝试连接，niri 便会自动启动 `xwayland-satellite`。
+如果 Xwayland 崩溃，niri 会继续监听 X11 套接字，并在需要时重启 `xwayland-satellite`。
+这与其他合成器中内置 Xwayland 的工作方式非常相似。
 
-`off` disables the integration: niri won't create an X11 socket and won't set the `DISPLAY` environment variable.
+`off` 禁用集成：niri 不会创建 X11 套接字，也不会设置 `DISPLAY` 环境变量。
 
-`path` sets the path to the `xwayland-satellite` binary.
-By default, it's just `xwayland-satellite`, so it's looked up like any other non-absolute program name.
+`path` 用于设置 `xwayland-satellite` 二进制文件的路径。
+默认情况下，该值就是 `xwayland-satellite`，因此会像查找其他非绝对路径的程序名一样来搜索它。
 
 ```kdl
-// Use a custom build of xwayland-satellite.
+// 使用 xwayland-satellite 的自定义构建。
 xwayland-satellite {
     path "~/source/rs/xwayland-satellite/target/release/xwayland-satellite"
 }
@@ -259,10 +259,10 @@ xwayland-satellite {
 
 <sup>Since: 25.02</sup>
 
-Clipboard settings.
+剪贴板设置。
 
-Set the `disable-primary` flag to disable the primary clipboard (middle-click paste).
-Toggling this flag will only apply to applications started afterward.
+设置 `disable-primary` 标志以禁用主剪贴板（中键粘贴）。
+切换此标志将仅适用于之后启动的应用程序。
 
 ```kdl
 clipboard {
@@ -272,11 +272,11 @@ clipboard {
 
 ### `hotkey-overlay`
 
-Settings for the "Important Hotkeys" overlay.
+“重要快捷键”覆盖层的设置。
 
 #### `skip-at-startup`
 
-Set the `skip-at-startup` flag if you don't want to see the hotkey help at niri startup.
+如果您不想在 niri 启动时看到快捷键帮助，请设置 `skip-at-startup` 标志。
 
 ```kdl
 hotkey-overlay {
@@ -288,8 +288,8 @@ hotkey-overlay {
 
 <sup>Since: 25.08</sup>
 
-By default, niri will show the most important actions even if they aren't bound to any key, to prevent confusion.
-Set the `hide-not-bound` flag if you want to hide all actions not bound to any key.
+默认情况下，niri 仍会显示最重要的动作，即使它们未绑定到任何键，以防混淆。
+如果您想隐藏所有未绑定到任何键的动作，请设置 `hide-not-bound` 标志。
 
 ```kdl
 hotkey-overlay {
@@ -297,16 +297,16 @@ hotkey-overlay {
 }
 ```
 
-You can customize which binds the hotkey overlay shows using the [`hotkey-overlay-title` property](./Configuration:-Key-Bindings.md#custom-hotkey-overlay-titles).
+您可以使用 [`hotkey-overlay-title` 属性](./Configuration:-Key-Bindings.md#custom-hotkey-overlay-titles)自定快捷键覆盖层显示的绑定。
 
 ### `config-notification`
 
 <sup>Since: 25.08</sup>
 
-Settings for the config created/failed notification.
+配置创建/失败时通知的设置。
 
-Set the `disable-failed` flag to disable the "Failed to parse the config file" notification.
-For example, if you have a custom one.
+设置 `disable-failed` 标志，可以禁用“解析配置文件失败”的通知。
+比如，如果您已用自己的方式来处理这类错误。
 
 ```kdl
 config-notification {
