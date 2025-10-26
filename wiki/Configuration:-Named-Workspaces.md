@@ -1,8 +1,8 @@
-### Overview
+### 概述
 
 <sup>Since: 0.1.6</sup>
 
-You can declare named workspaces at the top level of the config:
+您可以在配置的顶部声明命名工作区：
 
 ```kdl
 workspace "browser"
@@ -12,49 +12,49 @@ workspace "chat" {
 }
 ```
 
-Contrary to normal dynamic workspaces, named workspaces always exist, even when they have no windows.
-Otherwise, they behave like any other workspace: you can move them around, move to a different monitor, and so on.
+与普通的动态工作区相反，命名工作区始终存在，即使它们没有任何窗口。
+除此之外，它们的行为与其他普通工作区一样：您可以移动它们改变顺序、将它们拖到其他显示器，等等。
 
-Actions like `focus-workspace` or `move-column-to-workspace` can refer to workspaces by name.
-Also, you can use an `open-on-workspace` window rule to make a window open on a specific named workspace:
+诸如 `focus-workspace` 或 `move-column-to-workspace` 之类的操作都可以用名称来指代工作区。
+此外，您可以使用 `open-on-workspace` 窗口规则来让窗口在特定的命名工作区中打开：
 
 ```kdl
-// Declare a workspace named "chat" that opens on the "DP-2" output.
+// 声明一个名为 chat 的工作区，它会在 DP-2 输出上打开。
 workspace "chat" {
     open-on-output "DP-2"
 }
 
-// Open Fractal on the "chat" workspace, if it runs at niri startup.
+// 如果 Fractal 在 niri 启动时运行，则在 chat 工作区上打开它。
 window-rule {
     match at-startup=true app-id=r#"^org\.gnome\.Fractal$"#
     open-on-workspace "chat"
 }
 ```
 
-Named workspaces initially appear in the order they are declared in the config file.
-When editing the config while niri is running, newly declared named workspaces will appear at the very top of a monitor.
+命名工作区进行初始化的顺序与它们在配置文件中声明的顺序一致。
+若在 niri 运行时修改配置，则新增的命名工作区将出现在显示器的最顶端。
 
-If you delete some named workspace from the config, the workspace will become normal (unnamed), and if there are no windows on it, it will be removed (as any other normal workspace).
-There's no way to give a name to an already existing workspace, but you can simply move windows that you want to a new, empty named workspace.
+如果您从配置中删除了某个命名工作区，该工作区将退化成普通（无命名）工作区；如果该工作区上没有窗口，则会像普通空工作区一样被自动销毁。
+无法为已存在的工作区补充命名，但您可以直接将想要的窗口移动到一个新的、空的命名工作区。
 
-<sup>Since: 0.1.9</sup> `open-on-output` can now use monitor manufacturer, model, and serial.
-Before, it could only use the connector name.
+<sup>Since: 0.1.9</sup> `open-on-output` 现在可以使用显示器的制造商、型号和序列号。
+在此之前，它只能使用连接器名称。
 
-<sup>Since: 25.01</sup> You can use `set-workspace-name` and `unset-workspace-name` actions to change workspace names dynamically.
+<sup>Since: 25.01</sup> 您可以使用 `set-workspace-name` 和 `unset-workspace-name` 动作来动态更改工作区名称。
 
-<sup>Since: 25.02</sup> Named workspaces no longer update/forget their original output when opening a new window on them (unnamed workspaces will keep doing that).
-This means that named workspaces "stick" to their original output in more cases, reflecting their more permanent nature.
-Explicitly moving a named workspace to a different monitor will still update its original output.
+<sup>Since: 25.02</sup> 命名工作区不再因为在其上打开新窗口而更新/遗忘原始输出（无命名工作区仍会如此）。
+这意味着命名工作区在更多情况下会“粘附”到其原始输出上，以体现其更永久的特性。
+当然，如果用户手动将命名工作区移动到另一台显示器，其原始输出仍会随之更新。
 
-### Layout config overrides
+### 布局配置覆写 {#layout-config-overrides}
 
 <sup>Since: next release</sup>
 
-You can customize layout settings for named workspaces with a `layout {}` block:
+您可以使用 `layout {}` 块为命名工作区自定义布局设置：
 
 ```kdl
 workspace "aesthetic" {
-    // Layout config overrides just for this named workspace.
+    // 仅针对此命名工作区的布局配置覆写。
     layout {
         gaps 32
 
@@ -70,27 +70,27 @@ workspace "aesthetic" {
             width 4
         }
 
-        // ...any other setting.
+        // ...任何其他设置。
     }
 }
 ```
 
-It accepts all the same options as [the top-level `layout {}` block](./Configuration:-Layout.md), except:
+它接受与[顶级层级 `layout {}` 配置段](./Configuration:-Layout.md)相同的所有选项，除了：
 
-- `empty-workspace-above-first`: this is an output-level setting, doesn't make sense on a workspace.
-- `insert-hint`: currently we always draw these at the output level, so it's not customizable per-workspace.
+- `empty-workspace-above-first`：这是一个输出级别的设置，在工作区上没有意义。
+- `insert-hint`：目前我们始终在输出级别绘制这些提示，因此不能按工作区自定义。
 
-In order to unset a flag, write it with `false`, e.g.:
+要取消设置某个参数，请将其写为 `false`，例如：
 
 ```kdl
 layout {
-    // Enabled globally.
+    // 全局启用。
     always-center-single-column
 }
 
 workspace "uncentered" {
     layout {
-        // Unset on this workspace.
+        // 在此工作区上取消设置。
         always-center-single-column false
     }
 }
