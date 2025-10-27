@@ -1,19 +1,19 @@
-### Overview
+### 概述
 
-Window rules let you adjust behavior for individual windows.
-They have `match` and `exclude` directives that control which windows the rule should apply to, and a number of properties that you can set.
+窗口规则允许你调整单个窗口的行为。
+它们包含 `match` 和 `exclude` 指令，用于控制规则应对哪些窗口生效，以及一系列可供您设置的属性。
 
-Window rules are processed in order of appearance in the config file.
-This means that you can put more generic rules first, then override them for specific windows later.
-For example:
+窗口规则会按照它们在配置文件中出现的顺序进行处理。
+这意味着你可以将更通用的规则放在前面，然后在后面为特定窗口覆写它们。
+例如：
 
 ```kdl
-// Set open-maximized to true for all windows.
+// 为所有窗口设置 open-maximized 为 true。
 window-rule {
     open-maximized true
 }
 
-// Then, for Alacritty, set open-maximized back to false.
+// 然后，对于 Alacritty，将 open-maximized 设置回 false。
 window-rule {
     match app-id="Alacritty"
     open-maximized false
@@ -21,10 +21,10 @@ window-rule {
 ```
 
 > [!TIP]
-> In general, you cannot "unset" a property in a later rule, only set it to a different value.
-> Use the `exclude` directives to avoid applying a rule for specific windows.
+> 通常来说，你无法在后续规则中“取消设置”某个属性，只能将其设置为不同的值。
+> 使用 `exclude` 指令来避免对特定窗口应用某个规则。
 
-Here are all matchers and properties that a window rule could have:
+以下是窗口规则可以拥有的所有匹配器和属性：
 
 ```kdl
 window-rule {
@@ -38,7 +38,7 @@ window-rule {
     match is-urgent=true
     match at-startup=true
 
-    // Properties that apply once upon window opening.
+    // 在窗口打开时生效一次的属性。
     default-column-width { proportion 0.75; }
     default-window-height { fixed 500; }
     open-on-output "Some Company CoolMonitor 1234"
@@ -48,7 +48,7 @@ window-rule {
     open-floating true
     open-focused false
 
-    // Properties that apply continuously.
+    // 持久生效的属性。
     draw-border-with-background false
     opacity 0.5
     block-out-from "screencast"
@@ -71,7 +71,7 @@ window-rule {
     }
 
     border {
-        // Same as focus-ring.
+        // 和 focus-ring 一样。
     }
 
     shadow {
@@ -106,65 +106,64 @@ window-rule {
 }
 ```
 
-### Window Matching
+### 窗口匹配
 
-Each window rule can have several `match` and `exclude` directives.
-In order for the rule to apply, a window needs to match *any* of the `match` directives, and *none* of the `exclude` directives.
+每个窗口规则可以包含多个 `match` 和 `exclude` 指令。
+要想使规则生效，一个窗口需要满足*任意*一个 `match` 指令的条件，并且*不能满足任何* `exclude` 指令的条件。
 
 ```kdl
 window-rule {
-    // Match all Telegram windows...
+    // 匹配所有 Telegram 窗口...
     match app-id=r#"^org\.telegram\.desktop$"#
 
-    // ...except the media viewer window.
+    // ...除了（Telegram的）媒体查看器窗口。
     exclude title="^Media viewer$"
 
-    // Properties to apply.
+    // 需要应用的属性。
     open-on-output "HDMI-A-1"
 }
 ```
 
-Match and exclude directives have the same syntax.
-There can be multiple *matchers* in one directive, then the window should match all of them for the directive to apply.
+匹配和排除指令具有相同的语法。
+一条指令中可以拥有多个*匹配器*，窗口必须满足所有条件，该指令才会生效。
 
 ```kdl
 window-rule {
-    // Match Firefox windows with Gmail in title.
+    // 匹配标题中包含 Gmail 的 Firefox 窗口。
     match app-id="firefox" title="Gmail"
 }
 
 window-rule {
-    // Match Firefox, but only when it is active...
+    // 匹配 Firefox，但仅当它处于活动状态时...
     match app-id="firefox" is-active=true
 
-    // ...or match Telegram...
+    // ...或者匹配 Telegram...
     match app-id=r#"^org\.telegram\.desktop$"#
 
-    // ...but don't match the Telegram media viewer.
-    // If you open a tab in Firefox titled "Media viewer",
-    // it will not be excluded because it doesn't match the app-id
-    // of this exclude directive.
+    // ...但是不匹配 Telegram 的媒体查看器。
+    // 如果你在 Firefox 中打开一个标题为 "Media viewer" 的标签页，
+    // 它不会被排除，因为它不满足此排除指令的 app-id 条件。
     exclude app-id=r#"^org\.telegram\.desktop$"# title="Media viewer"
 }
 ```
 
-Let's look at the matchers in more detail.
+让我们更详细地了解一下这些匹配器。
 
-#### `title` and `app-id`
+#### `title` 和 `app-id`
 
-These are regular expressions that should match anywhere in the window title and app ID respectively.
-You can read about the supported regular expression syntax [here](https://docs.rs/regex/latest/regex/#syntax).
+这些是正则表达式，应分别匹配窗口标题和应用 ID 中的任意位置。
+你可以在[此处](https://docs.rs/regex/latest/regex/#syntax)了解支持的正则表达式语法。
 
 ```kdl
-// Match windows with title containing "Mozilla Firefox",
-// or windows with app ID containing "Alacritty".
+// 匹配标题包含 "Mozilla Firefox" 的窗口，
+// 或应用 ID 包含 "Alacritty" 的窗口。
 window-rule {
     match title="Mozilla Firefox"
     match app-id="Alacritty"
 }
 ```
 
-Raw KDL strings can be helpful for writing out regular expressions:
+原生 KDL 字符串在编写正则表达式时会很有帮助：
 
 ```kdl
 window-rule {
@@ -172,11 +171,11 @@ window-rule {
 }
 ```
 
-You can find the title and the app ID of a window by running `niri msg pick-window` and clicking on the window in question.
+你可以通过运行 `niri msg pick-window` 并点击相关窗口来获取到该窗口的标题和应用 ID。
 
 > [!TIP]
-> Another way to find the window title and app ID is to configure the `wlr/taskbar` module in [Waybar](https://github.com/Alexays/Waybar) to include them in the tooltip:
-> 
+> 另一种查找窗口标题和应用 ID 的方法是在 [Waybar](https://github.com/Alexays/Waybar) 中配置 `wlr/taskbar` 模块，这样就可以将它们包含在提示信息中：
+>
 > ```json
 > "wlr/taskbar": {
 >     "tooltip-format": "{title} | {app_id}",
@@ -185,11 +184,11 @@ You can find the title and the app ID of a window by running `niri msg pick-wind
 
 #### `is-active`
 
-Can be `true` or `false`.
-Matches active windows (same windows that have the active border / focus ring color).
+可以是 `true` 或 `false`。
+匹配活动窗口（即具有活动边框/焦点环颜色的窗口）。
 
-Every workspace on the focused monitor will have one active window.
-This means that you will usually have multiple active windows (one per workspace), and when you switch between workspaces, you can see two active windows at once.
+在当前获得焦点的显示器上，每个工作区都会有一个活动窗口。
+这意味着，您通常会有多个活动窗口（每个工作区各一个），并且在切换工作区时，您会同时看到两个处于活动状态的窗口。
 
 ```kdl
 window-rule {
@@ -199,12 +198,12 @@ window-rule {
 
 #### `is-focused`
 
-Can be `true` or `false`.
-Matches the window that has the keyboard focus.
+可以是 `true` 或 `false`。
+匹配具有键盘焦点的窗口。
 
-Contrary to `is-active`, there can only be a single focused window.
-Also, when opening a layer-shell application launcher or pop-up menu, the keyboard focus goes to layer-shell.
-While layer-shell has the keyboard focus, windows will not match this rule.
+与 `is-active` 相反，键盘焦点只能有一个获得焦点的窗口。
+此外，当打开一个 layer-shell 应用程序启动器或弹出菜单时，键盘焦点会转移到  layer-shell 上。
+当 layer-shell 拥有键盘焦点时，窗口将不会匹配此规则。
 
 ```kdl
 window-rule {
@@ -216,13 +215,13 @@ window-rule {
 
 <sup>Since: 0.1.6</sup>
 
-Can be `true` or `false`.
-Matches the window that is the "active" window in its column.
+可以是 `true` 或 `false`。
+匹配在其列中处于“活动”状态的窗口。
 
-Contrary to `is-active`, there is always one `is-active-in-column` window in each column.
-It is the window that was last focused in the column, i.e. the one that will gain focus if this column is focused.
+与 `is-active` 不同，每一列中始终会有一个 `is-active-in-column` 窗口。
+它指的是该列中最后获得焦点的窗口，即当该列获得焦点时，将会接收到焦点的那个窗口。
 
-<sup>Since: 25.01</sup> This rule will match `true` during the initial window opening.
+<sup>Since: 25.01</sup> 在窗口初始打开时，此规则将匹配为 `true`。
 
 ```kdl
 window-rule {
@@ -234,12 +233,12 @@ window-rule {
 
 <sup>Since: 25.01</sup>
 
-Can be `true` or `false`.
-Matches floating windows.
+可以是 `true` 或 `false`。
+匹配浮动窗口。
 
 > [!NOTE]
-> This matcher will apply only after the window is already open.
-> This means that you cannot use it to change the window opening properties like `default-window-height` or `open-on-workspace`.
+> 此匹配器仅在窗口已经打开后才会应用。
+> 这意味着你不能使用它来更改窗口的打开属性，如 `default-window-height` 或 `open-on-workspace`。
 
 ```kdl
 window-rule {
@@ -251,15 +250,15 @@ window-rule {
 
 <sup>Since: 25.02</sup>
 
-Can be `true` or `false`.
-Matches `true` for windows that are target of an ongoing window screencast.
+可以是 `true` 或 `false`。
+对于那写正在进行窗口屏幕录制的目标窗口，匹配为 `true`。
 
 > [!NOTE]
-> This only matches individual-window screencasts.
-> It will not match windows that happen to be visible in a monitor screencast, for example.
+> 这仅匹配单个窗口的屏幕录制。
+> 例如，它不会匹配在显示器屏幕录制中恰好可见的窗口。
 
 ```kdl
-// Indicate screencasted windows with red colors.
+// 用红色指示正在被屏幕录制的窗口。
 window-rule {
     match is-window-cast-target=true
 
@@ -283,16 +282,16 @@ window-rule {
 }
 ```
 
-Example:
+示例：
 
-![A screenshot showing that only the is-window-cast-target=true windows receive the special border colors](https://github.com/user-attachments/assets/375b381e-3a87-4e94-8676-44404971d893)
+![一张显示只有 is-window-cast-target=true 的窗口接收特殊的边框颜色的截图](https://github.com/user-attachments/assets/375b381e-3a87-4e94-8676-44404971d893)
 
 #### `is-urgent`
 
 <sup>Since: 25.05</sup>
 
-Can be `true` or `false`.
-Matches windows that request the user's attention.
+可以是 `true` 或 `false`。
+匹配请求用户注意的窗口。
 
 ```kdl
 window-rule {
@@ -304,38 +303,38 @@ window-rule {
 
 <sup>Since: 0.1.6</sup>
 
-Can be `true` or `false`.
-Matches during the first 60 seconds after starting niri.
+可以是 `true` 或 `false`。
+在启动 niri 后的前 60 秒内匹配。
 
-This is useful for properties like `open-on-output` which you may want to apply only right after starting niri.
+这对于像 `open-on-output` 这样的属性很有用，你可能希望仅在启动 niri 后的一段时间内应用它们。
 
 ```kdl
-// Open windows on the HDMI-A-1 monitor at niri startup, but not afterwards.
+// 在 niri 启动时，在 HDMI-A-1 显示器上打开窗口，但之后不这样做。
 window-rule {
     match at-startup=true
     open-on-output "HDMI-A-1"
 }
 ```
 
-### Window Opening Properties
+### 窗口打开属性
 
-These properties apply once, when a window first opens.
+这些属性在窗口首次打开时应用一次。
 
-To be precise, they apply at the point when niri sends the initial configure request to the window.
+准确地说，它们在 niri 向窗口发送初始配置请求时应用。
 
 #### `default-column-width`
 
-Set the default width for the new window.
+为新窗口设置默认宽度。
 
-This works for floating windows too, despite the word "column" in the name.
+尽管名称中有“column”，但其实这也适用于浮动窗口。
 
 ```kdl
-// Give Blender and GIMP some guaranteed width on opening.
+// 在打开时为 Blender 和 GIMP 提供足够的宽度。
 window-rule {
     match app-id="^blender$"
 
-    // GIMP app ID contains the version like "gimp-2.99",
-    // so we only match the beginning (with ^) and not the end.
+    // GIMP 应用 ID 包含版本号，如 "gimp-2.99"，
+    // 所以我们只匹配开头（用 ^）而不匹配结尾。
     match app-id="^gimp"
 
     default-column-width { fixed 1200; }
@@ -346,10 +345,10 @@ window-rule {
 
 <sup>Since: 25.01</sup>
 
-Set the default height for the new window.
+为新窗口设置默认高度。
 
 ```kdl
-// Open the Firefox picture-in-picture window as floating with 480×270 size.
+// 以浮动窗口打开 Firefox 画中画窗口，大小为 480×270 。
 window-rule {
     match app-id="firefox$" title="^Picture-in-Picture$"
 
@@ -361,41 +360,40 @@ window-rule {
 
 #### `open-on-output`
 
-Make the window open on a specific output.
+使窗口在特定的输出上打开。
 
-If such an output does not exist, the window will open on the currently focused output as usual.
+如果这样的输出不存在，窗口将照常地在当前聚焦的输出上打开。
 
-If the window opens on an output that is not currently focused, the window will not be automatically focused.
+如果窗口在当前未获得焦点的输出上打开，该窗口将不会自动获得焦点。
 
 ```kdl
-// Open Firefox and Telegram (but not its Media Viewer)
-// on a specific monitor.
+// 在特定的显示器上打开 Firefox 和 Telegram（但不包括其媒体查看器）。
 window-rule {
     match app-id="firefox$"
     match app-id=r#"^org\.telegram\.desktop$"#
     exclude app-id=r#"^org\.telegram\.desktop$"# title="^Media viewer$"
 
     open-on-output "HDMI-A-1"
-    // Or:
+    // 或者：
     // open-on-output "Some Company CoolMonitor 1234"
 }
 ```
 
-<sup>Since: 0.1.9</sup> `open-on-output` can now use monitor manufacturer, model, and serial.
-Before, it could only use the connector name.
+<sup>Since: 0.1.9</sup> `open-on-output` 现在可以使用显示器的制造商、型号和序列号。
+在此版本之前，它只能使用连接器名称。
 
 #### `open-on-workspace`
 
 <sup>Since: 0.1.6</sup>
 
-Make the window open on a specific [named workspace](./Configuration:-Named-Workspaces.md).
+使窗口在特定的[命名工作区](./Configuration:-Named-Workspaces.md)上打开。
 
-If such a workspace does not exist, the window will open on the currently focused workspace as usual.
+如果这样的工作区不存在，窗口将照常地在当前聚焦的工作区上打开。
 
-If the window opens on an output that is not currently focused, the window will not be automatically focused.
+如果窗口在当前未获得焦点的输出上打开，该窗口将不会自动获得焦点。
 
 ```kdl
-// Open Fractal on the "chat" workspace.
+// 在 "chat" 工作区上打开 Fractal。
 window-rule {
     match app-id=r#"^org\.gnome\.Fractal$"#
 
@@ -405,10 +403,10 @@ window-rule {
 
 #### `open-maximized`
 
-Make the window open as a maximized column.
+使窗口作为最大化列打开。
 
 ```kdl
-// Maximize Firefox by default.
+// 默认最大化 Firefox。
 window-rule {
     match app-id="firefox$"
 
@@ -418,7 +416,7 @@ window-rule {
 
 #### `open-fullscreen`
 
-Make the window open fullscreen.
+使窗口全屏打开。
 
 ```kdl
 window-rule {
@@ -426,10 +424,10 @@ window-rule {
 }
 ```
 
-You can also set this to `false` to *prevent* a window from opening fullscreen.
+你也可以将其设置为 `false` 以*阻止*窗口全屏打开。
 
 ```kdl
-// Make the Telegram media viewer open in windowed mode.
+// 让 Telegram 媒体查看器以窗口模式打开。
 window-rule {
     match app-id=r#"^org\.telegram\.desktop$"# title="^Media viewer$"
 
@@ -441,10 +439,10 @@ window-rule {
 
 <sup>Since: 25.01</sup>
 
-Make the window open in the floating layout.
+使窗口以浮动布局打开。
 
 ```kdl
-// Open the Firefox picture-in-picture window as floating.
+// 让 Firefox 画中画窗口作为浮动窗口打开。
 window-rule {
     match app-id="firefox$" title="^Picture-in-Picture$"
 
@@ -452,10 +450,10 @@ window-rule {
 }
 ```
 
-You can also set this to `false` to *prevent* a window from opening in the floating layout.
+你也可以将其设置为 `false` 以*阻止*窗口以浮动布局打开。
 
 ```kdl
-// Open all windows in the tiling layout, overriding any auto-floating logic.
+// 在平铺布局中打开所有窗口，覆盖任何自动浮动逻辑。
 window-rule {
     open-floating false
 }
@@ -465,10 +463,10 @@ window-rule {
 
 <sup>Since: 25.01</sup>
 
-Set this to `false` to prevent this window from being automatically focused upon opening.
+将此项设置为 `false` 以防止此窗口在打开时自动获取焦点。
 
 ```kdl
-// Don't give focus to the GIMP startup splash screen.
+// 不要将焦点给予 GIMP 启动画面。
 window-rule {
     match app-id="^gimp" title="^GIMP Startup$"
 
@@ -476,13 +474,13 @@ window-rule {
 }
 ```
 
-You can also set this to `true` to focus the window, even if normally it wouldn't get auto-focused.
+你也可以将其设置为 `true` 来聚焦窗口，即使通常情况下它不会自动获得焦点。
 
 ```kdl
-// Always focus the KeePassXC-Browser unlock dialog.
+// 始终聚焦 KeePassXC-Browser 解锁对话框。
 //
-// This dialog opens parented to the KeePassXC window rather than the browser,
-// so it doesn't get auto-focused by default.
+// 此对话框作为 KeePassXC 窗口的子窗口打开，而不是浏览器的，
+// 因此默认情况下它不会自动获得焦点。
 window-rule {
     match app-id=r#"^org\.keepassxc\.KeePassXC$"# title="^Unlock Database - KeePassXC$"
 
@@ -490,31 +488,31 @@ window-rule {
 }
 ```
 
-### Dynamic Properties
+### 动态属性
 
-These properties apply continuously to open windows.
+这些属性持久生效于已打开的窗口。
 
 #### `block-out-from`
 
-You can block out windows from xdg-desktop-portal screencasts.
-They will be replaced with solid black rectangles.
+你可以阻止窗口出现在 xdg-desktop-portal 屏幕录制中。
+它们将被替换为纯黑色矩形。
 
-This can be useful for password managers or messenger windows, etc.
-For layer-shell notification pop-ups and the like, you can use a [`block-out-from` layer rule](./Configuration:-Layer-Rules.md#block-out-from).
+这对于密码管理器或聊天窗口等很有用。
+对于 layer-shell 通知弹出窗口等类似的玩意儿，你可以使用 [`block-out-from` 层规则](./Configuration:-Layer-Rules.md#block-out-from)。
 
-![Screenshot showing a window visible normally, but blocked out on OBS.](./img/block-out-from-screencast.png)
+![截图显示一个窗口在正常情况下可见，但在 OBS 中被阻止。](./img/block-out-from-screencast.png)
 
-To preview and set up this rule, check the `preview-render` option in the debug section of the config.
+要预览和设置此规则，请检查配置中调试（debug）部分的 `preview-render` 选项。
 
 > [!CAUTION]
-> The window is **not** blocked out from third-party screenshot tools.
-> If you open some screenshot tool with preview while screencasting, blocked out windows **will be visible** on the screencast.
+> 该窗口在第三方截图工具中**不会**被屏蔽
+> 如果你在屏幕录制时打开某个带预览的截图工具，被阻止的窗口**将在屏幕录制中可见**。
 
-The built-in screenshot UI is not affected by this problem though.
-If you open the screenshot UI while screencasting, you will be able to select the area to screenshot while seeing all windows normally, but on a screencast the selection UI will display with windows blocked out.
+不过，内置的截图界面不受此问题影响。
+若在录屏期间打开截图界面，您将能正常看到所有窗口并选择截图区域，但在最终的录屏画面中，该选择界面会显示出来，而其中的窗口则会被屏蔽。
 
 ```kdl
-// Block out password managers from screencasts.
+// 在屏幕录制中屏蔽密码管理器。
 window-rule {
     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
     match app-id=r#"^org\.gnome\.World\.Secrets$"#
@@ -523,11 +521,11 @@ window-rule {
 }
 ```
 
-Alternatively, you can block out the window out of *all* screen captures, including third-party screenshot tools.
-This way you avoid accidentally showing the window on a screencast when opening a third-party screenshot preview.
+或者，你可以将窗口从*所有*屏幕捕获中屏蔽，包括第三方截图工具。
+这样，在打开第三方截图预览时，你就可以避免该窗口在屏幕录制中被意外显示。
 
-This setting will still let you use the interactive built-in screenshot UI, but it will block out the window from the fully automatic screenshot actions, such as `screenshot-screen` and `screenshot-window`.
-The reasoning is that with an interactive selection, you can make sure that you avoid screenshotting sensitive content.
+此设置仍然允许你使用交互式内置截图界面，但它会阻止窗口出现在完全自动的截图操作中，例如 `screenshot-screen` 和 `screenshot-window`。
+这样做的原因是，通过交互式选择，你可以确保避免截取敏感内容。
 
 ```kdl
 window-rule {
@@ -536,40 +534,40 @@ window-rule {
 ```
 
 > [!WARNING]
-> Be careful when blocking out windows based on a dynamically changing window title.
+> 根据动态变化的窗口标题来屏蔽窗口时要小心。
 >
-> For example, you might try to block out specific Firefox tabs like this:
+> 例如，你可能会尝试像这样阻止特定的 Firefox 标签页：
 >
 > ```kdl
 > window-rule {
->     // Doesn't quite work! Try to block out the Gmail tab.
+>     // 不太起作用！尝试阻止 Gmail 标签页。
 >     match app-id="firefox$" title="- Gmail "
 >
 >     block-out-from "screencast"
 > }
 > ```
 >
-> It will work, but when switching from a sensitive tab to a regular tab, the contents of the sensitive tab **will show up on a screencast** for an instant.
+> 它会起作用，但是当从一个敏感标签页切换到一个普通标签页时，敏感标签页的内容**会在屏幕录制中显示**一瞬间。
 >
-> This is because window title (and app ID) are not double-buffered in the Wayland protocol, so they are not tied to specific window contents.
-> There's no robust way for Firefox to synchronize visibly showing a different tab and changing the window title.
+> 这是因为在 Wayland 协议中，窗口标题（和应用 ID）并未实现双缓冲，因此它们与特定的窗口内容并不绑定。
+> Firefox 无法以一种可靠的方式，来同步“切换到另一个可见标签页”和“更改窗口标题”这两个操作。
 
 #### `opacity`
 
-Set the opacity of the window.
-`0.0` is fully transparent, `1.0` is fully opaque.
-This is applied on top of the window's own opacity, so semitransparent windows will become even more transparent.
+设置窗口的不透明度。
+`0.0` 是完全透明，`1.0` 是完全不透明。
+这是在窗口自身的不透明度之上应用的，因此半透明窗口将变得更加透明。
 
-Opacity is applied to every surface of the window individually, so subsurfaces and pop-up menus will show window content behind them.
+不透明度会单独应用于窗口的每个界面，因此子界面和弹出菜单将显示其背后的窗口内容。
 
-![Screenshot showing Adwaita Demo with a semitransparent pop-up menu.](./img/opacity-popup.png)
+![截图显示带有半透明弹出菜单的 Adwaita Demo 。](./img/opacity-popup.png)
 
-Also, focus ring and border with background will show through semitransparent windows (see `prefer-no-csd` and the `draw-border-with-background` window rule below).
+此外，焦点环和带背景的边框将在半透明窗口后显示（参见下面的 `prefer-no-csd` 和 `draw-border-with-background` 窗口规则）。
 
-Opacity can be toggled on or off for a window using the [`toggle-window-rule-opacity`](./Configuration:-Key-Bindings.md#toggle-window-rule-opacity) action.
+可以使用 [`toggle-window-rule-opacity`](./Configuration:-Key-Bindings.md#toggle-window-rule-opacity) 动作为窗口切换不透明度的开或关。
 
 ```kdl
-// Make inactive windows semitransparent.
+// 使非活动窗口半透明。
 window-rule {
     match is-active=false
 
@@ -581,15 +579,15 @@ window-rule {
 
 <sup>Since: 0.1.9</sup>
 
-If set to true, whenever this window displays on an output with on-demand VRR, it will enable VRR on that output.
+如果设置为 true，每当此窗口在支持按需 VRR 的输出上显示时，它将在该输出上启用 VRR。
 
 ```kdl
-// Configure some output with on-demand VRR.
+// 配置某个支持按需 VRR 的输出。
 output "HDMI-A-1" {
     variable-refresh-rate on-demand=true
 }
 
-// Enable on-demand VRR when mpv displays on the output.
+// 当 mpv 在该输出上显示时启用按需 VRR。
 window-rule {
     match app-id="^mpv$"
 
@@ -601,16 +599,16 @@ window-rule {
 
 <sup>Since: 25.02</sup>
 
-Set the default display mode for columns created from this window.
+为从此窗口创建的列设置默认显示模式。
 
-This is used any time a window goes into its own column.
-For example:
-- Opening a new window.
-- Expelling a window into its own column.
-- Moving a window from the floating layout to the tiling layout.
+这在窗口进入自己的列时使用。
+例如：
+- 打开一个新窗口。
+- 将一个窗口剔出成独立的列。
+- 将一个窗口从浮动布局切换到平铺布局。
 
 ```kdl
-// Make Evince windows open as tabbed columns.
+// 使 Evince 窗口作为标签页式列打开。
 window-rule {
     match app-id="^evince$"
 
@@ -622,26 +620,26 @@ window-rule {
 
 <sup>Since: 25.01</sup>
 
-Set the initial position for this window when it opens on, or moves to the floating layout.
+设置此窗口在打开或移动到浮动布局时的初始位置。
 
-Afterward, the window will remember its last floating position.
+之后，窗口将记住其最后的浮动位置。
 
-By default, new floating windows open at the center of the screen, and windows from the tiling layout open close to their visual screen position.
+默认情况下，新的浮动窗口在屏幕中心打开，而从平铺布局来的窗口在其视觉屏幕位置附近打开。
 
-The position uses logical coordinates relative to the working area.
-By default, they are relative to the top-left corner of the working area, but you can change this by setting `relative-to` to one of these values: `top-left`, `top-right`, `bottom-left`, `bottom-right`, `top`, `bottom`, `left`, or `right`.
+该位置使用相对于工作区的逻辑坐标。
+默认情况下，它们相对于工作区的左上角，但你可以通过将 `relative-to` 设置为以下值之一来更改此设置：`top-left`、`top-right`、`bottom-left`、`bottom-right`、`top`、`bottom`、`left` 或 `right`。
 
-For example, if you have a bar at the top, then `x=0 y=0` will put the top-left corner of the window directly below the bar.
-If instead you write `x=0 y=0 relative-to="top-right"`, then the top-right corner of the window will align with the top-right corner of the workspace, also directly below the bar.
-When only one side is specified (e.g. top) the window will align to the center of that side.
+例如，如果你顶部有一个栏，那么 `x=0 y=0` 会将窗口的左上角放在栏的正下方。
+相反，如果你写 `x=0 y=0 relative-to="top-right"`，那么窗口的右上角将与工作区的右上角对齐，同样在栏的正下方。
+当只指定一侧时（例如 top），则窗口将与该侧的中心对齐。
 
-The coordinates change direction based on `relative-to`.
-For example, by default (top-left), `x=100 y=200` will put the window 100 pixels to the right and 200 pixels down from the top-left corner.
-If you use `x=100 y=200 relative-to="bottom-left"`, it will put the window 100 pixels to the right and 200 pixels *up* from the bottom-left corner.
+坐标方向会根据 `relative-to` 改变。
+例如，默认情况下（左上角），`x=100 y=200` 会将窗口放在左上角的右侧 100 像素、下方 200 像素的位置。
+如果你使用 `x=100 y=200 relative-to="bottom-left"`，它会将窗口放在左下角的右侧 100 像素、*上方* 200 像素的位置。
 
 ```kdl
-// Open the Firefox picture-in-picture window at the bottom-left corner of the screen
-// with a small gap.
+// 在屏幕的左下角打开 Firefox 画中画窗口，
+// 并留有一个小间隙。
 window-rule {
     match app-id="firefox$" title="^Picture-in-Picture$"
 
@@ -649,23 +647,23 @@ window-rule {
 }
 ```
 
-You can use single-side `relative-to` to get a dropdown-like effect.
+你可以使用单侧 `relative-to` 来获得类似下拉菜单的效果。
 
 ```kdl
-// Example: a "dropdown" terminal.
+// 示例：一个“下拉”终端。
 window-rule {
-    // Match by "dropdown" app ID.
-    // You need to set this app ID when running your terminal, e.g.:
+    // 通过 "dropdown" 应用 ID 匹配。
+    // 你需要在运行终端时设置此应用 ID，例如：
     // spawn "alacritty" "--class" "dropdown"
     match app-id="^dropdown$"
 
-    // Open it as floating.
+    // 将其作为浮动窗口打开。
     open-floating true
-    // Anchor to the top edge of the screen.
+    // 锚定到屏幕的上边缘。
     default-floating-position x=0 y=0 relative-to="top"
-    // Half of the screen high.
+    // 屏幕高度的一半。
     default-window-height { proportion 0.5; }
-    // 80% of the screen wide.
+    // 屏幕宽度的 80%。
     default-column-width { proportion 0.8; }
 }
 ```
@@ -674,12 +672,12 @@ window-rule {
 
 <sup>Since: 25.02</sup>
 
-Set a scroll factor for all scroll events sent to a window.
+为发送到窗口的所有滚动事件设置滚动系数。
 
-This will be multiplied with the scroll factor set for your input device in the [input section](./Configuration:-Input.md#pointing-devices).
+这将与你在[输入部分](./Configuration:-Input.md#pointing-devices)中为输入设备设置的滚动系数相乘。
 
 ```kdl
-// Make scrolling in Firefox a bit slower.
+// 使 Firefox 中的滚动慢一点。
 window-rule {
     match app-id="firefox$"
 
@@ -689,16 +687,16 @@ window-rule {
 
 #### `draw-border-with-background`
 
-Override whether the border and the focus ring draw with a background.
+覆写边框和焦点环是否绘制背景。
 
-Set this to `true` to draw them as solid colored rectangles even for windows which agreed to omit their client-side decorations.
-Set this to `false` to draw them as borders around the window even for windows which use client-side decorations.
+将此项设置为 `true`，即使对于同意省略其客户端装饰的窗口，也将它们绘制为纯色矩形。
+将此项设置为 `false`，即使对于使用客户端装饰的窗口，也将它们绘制为窗口周围的边框。
 
-This property can be useful for rectangular windows that do not support the xdg-decoration protocol.
+此属性对于不支持 xdg-decoration 协议的矩形窗口很有用。
 
-| With Background                                  | Without Background                                  |
+| 带背景                                           | 不带背景                                           |
 | ------------------------------------------------ | --------------------------------------------------- |
-| ![A screenshot displaying a window with draw-border-with-background set to true](./img/simple-egl-border-with-background.png) | ![A screenshot displaying a window with draw-border-with-background set to false](./img/simple-egl-border-without-background.png) |
+| ![一张显示一个窗口，其 draw-border-with-background 设置为 true 的截图](./img/simple-egl-border-with-background.png) | ![一张显示一个窗口，其 draw-border-with-background 设置为 false 的截图](./img/simple-egl-border-without-background.png) |
 
 ```kdl
 window-rule {
@@ -706,16 +704,16 @@ window-rule {
 }
 ```
 
-#### `focus-ring` and `border`
+#### `focus-ring` 和 `border`
 
 <sup>Since: 0.1.6</sup>
 
-Override the focus ring and border options for the window.
+覆盖窗口的焦点环和边框选项。
 
-These rules have the same options as the normal [`focus-ring` and `border` config in the layout section](./Configuration:-Layout.md#focus-ring-and-border), so check the documentation there.
+这些规则与布局部分中普通的 [`focus-ring` 和 `border` 配置](./Configuration:-Layout.md#focus-ring-and-border) 具有相同的选项，因此请查看那里的文档。
 
-However, in addition to `off` to disable the border/focus ring, this window rule has an `on` flag that enables the border/focus ring for the window even if it was otherwise disabled.
-The `on` flag has precedence over the `off` flag, in case both are set.
+但是，除了用于禁用边框/焦点环的 `off` 之外，此窗口规则还有一个 `on` 标志，即使边框/焦点环在其他情况下被禁用，也会为窗口启用它。
+如果同时设置了 `on` 和 `off` 标志，则 `on` 标志优先级高于 `off` 标志。
 
 ```kdl
 window-rule {
@@ -737,15 +735,15 @@ window-rule {
 
 <sup>Since: 25.02</sup>
 
-Override the shadow options for the window.
+覆写窗口的阴影选项。
 
-This rule has the same options as the normal [`shadow` config in the layout section](./Configuration:-Layout.md#shadow), so check the documentation there.
+此规则与布局部分中普通的 [`shadow` 配置](./Configuration:-Layout.md#shadow) 具有相同的选项，因此请查看那里的文档。
 
-However, in addition to `on` to enable the shadow, this window rule has an `off` flag that disables the shadow for the window even if it was otherwise enabled.
-The `on` flag has precedence over the `off` flag, in case both are set.
+但是，除了用于启用阴影的 `on` 之外，此窗口规则还有一个 `off` 标志，即使阴影在其他情况下被启用，也会为窗口禁用它。
+如果同时设置了 `on` 和 `off` 标志，`on` 标志的优先级高于 `off` 标志。
 
 ```kdl
-// Turn on shadows for floating windows.
+// 为浮动窗口启用阴影。
 window-rule {
     match is-floating=true
 
@@ -759,12 +757,12 @@ window-rule {
 
 <sup>Since: 25.02</sup>
 
-Override the tab indicator options for the window.
+覆写窗口的选项卡指示器选项。
 
-Options in this rule match the same options as the normal [`tab-indicator` config in the layout section](./Configuration:-Layout.md#tab-indicator), so check the documentation there.
+此规则中的选项与布局部分中普通的 [`tab-indicator` 配置](./Configuration:-Layout.md#tab-indicator) 具有相同的选项，因此请查看那里的文档。
 
 ```kdl
-// Make KeePassXC tab have a dark red inactive color.
+// 让 KeePassXC 标签页具有深红色的非活动颜色。
 window-rule {
     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
 
@@ -778,10 +776,10 @@ window-rule {
 
 <sup>Since: 0.1.6</sup>
 
-Set the corner radius of the window.
+设置窗口的圆角半径。
 
-On its own, this setting will only affect the border and the focus ring—they will round their corners to match the geometry corner radius.
-If you'd like to force-round the corners of the window itself, set [`clip-to-geometry true`](#clip-to-geometry) in addition to this setting.
+仅此设置本身，只会影响边框和焦点环——它们会将其圆角调整为与几何圆角半径匹配。
+如果你想强制圆角化窗口本身的角，请在此设置之外再设置 [`clip-to-geometry true`](#clip-to-geometry)。
 
 ```kdl
 window-rule {
@@ -789,12 +787,12 @@ window-rule {
 }
 ```
 
-The radius is set in logical pixels, and controls the radius of the window itself, that is, the inner radius of the border:
+半径以逻辑像素为单位设置，并控制窗口本身的半径，即边框的内半径：
 
-![A screenshot showing a window with every corner rounded](./img/geometry-corner-radius.png)
+![一张显示一个每个角都圆角的窗口的截图](./img/geometry-corner-radius.png)
 
-Instead of one radius, you can set four, for each corner.
-The order is the same as in CSS: top-left, top-right, bottom-right, bottom-left.
+你可以设置四个半径，而不是一个，分别对应每个角。
+顺序与 CSS 中的相同：左上、右上、右下、左下。
 
 ```kdl
 window-rule {
@@ -802,19 +800,19 @@ window-rule {
 }
 ```
 
-This way, you can match GTK 3 applications which have square bottom corners:
+这样，你可以匹配具有方形底角的 GTK 3 应用程序：
 
-![A screenshot showing a window with only the top corners rounded](./img/different-corner-radius.png)
+![一张显示一个只有顶部圆角的窗口的截图](./img/different-corner-radius.png)
 
 #### `clip-to-geometry`
 
 <sup>Since: 0.1.6</sup>
 
-Clips the window to its visual geometry.
+将窗口裁剪到其视觉几何形状。
 
-This will cut out any client-side window shadows, and also round window corners according to `geometry-corner-radius`.
+这将裁剪掉任何客户端窗口阴影，并根据 `geometry-corner-radius` 圆角化窗口角。
 
-![A screenshot showing a window with rounded corners, clipped to the visual geometry](./img/clip-to-geometry.png)
+![一张显示一个带有圆角的窗口，被裁剪到视觉几何形状的截图](./img/clip-to-geometry.png)
 
 ```kdl
 window-rule {
@@ -822,9 +820,9 @@ window-rule {
 }
 ```
 
-Enable border, set [`geometry-corner-radius`](#geometry-corner-radius) and `clip-to-geometry`, and you've got a classic setup:
+启用边框，设置 [`geometry-corner-radius`](#geometry-corner-radius) 和 `clip-to-geometry`，你就得到了一个经典的设置：
 
-![A screenshot showing a window with rounded corners, and a border](./img/border-radius-clip.png)
+![一张显示一个带有圆角和边框的窗口的截图](./img/border-radius-clip.png)
 
 ```kdl
 prefer-no-csd
@@ -849,15 +847,15 @@ window-rule {
 
 <sup>Since: 25.05</sup>
 
-Informs the window that it is tiled.
-Usually, windows will react by becoming rectangular and hiding their client-side shadows.
-Windows that snap their size to a grid (e.g. terminals like [foot](https://codeberg.org/dnkl/foot)) will usually disable this snapping when they are tiled.
+通知窗口它已被平铺。
+通常，窗口会通过变为矩形并隐藏其客户端阴影来做出反应。
+将其大小吸附到网格的窗口（例如像 [foot](https://codeberg.org/dnkl/foot) 这样的终端）在被平铺时通常会禁用此吸附。
 
-By default, niri will set the tiled state to `true` together with [`prefer-no-csd`](./Configuration:-Miscellaneous.md#prefer-no-csd) in order to improve behavior for apps that don't support server-side decorations.
-You can use this window rule to override this, for example to get rectangular windows with CSD.
+默认情况下，niri 会将平铺状态设置为 `true`，同时设置 [`prefer-no-csd`](./Configuration:-Miscellaneous.md#prefer-no-csd)，以改善不支持服务器端装饰的应用程序的行为。
+你可以使用此窗口规则来覆写此设置，例如，在使用 CSD 的情况下获得矩形窗口。
 
 ```kdl
-// Make tiled windows rectangular while using CSD.
+// 在使用 CSD 的同时使平铺窗口变为矩形。
 window-rule {
     match is-floating=false
 
@@ -869,9 +867,9 @@ window-rule {
 
 <sup>Since: 25.02</sup>
 
-Make your windows FLOAT up and down.
+让你的窗口上下浮动。
 
-This is an April Fools' 2025 feature.
+这是一个 2025 年愚人节的功能。
 
 ```kdl
 window-rule {
@@ -887,18 +885,18 @@ https://github.com/user-attachments/assets/3f4cb1a4-40b2-4766-98b7-eec014c19509
 
 </video>
 
-#### Size Overrides
+#### 大小覆盖
 
-You can amend the window's minimum and maximum size in logical pixels.
+你可以以逻辑像素为单位修改窗口的最小和最大尺寸。
 
-Keep in mind that the window itself always has a final say in its size.
-These values instruct niri to never ask the window to be smaller than the minimum you set, or to be bigger than the maximum you set.
+请记住，窗口本身对其大小始终拥有最终决定权。
+这些值指示 niri 永远不要请求窗口小于你设置的最小值，或大于你设置的最大值。
 
 > [!NOTE]
-> `max-height` will only apply to automatically-sized windows if it is equal to `min-height`.
-> Either set it equal to `min-height`, or change the window height manually after opening it with `set-window-height`.
+> `max-height` 仅在等于 `min-height` 时才会应用于自动调整大小的窗口。
+> 要么将其设置为等于 `min-height`，要么在使用 `set-window-height` 打开窗口后手动更改窗口高度。
 >
-> This is a limitation of niri's window height distribution algorithm.
+> 这是 niri 窗口高度分配算法的一个限制。
 
 ```kdl
 window-rule {
@@ -910,7 +908,7 @@ window-rule {
 ```
 
 ```kdl
-// Fix OBS with server-side decorations missing a minimum width.
+// 修复缺少最小宽度的、带服务器端装饰的 OBS。
 window-rule {
     match app-id=r#"^com\.obsproject\.Studio$"#
 
