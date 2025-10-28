@@ -34,7 +34,7 @@ https://docs.akass.cn/niri/
 
 - [niri 官方仓库](https://github.com/YaLTeR/niri)
 - [niri 官方文档](https://github.com/YaLTeR/niri/wiki)
-- [niri 新版文档](yalter.github.io/niri/)
+- [niri 新版文档](https://yalter.github.io/niri/)
 - [向 niri 报告问题](https://github.com/YaLTeR/niri/issues)
 
 ---
