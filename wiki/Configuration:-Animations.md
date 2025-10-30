@@ -1,20 +1,20 @@
-### Overview
+### 概述
 
-Niri has several animations which you can configure in the same way.
-Additionally, you can disable or slow down all animations at once.
+Niri 提供了多种可配置的动画效果，这些动画采用统一的配置方式。
+此外，您还可以一次性禁用所有动画或降低所有动画速度。
 
-Here's a quick glance at the available animations with their default values.
+以下是可用动画及其默认值的快速概览。
 
 ```kdl
 animations {
-    // Uncomment to turn off all animations.
-    // You can also put "off" into each individual animation to disable it.
+    // 取消注释以关闭所有动画。
+    // 你也可以在单个动画中设置 "off" 来禁用它。
     // off
 
-    // Slow down all animations by this factor. Values below 1 speed them up instead.
+    // 按此系数减慢所有动画速度。低于 1 的值会加快动画速度。
     // slowdown 3.0
 
-    // Individual animations.
+    // 单个动画配置。
 
     workspace-switch {
         spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
@@ -61,19 +61,19 @@ animations {
 }
 ```
 
-### Animation Types
+### 动画类型
 
-There are two animation types: easing and spring.
-Each animation can be either an easing or a spring.
+有两种动画类型：easing（缓动）和 spring（弹簧）。
+每个动画都可以配置为缓动或弹簧效果。
 
-#### Easing
+#### 缓动动画
 
-This is a relatively common animation type that changes the value over a set duration using an interpolation curve.
+这是一种相对常见的动画类型，它使用插值曲线在设定的持续时间内改变数值。
 
-To use this animation, set the following parameters:
+要使用此动画，请设置以下参数：
 
-- `duration-ms`: duration of the animation in milliseconds.
-- `curve`: the easing curve to use.
+- `duration-ms`：动画的持续时间，以毫秒为单位。
+- `curve`：要使用的缓动曲线。
 
 ```kdl
 animations {
@@ -84,36 +84,36 @@ animations {
 }
 ```
 
-Currently, niri only supports five curves.
-You can get a feel for them on pages like [easings.net](https://easings.net/).
+目前，niri 仅支持五种曲线。
+你可以在 [easings.net](https://easings.net/) 这样的网页上感受它们的效果。
 
 - `ease-out-quad` <sup>Since: 0.1.5</sup>
 - `ease-out-cubic`
 - `ease-out-expo`
 - `linear` <sup>Since: 0.1.6</sup>
 - `cubic-bezier` <sup>Since: 25.08</sup>
-    A custom [cubic Bézier curve](https://www.w3.org/TR/css-easing-1/#cubic-bezier-easing-functions). You need to set 4 numbers defining the control points of the curve, for example:
+    一个自定义的[三次贝塞尔曲线](https://www.w3.org/TR/css-easing-1/#cubic-bezier-easing-functions)。你需要设置 4 个数字来定义曲线的控制点，例如：
     ```kdl
     animations {
         window-open {
-            // Same as CSS cubic-bezier(0.05, 0.7, 0.1, 1)
+            // 等同于 CSS cubic-bezier(0.05, 0.7, 0.1, 1)
             curve "cubic-bezier" 0.05 0.7 0.1 1
         }
     }
     ```
-    You can tweak the cubic-bezier parameters on pages like [easings.co](https://easings.co?curve=0.05,0.7,0.1,1).
+    你可以在 [easings.co](https://easings.co?curve=0.05,0.7,0.1,1) 这样的网页上调整 cubic-bezier 参数。
 
-#### Spring
+#### 弹簧动画
 
-Spring animations use a model of a physical spring to animate the value.
-They notably feel better with touchpad gestures, because they take into account the velocity of your fingers as you release the swipe.
-Springs can also oscillate / bounce at the end with the right parameters if you like that sort of thing, but they don't have to (and by default they mostly don't).
+弹簧动画使用物理弹簧模型来驱动数值变化。
+在触摸板手势操作中，它的体验感会显著提升，因为动画会捕捉到你松开手指时的速度。
+如果你喜欢，可以通过设置合适的参数让动画在末尾产生振荡或回弹效果，但这并非必须（默认情况下基本不会启用）。
 
-Due to springs using a physical model, the animation parameters are less obvious and generally should be tuned with trial and error.
-Notably, you cannot directly set the duration.
-You can use the [Elastic](https://flathub.org/apps/app.drey.Elastic) app to help visualize how the spring parameters change the animation.
+由于弹簧动画基于物理模型，其参数不那么直观，通常需要通过反复测试来进行调整。
+值得注意的是，你无法直接设置动画的持续时间。
+你可以使用 [Elastic](https://flathub.org/apps/app.drey.Elastic) 应用来帮助可视化弹簧参数对动画的影响。
 
-A spring animation is configured like this, with three mandatory parameters:
+弹簧动画的配置如下，包含三个必需参数：
 
 ```kdl
 animations {
@@ -123,34 +123,34 @@ animations {
 }
 ```
 
-The `damping-ratio` goes from 0.1 to 10.0 and has the following properties:
+`damping-ratio` 的取值范围是 0.1 到 10.0，其特性如下：
 
-- below 1.0: underdamped spring, will oscillate in the end.
-- above 1.0: overdamped spring, won't oscillate.
-- 1.0: critically damped spring, comes to rest in minimum possible time without oscillations.
+- 低于 1.0：欠阻尼弹簧，最终会产生振荡。
+- 高于 1.0：过阻尼弹簧，不会产生振荡。
+- 1.0：临界阻尼弹簧，能在不产生振荡的前提下，以最短时间恢复静止。
 
-However, even with damping ratio = 1.0, the spring animation may oscillate if "launched" with enough velocity from a touchpad swipe.
+然而，即使阻尼比设置为 1.0，如果通过触摸板滑动赋予了动画足够大的“初始”速度，动画仍可能产生振荡。
 
 > [!WARNING]
-> Overdamped springs currently have some numerical stability issues and may cause graphical glitches.
-> Therefore, setting `damping-ratio` above `1.0` is not recommended.
+> 过阻尼弹簧目前存在一些数值稳定性问题，可能会导致图形错误。
+> 因此，不建议将 `damping-ratio` 设置得高于 `1.0`。
 
-Lower `stiffness` will result in a slower animation more prone to oscillation.
+较低的 `stiffness`（刚度）会导致动画变慢，并且更容易产生振荡。
 
-Set `epsilon` to a lower value if the animation "jumps" at the end.
+如果动画在末尾出现“跳跃”，请将 `epsilon` 设置为更低的值。
 
 > [!TIP]
-> The spring *mass* (which you can see in Elastic) is hardcoded to 1.0 and cannot be changed.
-> Instead, change `stiffness` proportionally.
-> E.g. increasing mass by 2× is the same as decreasing stiffness by 2×.
+> 弹簧的*质量*（你可以在 Elastic 中看到）被硬编码为 1.0，无法更改。
+> 请改为按比例更改 `stiffness`。
+> 例如，将质量增加 2 倍与将刚度减小 2 倍的效果相同。
 
-### Animations
+### 动画
 
-Now let's go into more detail on the animations that you can configure.
+现在让我们更详细地介绍你可以配置的动画。
 
 #### `workspace-switch`
 
-Animation when switching workspaces up and down, including after the vertical touchpad gesture (a spring is recommended).
+上下切换工作区时的动画，包括垂直触摸板手势之后（推荐使用弹簧）。
 
 ```kdl
 animations {
@@ -162,9 +162,9 @@ animations {
 
 #### `window-open`
 
-Window opening animation.
+窗口打开动画。
 
-This one uses an easing type by default.
+此动画默认使用缓动类型。
 
 ```kdl
 animations {
@@ -179,19 +179,19 @@ animations {
 
 <sup>Since: 0.1.6</sup>
 
-You can write a custom shader for drawing the window during an open animation.
+你可以编写一个自定义着色器，在打开动画期间绘制窗口。
 
-See [this example shader](./examples/open_custom_shader.frag) for a full documentation with several animations to experiment with.
+请参阅[此示例着色器](./examples/open_custom_shader.frag)获取完整文档，其中包含多个可供试验的动画效果。
 
-If a custom shader fails to compile, niri will print a warning and fall back to the default, or previous successfully compiled shader.
-When running niri as a systemd service, you can see the warnings in the journal: `journalctl -ef /usr/bin/niri`
+如果自定义着色器编译失败，niri 将打印警告并回退到默认或先前成功编译的着色器。
+当 niri 作为 systemd 服务运行时，你可以在日志中看到警告：`journalctl -ef /usr/bin/niri`
 
 > [!WARNING]
 >
-> Custom shaders do not have a backwards compatibility guarantee.
-> I may need to change their interface as I'm developing new features.
+> 自定义着色器不保证向后兼容。
+> 我在开发新功能时，可能会更改它们的接口。
 
-Example: open will fill the current geometry with a solid gradient that gradually fades in.
+示例：打开时将用纯色渐变填充当前几何区域，并逐渐淡入。
 
 ```kdl
 animations {
@@ -222,9 +222,9 @@ animations {
 
 <sup>Since: 0.1.5</sup>
 
-Window closing animation.
+窗口关闭动画。
 
-This one uses an easing type by default.
+此动画默认使用缓动类型。
 
 ```kdl
 animations {
@@ -239,19 +239,19 @@ animations {
 
 <sup>Since: 0.1.6</sup>
 
-You can write a custom shader for drawing the window during a close animation.
+你可以编写一个自定义着色器，在关闭动画期间绘制窗口。
 
-See [this example shader](./examples/close_custom_shader.frag) for a full documentation with several animations to experiment with.
+请参阅[此示例着色器](./examples/close_custom_shader.frag)获取完整文档，其中包含多个可供试验的动画效果。
 
-If a custom shader fails to compile, niri will print a warning and fall back to the default, or previous successfully compiled shader.
-When running niri as a systemd service, you can see the warnings in the journal: `journalctl -ef /usr/bin/niri`
+如果自定义着色器编译失败，niri 将打印警告并回退到默认或先前成功编译的着色器。
+当 niri 作为 systemd 服务运行时，你可以在日志中看到警告：`journalctl -ef /usr/bin/niri`
 
 > [!WARNING]
 >
-> Custom shaders do not have a backwards compatibility guarantee.
-> I may need to change their interface as I'm developing new features.
+> 自定义着色器不保证向后兼容。
+> 我在开发新功能时，可能会更改它们的接口。
 
-Example: close will fill the current geometry with a solid gradient that gradually fades away.
+示例：关闭时将用纯色渐变填充当前几何形状，并逐渐淡出。
 
 ```kdl
 animations {
@@ -277,11 +277,11 @@ animations {
 
 #### `horizontal-view-movement`
 
-All horizontal camera view movement animations, such as:
+所有水平摄像机视角移动动画，例如：
 
-- When a window off-screen is focused and the camera scrolls to it.
-- When a new window appears off-screen and the camera scrolls to it.
-- After a horizontal touchpad gesture (a spring is recommended).
+- 当一个屏幕外的窗口被聚焦，相机随之滚动到该窗口时。
+- 当一个新窗口出现在屏幕外，相机随之滚动到该窗口时。
+- 在执行水平触摸板手势之后（推荐使用弹簧动画）。
 
 ```kdl
 animations {
@@ -295,16 +295,16 @@ animations {
 
 <sup>Since: 0.1.5</sup>
 
-Movement of individual windows within a workspace.
+工作区内单个窗口的移动。
 
-Includes:
+包括：
 
-- Moving window columns with `move-column-left` and `move-column-right`.
-- Moving windows inside a column with `move-window-up` and `move-window-down`.
-- Moving windows out of the way upon window opening and closing.
-- Window movement between columns when consuming/expelling.
+- 使用 `move-column-left` 和 `move-column-right` 移动窗口列。
+- 使用 `move-window-up` 和 `move-window-down` 在同一列内移动窗口。
+- 在窗口打开或关闭时，移动其他窗口以腾出空间。
+- 在执行销毁或弹出操作时，窗口在列之间的移动。
 
-This animation *does not* include the camera view movement, such as scrolling the workspace left and right.
+此动画*不包括*摄像机视角移动，例如左右滚动工作区。
 
 ```kdl
 animations {
@@ -318,10 +318,10 @@ animations {
 
 <sup>Since: 0.1.5</sup>
 
-Window resize animation.
+窗口大小调整动画。
 
-Only manual window resizes are animated, i.e. when you resize the window with `switch-preset-column-width` or `maximize-column`.
-Also, very small resizes (up to 10 pixels) are not animated.
+只有手动调整窗口大小时才会有动画，即当你使用 `switch-preset-column-width` 或 `maximize-column` 调整窗口大小时。
+此外，非常小的调整（直到 10 像素）都没有动画。
 
 ```kdl
 animations {
@@ -335,19 +335,19 @@ animations {
 
 <sup>Since: 0.1.6</sup>
 
-You can write a custom shader for drawing the window during a resize animation.
+你可以编写一个自定义着色器，在调整大小动画期间绘制窗口。
 
-See [this example shader](./examples/resize_custom_shader.frag) for a full documentation with several animations to experiment with.
+请参阅[此示例着色器](./examples/resize_custom_shader.frag)获取完整文档，其中包含多个可供试验的动画效果。
 
-If a custom shader fails to compile, niri will print a warning and fall back to the default, or previous successfully compiled shader.
-When running niri as a systemd service, you can see the warnings in the journal: `journalctl -ef /usr/bin/niri`
+如果自定义着色器编译失败，niri 将打印警告并回退到默认或先前成功编译的着色器。
+当 niri 作为 systemd 服务运行时，你可以在日志中看到警告：`journalctl -ef /usr/bin/niri`
 
 > [!WARNING]
 >
-> Custom shaders do not have a backwards compatibility guarantee.
-> I may need to change their interface as I'm developing new features.
+> 自定义着色器不保证向后兼容。
+> 我在开发新功能时，可能会更改它们的接口。
 
-Example: resize will show the next (after resize) window texture right away, stretched to the current geometry.
+示例：调整大小时将立即显示下一个（调整大小后）的窗口纹理，并拉伸到当前几何区域。
 
 ```kdl
 animations {
@@ -365,9 +365,9 @@ animations {
 
 #### `config-notification-open-close`
 
-The open/close animation of the config parse error and new default config notifications.
+配置解析错误和新的默认配置通知的打开/关闭动画。
 
-This one uses an underdamped spring by default (`damping-ratio=0.6`) which causes a slight oscillation in the end.
+此动画默认使用欠阻尼弹簧（`damping-ratio=0.6`），这会在动画末尾引起轻微振荡。
 
 ```kdl
 animations {
@@ -381,9 +381,9 @@ animations {
 
 <sup>Since: 25.08</sup>
 
-The open/close animation of the exit confirmation dialog.
+退出确认对话框的打开/关闭动画。
 
-This one uses an underdamped spring by default (`damping-ratio=0.6`) which causes a slight oscillation in the end.
+此动画默认使用欠阻尼弹簧（`damping-ratio=0.6`），这会在动画末尾引起轻微振荡。
 
 ```kdl
 animations {
@@ -397,7 +397,7 @@ animations {
 
 <sup>Since: 0.1.8</sup>
 
-The open (fade-in) animation of the screenshot UI.
+截图用户界面的打开（淡入）动画。
 
 ```kdl
 animations {
@@ -412,7 +412,7 @@ animations {
 
 <sup>Since: 25.05</sup>
 
-The open/close zoom animation of the [Overview](./Overview.md).
+[全局概览](./Overview.md)的打开/关闭缩放动画。
 
 ```kdl
 animations {
@@ -422,20 +422,20 @@ animations {
 }
 ```
 
-### Synchronized Animations
+### 同步动画
 
 <sup>Since: 0.1.5</sup>
 
-Sometimes, when two animations are meant to play together synchronized, niri will drive them both with the same configuration.
+有时，当两个动画需要同步播放时，niri 将使用相同的配置来驱动它们。
 
-For example, if a window resize causes the view to move, then that view movement animation will also use the `window-resize` configuration (rather than the `horizontal-view-movement` configuration).
-This is especially important for animated resizes to look good when using `center-focused-column "always"`.
+例如，如果调整窗口大小导致视角移动，那么该视角移动动画也将使用 `window-resize` 配置（而不是 `horizontal-view-movement` 配置）。
+这对于在使用 `center-focused-column "always"` 时让动画调整大小看起来流畅尤为重要。
 
-As another example, resizing a window in a column vertically causes other windows to move up or down into their new position.
-This movement will use the `window-resize` configuration, rather than the `window-movement` configuration, to keep the animations synchronized.
+再举一个例子，在列中垂直调整窗口大小时，会导致其他窗口向上或向下移动到新位置。
+此移动将使用 `window-resize` 配置，而不是 `window-movement` 配置，以保持动画同步。
 
-A few actions are still missing this synchronization logic, since in some cases it is difficult to implement properly.
-Therefore, for the best results, consider using the same parameters for related animations (they are all the same by default):
+有少数操作仍然缺少此同步逻辑，因为在某些情况下难以正确实现。
+因此，为获得最佳效果，请考虑为相关动画使用相同的参数（默认情况下它们都是相同的）：
 
 - `horizontal-view-movement`
 - `window-movement`
