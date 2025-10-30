@@ -2,8 +2,8 @@
 
 <sup>Since: 25.01</sup>
 
-图层规则允许你为单个 layer-shell 界面调整行为。
-它们包含 `match` 和 `exclude` 指令，用于控制规则应该应用于哪些 layer-shell 界面，并提供了一系列可供你设置的属性。
+图层规则允许您为单个 layer-shell 界面调整行为。
+它们包含 `match` 和 `exclude` 指令，用于控制规则应该应用于哪些 layer-shell 界面，并提供了一系列可供您设置的属性。
 
 图层规则的处理和工作方式与窗口规则非常相似，只是匹配器和属性不同。
 请阅读[窗口规则的 wiki 页面](./Configuration:-Window-Rules.md)以了解匹配是如何工作的。
@@ -44,7 +44,7 @@ layer-rule {
 #### `namespace`
 
 这是一个正则表达式，应匹配界面命名空间中的任何位置。
-你可以阅读[此处文档](https://docs.rs/regex/latest/regex/#syntax)了解支持的正则表达式语法。
+您可以阅读[此处文档](https://docs.rs/regex/latest/regex/#syntax)了解支持的正则表达式语法。
 
 ```kdl
 // 匹配命名空间包含 "waybar" 的界面，
@@ -53,7 +53,7 @@ layer-rule {
 }
 ```
 
-你可以通过运行 `niri msg layers` 找到所有打开的 layer-shell 界面的命名空间。
+您可以通过运行 `niri msg layers` 找到所有打开的 layer-shell 界面的命名空间。
 
 #### `at-startup`
 
@@ -75,7 +75,7 @@ layer-rule {
 
 #### `block-out-from`
 
-你可以阻止 xdg-desktop-portal 屏幕录制或所有屏幕捕获捕获界面。
+您可以阻止 xdg-desktop-portal 屏幕录制或所有屏幕捕获捕获界面。
 它们将被替换为纯黑色矩形。
 
 这对于通知可能很有用。
@@ -125,7 +125,7 @@ layer-rule {
 > 图层界面无法告知 niri 其*视觉几何形状*。
 > 例如，如果图层界面包含一些不可见的边距（如 mako），niri 无法知道这一点，并将在整个界面（包括不可见的边距）后面绘制阴影。
 >
-> 因此，要使用 niri 阴影，你需要配置 layer-shell 客户端以移除它们自己的边距或阴影。
+> 因此，要使用 niri 阴影，您需要配置 layer-shell 客户端以移除它们自己的边距或阴影。
 
 ```kdl
 // 为 fuzzel 添加阴影。
@@ -179,7 +179,7 @@ layer-rule {
 
 <sup>Since: 25.05</sup>
 
-让你的图层界面上下浮动。
+让您的图层界面上下浮动。
 
 这个功能是[2025 年愚人节功能](./Configuration:-Window-Rules.md#baba-is-float)的正统续作。
 
