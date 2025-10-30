@@ -1,13 +1,13 @@
-### Overview
+### 概述
 
-Niri has several options that are only useful for debugging, or are experimental and have known issues.
-They are not meant for normal use.
+Niri 提供了一些仅用于调试或实验性的选项，这些选项存在已知问题。
+它们不适用于正常使用。
 
 > [!CAUTION]
-> These options are **not** covered by the [config breaking change policy](./Configuration:-Introduction.md#breaking-change-policy).
-> They can change or stop working at any point with little notice.
+> 这些选项**不**受[配置破坏性变更策略](./Configuration:-Introduction.md#breaking-change-policy)的约束。
+> 它们可能在任何时候更改或停止工作，且不会提前通知。
 
-Here are all the options at a glance:
+以下是所有选项的概览：
 
 ```kdl
 debug {
@@ -44,9 +44,9 @@ binds {
 
 ### `preview-render`
 
-Make niri render the monitors the same way as for a screencast or a screen capture.
+使 niri 以与屏幕录制或屏幕捕获相同的方式渲染显示器。
 
-Useful for previewing the `block-out-from` window rule.
+可用于预览 `block-out-from` 窗口规则的效果。
 
 ```kdl
 debug {
@@ -57,10 +57,10 @@ debug {
 
 ### `enable-overlay-planes`
 
-Enable direct scanout into overlay planes.
-May cause frame drops during some animations on some hardware (which is why it is not the default).
+启用直接扫描输出到覆盖层平面（overlay planes）。
+在某些硬件上，这可能导致在某些动画期间掉帧（这也是为什么它不默认开启）。
 
-Direct scanout into the primary plane is always enabled.
+直接扫描输出到主平面（primary plane）则始终是开启的。
 
 ```kdl
 debug {
@@ -70,10 +70,10 @@ debug {
 
 ### `disable-cursor-plane`
 
-Disable the use of the cursor plane.
-The cursor will be rendered together with the rest of the frame.
+禁用光标平面（cursor plane）的使用。
+光标将与帧的其余部分一起渲染。
 
-Useful to work around driver bugs on specific hardware.
+可用于解决特定硬件上的驱动程序错误。
 
 ```kdl
 debug {
@@ -83,7 +83,7 @@ debug {
 
 ### `disable-direct-scanout`
 
-Disable direct scanout to both the primary plane and the overlay planes.
+禁用直接扫描输出到主平面和覆盖层平面。
 
 ```kdl
 debug {
@@ -93,11 +93,11 @@ debug {
 
 ### `restrict-primary-scanout-to-matching-format`
 
-Restricts direct scanout to the primary plane to when the window buffer exactly matches the composition swapchain format.
+仅当窗口缓冲区的格式与合成交换链（swapchain）格式完全一致时，才允许向主平面做直接扫描输出。
 
-This flag may prevent unexpected bandwidth changes when going between composition and scanout.
-The plan is to make it default in the future, when we implement a way to tell the clients the composition swapchain format.
-As is, it may prevent some clients (mpv on my machine) from scanning out to the primary plane.
+此标志可以避免在合成和扫描输出之间出现意外的带宽波动。
+计划在未来实现一种告知客户端合成交换链格式的方法后，将其设为默认选项。
+就目前而言，它可能会阻止某些客户端（比如我机器上的 mpv）扫描输出到主平面。
 
 ```kdl
 debug {
@@ -107,9 +107,9 @@ debug {
 
 ### `render-drm-device`
 
-Override the DRM device that niri will use for all rendering.
+覆写 niri 将用于所有渲染的 DRM 设备。
 
-You can set this to make niri use a different primary GPU than the default one.
+您可以设置此项以让 niri 使用与默认设备不同的主 GPU。
 
 ```kdl
 debug {
@@ -121,8 +121,8 @@ debug {
 
 <sup>Since: next release</sup>
 
-List DRM devices that niri will ignore.
-Useful for GPU passthrough when you don't want niri to open a certain device.
+列出 niri 将忽略的 DRM 设备。
+在进行 GPU 直通且不希望 niri 打开特定设备时很有用。
 
 ```kdl
 debug {
@@ -135,9 +135,9 @@ debug {
 
 <sup>Since: 25.01</sup>
 
-Forces PipeWire screencasting to use the invalid modifier, even when DRM offers more modifiers.
+强制 PipeWire 屏幕录制使用无效修饰符，即使 DRM 提供了更多修饰符。
 
-Useful for testing the invalid modifier code path that is hit by drivers that don't support modifiers.
+对于测试由不支持修饰符的驱动程序触发的无效修饰符代码路径很有用。
 
 ```kdl
 debug {
@@ -147,11 +147,11 @@ debug {
 
 ### `dbus-interfaces-in-non-session-instances`
 
-Make niri create its D-Bus interfaces even if it's not running as a `--session`.
+让 niri 即使未以 `--session` 启动，也创建其 D-Bus 接口。
 
-Useful for testing screencasting changes without having to relogin.
+方便调试录屏相关改动，无需重登录。
 
-The main niri instance will *not* currently take back the interfaces when you close the test instance, so you will need to relogin in the end to make screencasting work again.
+当您关闭测试实例时，主 niri 实例目前*不会*回收接口，因此最终您需要重新登录才能使屏幕录制再次工作。
 
 ```kdl
 debug {
@@ -161,9 +161,9 @@ debug {
 
 ### `wait-for-frame-completion-before-queueing`
 
-Wait until every frame is done rendering before handing it over to DRM.
+等待每一帧完成渲染后再将其交给 DRM。
 
-Useful for diagnosing certain synchronization and performance problems.
+对于诊断某些同步和性能问题很有用。
 
 ```kdl
 debug {
@@ -173,9 +173,9 @@ debug {
 
 ### `emulate-zero-presentation-time`
 
-Emulate zero (unknown) presentation time returned from DRM.
+模拟从 DRM 返回的零（未知）呈现时间。
 
-This is a thing on NVIDIA proprietary drivers, so this flag can be used to test that niri doesn't break too hard on those systems.
+这在 NVIDIA 专有驱动程序上是一个问题，因此可以使用此标志来测试 niri 在这些系统上不会出现严重问题。
 
 ```kdl
 debug {
@@ -187,12 +187,12 @@ debug {
 
 <sup>Since: 0.1.9</sup>
 
-Disable throttling resize events sent to windows.
+禁用向窗口发送的尺寸调整事件节流。
 
-By default, when resizing quickly (e.g. interactively), a window will only receive the next size once it has made a commit for the previously requested size.
-This is required for resize transactions to work properly, and it also helps certain clients which don't batch incoming resizes from the compositor.
+默认情况下，在快速调整尺寸时（例如，交互式），窗口必须先提交上一次请求的尺寸，才会收到新的尺寸事件。
+这是调整大小事务正常工作所必需的，并且也有助于某些不批量处理来自合成器的传入调整大小的客户端。
 
-Disabling resize throttling will send resizes to windows as fast as possible, which is potentially very fast (for example, on a 1000 Hz mouse).
+禁用调整尺寸节流将以最快速度将调整尺寸事件发送到窗口，这可能非常快（例如，使用 1000 Hz 的鼠标时）。
 
 ```kdl
 debug {
@@ -204,13 +204,13 @@ debug {
 
 <sup>Since: 0.1.9</sup>
 
-Disable transactions (resize and close).
+禁用事务（调整大小和关闭）。
 
-By default, windows which must resize together, do resize together.
-For example, all windows in a column must resize at the same time to maintain the combined column height equal to the screen height, and to maintain the same window width.
+默认情况下，必须一起调整大小的窗口会一起调整大小。
+例如，列中的所有窗口必须同时调整大小，以保持组合的列高度等于屏幕高度，并保持相同的窗口宽度。
 
-Transactions make niri wait until all windows finish resizing before showing them all on screen in one, synchronized frame.
-For them to work properly, resize throttling shouldn't be disabled (with the previous debug flag).
+事务使 niri 等待所有窗口完成调整大小，然后在一个同步的帧中将它们全部显示在屏幕上。
+为了使它们正常工作，不应禁用调整大小节流（使用先前的调试标志）。
 
 ```kdl
 debug {
@@ -222,8 +222,8 @@ debug {
 
 <sup>Since: 0.1.10</sup>
 
-By default, niri will disable the internal laptop monitor when the laptop lid is closed.
-This flag turns off this behavior and will leave the internal laptop monitor on.
+默认情况下，当笔记本电脑盖关闭时，niri 将禁用笔记本电脑内置的显示器。
+此标志会关闭此行为，并将保持内置的显示器开启。
 
 ```kdl
 debug {
@@ -235,9 +235,9 @@ debug {
 
 <sup>Since: 0.1.10</sup>
 
-Disables the make/model/serial monitor names, as if niri fails to read them from the EDID.
+禁用制造商/型号/序列号显示器名称，就像 niri 无法从 EDID 读取它们一样。
 
-Use this flag to work around a crash present in 0.1.9 and 0.1.10 when connecting two monitors with matching make/model/serial.
+使用此标志来解决 0.1.9 和 0.1.10 版本中连接两个具有相同制造商/型号/序列号的显示器时出现的崩溃问题。
 
 ```kdl
 debug {
@@ -249,8 +249,8 @@ debug {
 
 <sup>Since: 25.01</sup>
 
-Disables heuristic automatic focusing for new windows.
-Only windows that activate themselves with a valid xdg-activation token will be focused.
+禁用对新窗口的启发式自动聚焦。
+只有使用有效的 xdg-activation 令牌自行激活的窗口才会被聚焦。
 
 ```kdl
 debug {
@@ -262,14 +262,14 @@ debug {
 
 <sup>Since: 25.05</sup>
 
-Widely-used clients such as Discord and Telegram make fresh xdg-activation tokens upon clicking on their tray icon or on their notification.
-Most of the time, these fresh tokens will have invalid serials, because the app needs to be focused to get a valid serial, and if the user clicks on a tray icon or a notification, it is usually because the app *isn't* focused, and the user wants to focus it.
+像 Discord 和 Telegram 这样常用的客户端，在用户点击其托盘图标或通知时，会生成新的 xdg-activation 令牌。
+大多数情况下，这些新令牌将具有无效的序列号，因为应用程序需要被聚焦才能获得有效的序列号，而如果用户点击托盘图标或通知，通常是因为应用程序*未被*聚焦，而用户想要聚焦它。
 
-By default, niri ignores xdg-activation tokens with invalid serials, to prevent windows from randomly stealing focus.
-This debug flag makes niri honor such tokens, making the aforementioned widely-used apps get focus when clicking on their tray icon or notification.
+默认情况下，niri 忽略具有无效序列号的 xdg-activation 令牌，以防止窗口随机窃取焦点。
+此调试标志使 niri 接受此类令牌，使上述常用的应用程序在点击其托盘图标或通知时获得焦点。
 
-Amusingly, clicking on a notification sends the app a perfectly valid activation token from the notification daemon, but these apps seem to simply ignore it.
-Maybe in the future these apps/toolkits (Electron, Qt) are fixed, making this debug flag unnecessary.
+有趣的是，点击通知会向应用程序发送一个来自通知守护程序的完全有效的激活令牌，但这些应用程序似乎完全忽略了它。
+也许未来这些应用程序/工具包（Electron、Qt）会被修复，使此调试标志变得不必要。
 
 ```kdl
 debug {
@@ -281,11 +281,11 @@ debug {
 
 <sup>Since: 25.08</sup>
 
-Skips redrawing the screen from cursor input while variable refresh rate is active.
+在可变刷新率激活期间，跳过仅因光标输入而重绘屏幕。
 
-Useful for games where the cursor isn't drawn internally to prevent erratic VRR shifts in response to cursor movement.
+对于内部未绘制光标的游戏非常有用，可以防止因光标移动而导致不稳定的 VRR 变化。
 
-Note that the current implementation has some issues, for example when there's nothing redrawing the screen (like a game), the rendering will appear to completely freeze (since cursor movements won't cause redraws).
+请注意，当前的实现存在一些问题，例如，当没有任何东西重绘屏幕（如游戏）时，渲染将看起来完全冻结（因为光标移动不会导致重绘）。
 
 ```kdl
 debug {
@@ -297,11 +297,11 @@ debug {
 
 <sup>Since: 25.08</sup>
 
-Some clients (notably, Chromium- and Electron-based, like Teams or Slack) erroneously use the Activated xdg window state instead of keyboard focus for things like deciding whether to send notifications for new messages, or for picking where to show an IME popup.
-Niri keeps the Activated state on unfocused workspaces and invisible tabbed windows (to reduce unwanted animations), surfacing bugs in these applications.
+某些客户端（特别是基于 Chromium 和 Electron 的客户端，如 Teams 或 Slack）错误地使用 Activated xdg 窗口状态而不是键盘焦点来决定是否为新消息发送通知，或决定在哪里显示 IME 弹出窗口等事项。
+Niri 在未聚焦的工作空间和不可见的标签页窗口上保持 Activated 状态（以减少不必要的动画），从而暴露了这些应用程序中的错误。
 
-Set this debug flag to work around these problems.
-It will cause niri to drop the Activated state for all unfocused windows.
+设置此调试标志以解决这些问题。
+它将导致 niri 为所有未聚焦的窗口丢弃 Activated 状态。
 
 ```kdl
 debug {
@@ -313,12 +313,12 @@ debug {
 
 <sup>Since: 25.08</sup>
 
-When connecting monitors, niri sets their max bpc to 8 in order to reduce display bandwidth and to potentially allow more monitors to be connected at once.
-Restricting bpc to 8 is not a problem since we don't support HDR or color management yet and can't really make use of higher bpc.
+连接显示器时，niri 会将其最大 bpc 设置为 8，以减少显示带宽并可能允许同时连接更多显示器。
+将 bpc 限制为 8 不是问题，因为我们尚不支持 HDR 或色彩管理，无法真正利用更高的 bpc。
 
-Apparently, setting max bpc to 8 breaks some displays driven by AMDGPU.
-If this happens to you, set this debug flag, which will prevent niri from changing max bpc.
-AMDGPU bug report: https://gitlab.freedesktop.org/drm/amd/-/issues/4487.
+显然，将最大 bpc 设置为 8 会破坏某些由 AMDGPU 驱动的显示器。
+如果您遇到这种问题，请设置此调试标志，这将阻止 niri 更改最大 bpc。
+AMDGPU 错误报告：https://gitlab.freedesktop.org/drm/amd/-/issues/4487。
 
 ```kdl
 debug {
@@ -326,15 +326,15 @@ debug {
 }
 ```
 
-### Key Bindings
+### 按键绑定
 
-These are not debug options, but rather key bindings.
+这些不是调试选项，而是按键绑定。
 
 #### `toggle-debug-tint`
 
-Tints all surfaces green, unless they are being directly scanned out.
+将所有表面着色为绿色，除非它们正在被直接扫描输出。
 
-Useful to check if direct scanout is working.
+用于检查直接扫描输出是否正常工作。
 
 ```kdl
 binds {
@@ -346,9 +346,9 @@ binds {
 
 <sup>Since: 0.1.6</sup>
 
-Tints regions marked as opaque with blue and the rest of the render elements with red.
+将标记为不透明的区域着色为蓝色，其余渲染元素着色为红色。
 
-Useful to check how Wayland surfaces and internal render elements mark their parts as opaque, which is a rendering performance optimization.
+用于检查 Wayland 表面和内部渲染元素如何将其部分标记为不透明，这是一种渲染性能优化。
 
 ```kdl
 binds {
@@ -360,7 +360,7 @@ binds {
 
 <sup>Since: 0.1.6</sup>
 
-Tints damaged regions with red.
+将损坏区域着色为红色。
 
 ```kdl
 binds {
