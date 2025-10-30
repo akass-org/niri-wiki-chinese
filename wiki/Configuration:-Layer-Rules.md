@@ -1,21 +1,21 @@
-### Overview
+### 概述
 
 <sup>Since: 25.01</sup>
 
-Layer rules let you adjust behavior for individual layer-shell surfaces.
-They have `match` and `exclude` directives that control which layer-shell surfaces the rule should apply to, and a number of properties that you can set.
+图层规则允许你为单个 layer-shell 界面调整行为。
+它们包含 `match` 和 `exclude` 指令，用于控制规则应该应用于哪些 layer-shell 界面，并提供了一系列可供你设置的属性。
 
-Layer rules are processed and work very similarly to window rules, just with different matchers and properties.
-Please read the [window rules wiki page](./Configuration:-Window-Rules.md) to learn how matching works.
+图层规则的处理和工作方式与窗口规则非常相似，只是匹配器和属性不同。
+请阅读[窗口规则的 wiki 页面](./Configuration:-Window-Rules.md)以了解匹配是如何工作的。
 
-Here are all matchers and properties that a layer rule could have:
+以下是图层规则可以拥有的所有匹配器和属性：
 
 ```kdl
 layer-rule {
     match namespace="waybar"
     match at-startup=true
 
-    // Properties that apply continuously.
+    // 持久生效的属性。
     opacity 0.5
     block-out-from "screencast"
     // block-out-from "screen-capture"
@@ -37,31 +37,31 @@ layer-rule {
 }
 ```
 
-### Layer Surface Matching
+### 图层界面匹配
 
-Let's look at the matchers in more detail.
+让我们更仔细地看一下这些匹配器。
 
 #### `namespace`
 
-This is a regular expression that should match anywhere in the surface namespace.
-You can read about the supported regular expression syntax [here](https://docs.rs/regex/latest/regex/#syntax).
+这是一个正则表达式，应匹配界面命名空间中的任何位置。
+你可以阅读[此处文档](https://docs.rs/regex/latest/regex/#syntax)了解支持的正则表达式语法。
 
 ```kdl
-// Match surfaces with namespace containing "waybar",
+// 匹配命名空间包含 "waybar" 的界面，
 layer-rule {
     match namespace="waybar"
 }
 ```
 
-You can find the namespaces of all open layer-shell surfaces by running `niri msg layers`.
+你可以通过运行 `niri msg layers` 找到所有打开的 layer-shell 界面的命名空间。
 
 #### `at-startup`
 
-Can be `true` or `false`.
-Matches during the first 60 seconds after starting niri.
+可以是 `true` 或 `false`。
+在启动 niri 后的前 60 秒内进行匹配。
 
 ```kdl
-// Show layer-shell surfaces with 0.5 opacity at niri startup, but not afterwards.
+// 在 niri 启动时以 0.5 的不透明度显示 layer-shell 界面，之后不再显示。
 layer-rule {
     match at-startup=true
 
@@ -69,23 +69,23 @@ layer-rule {
 }
 ```
 
-### Dynamic Properties
+### 动态属性
 
-These properties apply continuously to open layer-shell surfaces.
+这些属性持续生效于打开的 layer-shell 界面。
 
 #### `block-out-from`
 
-You can block out surfaces from xdg-desktop-portal screencasts or all screen captures.
-They will be replaced with solid black rectangles.
+你可以阻止 xdg-desktop-portal 屏幕录制或所有屏幕捕获捕获界面。
+它们将被替换为纯黑色矩形。
 
-This can be useful for notifications.
+这对于通知可能很有用。
 
-The same caveats and instructions apply as for the [`block-out-from` window rule](./Configuration:-Window-Rules.md#block-out-from), so check the documentation there.
+同样的注意事项和说明适用于 [`block-out-from` 窗口规则](./Configuration:-Window-Rules.md#block-out-from)，因此请查看那里的文档。
 
-![Screenshot showing a notification visible normally, but blocked out on OBS.](./img/layer-block-out-from-screencast.png)
+![截图显示一个通知在正常情况下可见，但在 OBS 中被屏蔽。](./img/layer-block-out-from-screencast.png)
 
 ```kdl
-// Block out mako notifications from screencasts.
+// 阻止 mako 通知被屏幕录制捕获。
 layer-rule {
     match namespace="^notifications$"
 
@@ -95,14 +95,14 @@ layer-rule {
 
 #### `opacity`
 
-Set the opacity of the surface.
-`0.0` is fully transparent, `1.0` is fully opaque.
-This is applied on top of the surface's own opacity, so semitransparent surfaces will become even more transparent.
+设置界面的不透明度。
+`0.0` 是完全透明，`1.0` 是完全不透明。
+这是在界面自身的不透明度之上应用的，因此半透明的界面将变得更加透明。
 
-Opacity is applied to every child of the layer-shell surface individually, so subsurfaces and pop-up menus will show window content behind them.
+不透明度会单独应用于 layer-shell 界面的每个子项，因此子界面和弹出菜单将显示其后面的窗口内容。
 
 ```kdl
-// Make fuzzel semitransparent.
+// 让 fuzzel 半透明。
 layer-rule {
     match namespace="^launcher$"
 
@@ -114,21 +114,21 @@ layer-rule {
 
 <sup>Since: 25.02</sup>
 
-Override the shadow options for the surface.
+为界面覆盖阴影选项。
 
-These rules have the same options as the normal [`shadow` config in the layout section](./Configuration:-Layout.md#shadow), so check the documentation there.
+这些规则的选项与布局部分中的常规 [`shadow` 配置](./Configuration:-Layout.md#shadow)相同，因此请查阅那里的文档。
 
-Unlike window shadows, layer surface shadows always need to be enabled with a layer rule.
-That is, enabling shadows in the layout config section won't automatically enable them for layer surfaces.
+与窗口阴影不同，图层界面的阴影必须通过一条图层规则来启用。
+也就是说，在布局配置部分启用阴影，并不会自动为图层界面启用它们。
 
 > [!NOTE]
-> Layer surfaces have no way to tell niri about their *visual geometry*.
-> For example, if a layer surface includes some invisible margins (like mako), niri has no way of knowing that, and will draw the shadow behind the entire surface, including the invisible margins.
+> 图层界面无法告知 niri 其*视觉几何形状*。
+> 例如，如果图层界面包含一些不可见的边距（如 mako），niri 无法知道这一点，并将在整个界面（包括不可见的边距）后面绘制阴影。
 >
-> So to use niri shadows, you'll need to configure layer-shell clients to remove their own margins or shadows.
+> 因此，要使用 niri 阴影，你需要配置 layer-shell 客户端以移除它们自己的边距或阴影。
 
 ```kdl
-// Add a shadow for fuzzel.
+// 为 fuzzel 添加阴影。
 layer-rule {
     match namespace="^launcher$"
 
@@ -136,7 +136,7 @@ layer-rule {
         on
     }
 
-    // Fuzzel defaults to 10 px rounded corners.
+    // Fuzzel 默认设置为 10 像素圆角。
     geometry-corner-radius 10
 }
 ```
@@ -145,9 +145,9 @@ layer-rule {
 
 <sup>Since: 25.02</sup>
 
-Set the corner radius of the surface.
+设置界面的圆角半径。
 
-This setting will only affect the shadow—it will round its corners to match the geometry corner radius.
+此设置仅影响阴影——它将使阴影的角落变圆以匹配几何圆角半径。
 
 ```kdl
 layer-rule {
@@ -161,13 +161,13 @@ layer-rule {
 
 <sup>Since: 25.05</sup>
 
-Set to `true` to place the surface into the backdrop visible in the [Overview](./Overview.md) and between workspaces.
+设置为 `true` 可将该界面放置到在[概览](./Overview.md)和工作区之间可见的背景中。
 
-This will only work for *background* layer surfaces that ignore exclusive zones (typical for wallpaper tools).
-Layers within the backdrop will ignore all input.
+这仅适用于忽略独占区域的*背景*图层界面（壁纸工具的典型情况）。
+背景内的图层将忽略所有输入。
 
 ```kdl
-// Put swaybg inside the overview backdrop.
+// 将 swaybg 放入概览背景中。
 layer-rule {
     match namespace="^wallpaper$"
 
@@ -179,12 +179,12 @@ layer-rule {
 
 <sup>Since: 25.05</sup>
 
-Make your layer surfaces FLOAT up and down.
+让你的图层界面上下浮动。
 
-This is a natural extension of the [April Fools' 2025 feature](./Configuration:-Window-Rules.md#baba-is-float).
+这个功能是[2025 年愚人节功能](./Configuration:-Window-Rules.md#baba-is-float)的正统续作。
 
 ```kdl
-// Make fuzzel FLOAT.
+// 让 fuzzel 浮起来。
 layer-rule {
     match namespace="^launcher$"
 
