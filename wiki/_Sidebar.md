@@ -37,7 +37,7 @@
 
 ## Development
 * [设计原则](./Development:-Design-Principles.md)
-* [Developing niri](./Development:-Developing-niri.md)
+* [开发 niri](./Development:-Developing-niri.md)
 * [Documenting niri](./Development:-Documenting-niri.md)
 * [Fractional Layout](./Development:-Fractional-Layout.md)
 * [Redraw Loop](./Development:-Redraw-Loop.md)
