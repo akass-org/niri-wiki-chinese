@@ -124,3 +124,21 @@ binds {
     Super+Alt+L allow-when-locked=true { spawn "swaylock"; }
 }
 ```
+
+### 我该如何根据连接的显示器来更改输出配置？
+
+如果你需要根据所连接的显示器来应用不同的输出配置，可以使用 [Kanshi](https://gitlab.freedesktop.org/emersion/kanshi)。
+
+Kanshi 拥有自己独立的简易配置，并通过 IPC 与 niri 进行通信。 你可能需要在 niri 的 config.kdl 配置文件中启动 kanshi，例如： `spawn-at-startup "/usr/bin/kanshi"`
+
+举个例子，如果你希望在连接外接显示器时，对笔记本屏幕应用不同的缩放比例，那么你可以使用类似这样的 Kanshi 配置：
+```
+profile {
+	output eDP-1 enable scale 1.0
+}
+
+profile {
+	output HDMI-A-1 enable scale 1.0 position 0,0
+	output eDP-1 enable scale 1.25 position 1920,0
+}
+```
