@@ -38,7 +38,7 @@
 ## Development
 * [设计原则](./Development:-Design-Principles.md)
 * [开发 niri](./Development:-Developing-niri.md)
-* [Documenting niri](./Development:-Documenting-niri.md)
+* [niri 文档](./Development:-Documenting-niri.md)
 * [Fractional Layout](./Development:-Fractional-Layout.md)
 * [Redraw Loop](./Development:-Redraw-Loop.md)
 * [动画时机](./Development:-Animation-Timing.md)
