@@ -40,5 +40,5 @@
 * [开发 niri](./Development:-Developing-niri.md)
 * [niri 文档](./Development:-Documenting-niri.md)
 * [分数布局](./Development:-Fractional-Layout.md)
-* [Redraw Loop](./Development:-Redraw-Loop.md)
+* [重绘循环](./Development:-Redraw-Loop.md)
 * [动画时机](./Development:-Animation-Timing.md)
