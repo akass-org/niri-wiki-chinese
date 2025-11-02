@@ -91,21 +91,21 @@ nav:
     - 无障碍: Accessibility.md
     - 名称与徽标: Name-and-Logo.md
     - 常见问题: FAQ.md
-  - Configuration:
-    - Introduction: Configuration:-Introduction.md
-    - Input: Configuration:-Input.md
-    - Outputs: Configuration:-Outputs.md
-    - Key Bindings: Configuration:-Key-Bindings.md
-    - Switch Events: Configuration:-Switch-Events.md
-    - Layout: Configuration:-Layout.md
-    - Named Workspaces: Configuration:-Named-Workspaces.md
-    - Miscellaneous: Configuration:-Miscellaneous.md
-    - Window Rules: Configuration:-Window-Rules.md
-    - Layer Rules: Configuration:-Layer-Rules.md
-    - Animations: Configuration:-Animations.md
-    - Gestures: Configuration:-Gestures.md
-    - Debug Options: Configuration:-Debug-Options.md
-    - Include: Configuration:-Include.md
+  - 配置:
+    - 简介: Configuration:-Introduction.md
+    - 输入: Configuration:-Input.md
+    - 输出: Configuration:-Outputs.md
+    - 按键绑定: Configuration:-Key-Bindings.md
+    - 开关事件: Configuration:-Switch-Events.md
+    - 布局: Configuration:-Layout.md
+    - 命名工作区: Configuration:-Named-Workspaces.md
+    - 杂项: Configuration:-Miscellaneous.md
+    - 窗口规则: Configuration:-Window-Rules.md
+    - 图层规则: Configuration:-Layer-Rules.md
+    - 动画: Configuration:-Animations.md
+    - 手势: Configuration:-Gestures.md
+    - 调试选项: Configuration:-Debug-Options.md
+    - 包含: Configuration:-Include.md
   - Development:
     - Design Principles: Development:-Design-Principles.md
     - Developing niri: Development:-Developing-niri.md
