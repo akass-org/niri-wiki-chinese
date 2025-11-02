@@ -1,39 +1,39 @@
 <sup>Since: next release</sup>
 
-You can include other files at the top level of the config.
+您可以在配置的顶部包含其他文件。
 
 ```kdl,must-fail
-// Some settings...
+// 一些设置...
 
 include "colors.kdl"
 
-// Some more settings...
+// 更多设置...
 ```
 
-Included files have the same structure as the main config file.
-Settings from included files will be merged with the settings from the main config file.
+被包含的文件与主配置文件具有相同的结构。
+来自被包含文件的设置将与主配置文件中的设置合并。
 
-Included config files can in turn include more files.
-All included files are watched for changes, and the config live-reloads when any of them change.
+被包含的配置文件可以继续包含更多文件。
+所有被包含的文件都会被监视其更改，当其中任何一个文件发生变化时，配置将实时重新加载。
 
-Includes work only at the top level of the config:
+包含操作仅在配置的顶部有效：
 
 ```kdl,must-fail
-// All good: include at the top level.
+// 正确：在顶部包含。
 include "something.kdl"
 
 layout {
-    // NOT allowed: include inside some other section.
+    // 不允许：在其他部分内部包含。
     include "other.kdl"
 }
 ```
 
-### Positionality
+### 位置性
 
-Includes are *positional*.
-They will override options set *prior* to them.
-Window rules from included files will be inserted at the position of the `include` line.
-For example:
+包含操作具有*位置性*。
+它们会覆盖在它们*之前*设置的选项。
+来自被包含文件的窗口规则将被插入到 `include` 行所在的位置。
+例如：
 
 ```kdl
 // colors.kdl
@@ -56,21 +56,21 @@ layout {
     }
 }
 
-// This overrides the border color and the backdrop color to green.
+// 这会将边框颜色和背景颜色覆盖为绿色。
 include "colors.kdl"
 
-// This sets the overview backdrop color to red again.
+// 这会再次将全局概览的背景颜色设置为红色。
 overview {
     backdrop-color "red"
 }
 ```
 
-The end result:
+最终结果是：
 
-- the border color is green (from `colors.kdl`),
-- the overview backdrop color is red (it was set *after* `colors.kdl`).
+- 边框颜色为绿色（来自 `colors.kdl`），
+- 全局概览背景颜色为红色（它是在 `colors.kdl` *之后*设置的）。
 
-Another example:
+另一个例子：
 
 ```kdl
 // rules.kdl
@@ -86,7 +86,7 @@ window-rule {
     open-maximized true
 }
 
-// Window rules get inserted at this position.
+// 窗口规则在此位置插入。
 include "rules.kdl"
 
 window-rule {
@@ -95,14 +95,14 @@ window-rule {
 }
 ```
 
-This is equivalent to the following config file:
+这等效于以下配置文件：
 
 ```kdl
 window-rule {
     open-maximized true
 }
 
-// Included from rules.kdl.
+// 从 rules.kdl 包含。
 window-rule {
     match app-id="Alacritty"
     open-maximized false
@@ -114,15 +114,15 @@ window-rule {
 }
 ```
 
-### Merging
+### 合并
 
-Most config sections are merged between includes, meaning that you can set only a few properties, and only those properties will change.
+大多数配置部分在包含之间会进行合并，这意味着您可以只设置少数几个属性，并且只有这些属性会被更改。
 
 ```kdl
 // colors.kdl
 layout {
-    // Does not affect gaps, border width, etc.
-    // Only changes colors as written.
+    // 不影响间隙、边框宽度等。
+    // 仅更改所写的颜色。
     focus-ring {
         active-color "blue"
     }
@@ -138,8 +138,8 @@ layout {
 include "colors.kdl"
 
 layout {
-    // Does not set border and focus-ring colors,
-    // so colors from colors.kdl are used.
+    // 不设置边框和聚焦环颜色，
+    // 因此使用 colors.kdl 中的颜色。
     gaps 8
 
     border {
@@ -148,9 +148,9 @@ layout {
 }
 ```
 
-#### Multipart sections
+#### 多部分 sections
 
-Multipart sections like `window-rule`, `output`, or `workspace` are inserted as is without merging:
+像 `window-rule`、`output` 或 `workspace` 这样的多部分配置段会按原样插入，不进行合并：
 
 ```kdl
 // laptop.kdl
@@ -167,12 +167,12 @@ output "DP-2" {
 
 include "laptop.kdl"
 
-// End result: both DP-2 and eDP-1 settings.
+// 最终结果：DP-2 和 eDP-1 的设置都存在。
 ```
 
-#### Binds
+#### 按键绑定
 
-`binds` will override previously-defined conflicting keys:
+`binds` 会覆盖先前定义的冲突按键：
 
 ```kdl
 // binds.kdl
@@ -186,36 +186,36 @@ binds {
 include "binds.kdl"
 
 binds {
-    // Overrides Mod+T from binds.kdl.
+    // 覆盖 binds.kdl 中的 Mod+T。
     Mod+T { spawn "foot"; }
 }
 ```
 
-#### Flags
+#### 标志
 
-Most flags can be disabled with `false`:
+大多数标志可以通过 `false` 来禁用：
 
 ```kdl
 // csd.kdl
 
-// Write "false" to explicitly disable.
+// 写入 "false" 以明确禁用。
 prefer-no-csd false
 ```
 
 ```kdl,must-fail
 // config.kdl
 
-// Enable prefer-no-csd in the main config.
+// 在主配置中启用 prefer-no-csd。
 prefer-no-csd
 
-// Including csd.kdl will disable it again.
+// 包含 csd.kdl 会再次禁用它。
 include "csd.kdl"
 ```
 
-#### Non-merging sections
+#### 非合并配置段
 
-Some sections where the contents represent a combined structure are not merged.
-Examples are `struts`, `preset-column-widths`, individual subsections in `animations`, pointing device sections in `input`.
+某些其内容表示组合结构的配置段不会被合并。
+例如 `struts`、`preset-column-widths`、`animations` 中的各个子配置段、`input` 中的指针设备配置段。
 
 ```kdl
 // struts.kdl
@@ -238,24 +238,24 @@ layout {
 
 include "struts.kdl"
 
-// Struts are not merged.
-// End result is only left and right struts.
+// Struts 不会被合并。
+// 最终结果只有左右 struts。
 ```
 
-### Border special case
+### 边框特殊情况
 
-There's one special case that differs between the main config and included configs.
+在主配置和包含配置之间存在一个特殊情况的差异。
 
-Writing `layout { border {} }` in an included config does nothing (since no properties are changed).
-However, writing the same in the main config will *enable* the border, i.e. it's equivalent to `layout { border { on; } }`.
+在被包含的配置中写入 `layout { border {} }` 不会产生任何效果（因为没有属性被更改）。
+然而，在主配置中写入相同内容会*启用*边框，即它等效于 `layout { border { on; } }`。
 
-So, if you want to move your layout configuration from the main config to a separate file, remember to add `on` to the border section, for example:
+因此，如果您想将布局配置从主配置移动到单独的文件中，请记得在边框部分添加 `on`，例如：
 
 ```kdl
 // separate.kdl
 layout {
     border {
-        // Add this line:
+        // 添加此行：
         on
 
         width 4
@@ -265,6 +265,6 @@ layout {
 }
 ```
 
-The reason for this special case is that this is how it historically worked: back when I added borders, we didn't have any `on` flags, so I made writing the `border {}` section enable the border, with an explicit `off` to disable it.
-It wouldn't be too problematic to change it, however the default config always had a pre-filled `layout { border { off; } }` section with a note saying that commenting out the `off` is enough to enable the border.
-Many people likely have this part of the default config embedded in their configs now, so changing how it works would just cause a lot of confusion.
+这种特殊情况的原因是它历史上的工作方式：当初我添加边框时，我们没有任何 `on` 标志，所以我让写入 `border {}` 部分来启用边框，并通过显式的 `off` 来禁用它。
+现在更改它不会有太大问题，但是默认配置总是有一个预填充的 `layout { border { off; } }` 部分，并附有注释说明注释掉 `off` 就足以启用边框。
+现在许多人很可能在其配置中嵌入了默认配置的这一部分，因此更改其工作方式只会引起很多困惑。
