@@ -1,113 +1,94 @@
-## General principles
+## 基本原则。
 
-These are some of the general principles that I try to follow throughout niri.
-They can be sidestepped in specific circumstances if there's a good reason.
+这里有一些我试图在开发niri时遵循的基本原则。在特定情况下，如果有正当理由，可以绕过这些程序。
 
-### Opening a new window should not affect the sizes of any existing windows.
+### 打开一个新窗口的时候不应该影响其他窗口的大小。
 
-This is the main annoyance with traditional tiling: you want to open a new window, but it messes with your existing window sizes.
-Especially when you're looking at a big window like a browser or an image editor, want to open a quick terminal for something, and it makes the big window unusably small, or reflows the content, or clips part of the window.
+传统平铺布局的主要弊端在于：你想打开一个新窗口，它却会影响现有窗口的大小。尤其是在你正在查看浏览器或图像编辑器等大窗口时，如果想快速打开一个终端，它会导致大窗口变得非常小，难以使用，或者内容重新排版，甚至裁剪掉窗口的一部分。
 
-The usual workaround in tiling WMs is to use more workspaces: when you need a new window, you go to an empty workspace and open it there (this way, you also get your entire screen for the new window, rather than a smaller part of it).
+平铺式窗口管理器的常用解决方法是使用更多工作区：当需要打开新窗口时，您可以转到空白工作区并在那里打开它（这样，新窗口就可以占据整个屏幕，而不是屏幕的一小部分）。
 
-Scrollable tiling offers an alternative: for temporary windows, you can just open them, do what you need, and close, all without messing up the other windows or having to go to a new workspace.
-It also lets you group together more related windows on the same workspace by having less frequently used ones scrolled out of the view.
+可滚动平铺提供了一种替代方案：对于临时窗口，您可以直接打开它们，完成所需操作，然后关闭，而无需影响其他窗口或切换到新的工作区。它还允许您将同一工作区中更多相关的窗口分组在一起，方法是将不常用的窗口滚动到视图之外。
 
-### The focused window should not move around on its own.
+### 聚焦窗口不应该自行移动。
 
-In particular: windows opening, closing, and resizing to the left of the focused window should not cause it to visually move.
+具体来说：在焦点窗口左侧打开、关闭和调整窗口大小时，不应导致焦点窗口在视觉上移动。
 
-The focused window is the window you're working in.
-And stuff happening outside the view shouldn't mess with what you're focused on.
+当前聚焦的窗口就是你正在工作的窗口。窗口外发生的事情不应该干扰你正在关注的内容。
 
-### Actions should apply immediately.
+### 行为应立即生效。
 
-This is important both for compositor responsiveness and predictability, and for keeping the code sane and free of edge cases and unnecessary asynchrony.
+这对于合成器的响应速度和可预测性都很重要，同时也能保持代码的合理性，避免出现极端情况和不必要的异步操作。
 
-- Things like resizing or consuming into column take effect immediately, even if the window needs time to catch up.
-- An animated workspace switch makes your input go to the final workspace and window instantly, without waiting for the animation.
-- Opening the overview (which has a zoom-out animation) lets you grab windows right away, and closing the overview makes your input immediately go back to the windows, without waiting for the zoom back in.
+- 调整窗口大小或将内容分列显示等操作会立即生效，即使窗口需要一些时间才能跟上。
+- 带动画的工作区切换可让您的输入立即传输到最终的工作区和窗口，无需等待动画结束。
+- 打开概览（带有缩小动画）后，您可以立即选中窗口；关闭概览后，您的输入会立即返回到窗口，无需等待窗口重新放大。
 
-### When disabled, eye-candy features should not affect the performance.
+### 禁用后，视觉特效不应影响性能。
 
-Things like animations and custom shaders do not run and are not present in the render tree when disabled.
-Extra offscreen rendering is avoided.
+禁用此功能后，动画和自定义着色器等功能将不会运行，也不会出现在渲染树中。此外，还会避免额外的离屏渲染。
 
-Animations specifically are still "started" even when disabled, but with a duration of 0 (this way, they end as soon as the time is advanced).
-This does not impact performance, but helps avoid a lot of edge cases in the code.
+即使动画被禁用，动画仍然会“开始”，但持续时间为 0（这样，时间一推进，动画就会立即结束）。这不会影响性能，但有助于避免代码中出现许多极端情况。
 
-### Eye-candy features should not cause unreasonable excessive rendering.
+### 视觉效果不应导致不合理的过度渲染。
 
-- For example, clip-to-geometry will prevent direct scanout in many cases (since the window surface is not completely visible). But in the cases where the surface or the subsurface *is* completely visible (fully within the clipped region), it will still allow for direct scanout.
-- For example, animations *can* cause damage and even draw to an offscreen every frame, because they are expected to be short (and can be disabled). However, something like the rounded corners shader should not offscreen or cause excessive damage every frame, because it is long-running and constantly active.
+- 例如，在许多情况下，裁剪到几何体会阻止直接扫描输出（因为窗口表面并非完全可见）。但如果表面或次表面完全可见（完全位于裁剪区域内），则仍然允许直接扫描输出。
+例如，动画可能会造成界面重绘，甚至每帧都离屏绘制，因为它们通常持续时间很短（并且可以被禁用）。然而，像圆角着色器这样的效果不应该每帧都离屏绘制或造成大量的重绘区域，因为它运行时间长且持续激活。
 
-### Be mindful of invisible state.
+### 注意不可见状态。
 
-This is niri state that is not immediately apparent from looking at the screen. This is not bad per se, but you should carefully consider how to reduce the surprise factor.
+这是从屏幕上无法立即察觉的 niri 状态。这本身并非坏事，但您应该仔细考虑如何降低意外发生的可能性。
 
-- For example, when a monitor disconnects, all its workspaces move to another connected monitor. In order to be able to restore these workspaces when the first monitor connects again, these workspaces keep the knowledge of which was their *original monitor*—this is an example of invisible state, since you can't tell it in any way by looking at the screen. This can have surprising consequences: imagine disconnecting a monitor at home, going to work, completely rearranging the windows there, then coming back home, and suddenly some random workspaces end up on your home monitor. In order to reduce this surprise factor, whenever a new window appears on a workspace, that workspace resets its *original monitor* to its current monitor. This way, the workspaces you actively worked on remain where they were.
-- For example, niri preserves the view position whenever a window appears, or whenever a window goes full-screen, to restore it afterward. This way, dealing with temporary things like dialogs opening and closing, or toggling full-screen, becomes less annoying, since it doesn't mess up the view position. This is also invisible state, as you cannot tell by looking at the screen where closing a window will restore the view position. If taken to the extreme (previous view position saved forever for every open window), this can be surprising, as closing long-running windows would result in the view shifting around pretty much randomly. To reduce this surprise factor, niri remembers only one last view position per workspace, and forgets this stored view position upon window focus change.
+- 例如，当一个显示器断开连接时，它的所有工作区都会移动到另一个已连接的显示器上。为了在第一个显示器重新连接后能够恢复这些工作区，这些工作区会保留其*原始显示器*的信息——这是一个不可见状态的例子，因为您无法通过查看屏幕来判断。这可能会带来意想不到的后果：想象一下，您在家里断开了一个显示器，然后去上班，彻底重新排列了那里的窗口，之后回到家，突然发现一些随机的工作区出现在了您家里的显示器上。为了减少这种意外情况，每当一个新窗口出现在工作区中时，该工作区都会将其*原始显示器*重置为当前显示器。这样，您正在使用的工作区就会保持在原来的位置。
+- 例如，niri 会在窗口出现或全屏显示时保存视图位置，以便在之后恢复它。这样，处理对话框的打开和关闭或切换全屏等临时操作就变得不那么麻烦了，因为它不会扰乱视图位置。这也是一种不可见的状态，因为您无法通过观察屏幕来判断关闭窗口后视图位置的恢复情况。如果极端情况下（每个打开的窗口都永久保存之前的视图位置），这可能会造成意外，因为关闭长时间运行的窗口会导致视图位置几乎随机移动。为了减少这种意外情况，niri 为每个工作区只记住一个最后的视图位置，并在窗口焦点切换时忘记该位置。
 
-## Window layout
+## 窗口布局
 
-Here are some design considerations for the window layout logic.
+以下是窗口布局逻辑的一些设计考虑因素。
 
-1. If a window or popup is larger than the screen, it should be aligned in the top left corner.
+1. 如果窗口或弹出窗口大于屏幕，则应将其对齐到左上角。
 
-    The top left area of a window is more likely to contain something important, so it should always be visible.
+    窗口左上角区域更有可能包含重要内容，因此应该始终可见。
 
-1. Setting window width or height to a fixed pixel size (e.g. `set-column-width 1280` or `default-column-width { fixed 1280; }`) will set the size of the window itself, however setting to a proportional size (e.g. `set-column-width 50%`) will set the size of the tile, including the border added by niri.
+2. 将窗口宽度或高度设置为固定像素大小（例如 `set-column-width 1280` 或 `default-column-width { fixed 1280; }`）将设置窗口本身的大小，而设置为比例大小（例如 `set-column-width 50%`）将设置平铺单元的大小，包括 niri 添加的边框。
 
-    - With proportions, the user is looking to tile multiple windows on the screen, so they should include borders.
-    - With fixed sizes, the user wants to test a specific client size or take a specifically sized screenshot, so they should affect the window directly.
-    - After the size is set, it is always converted to a value that includes the borders, to make the code sane. That is, `set-column-width 1000` followed by changing the niri border width will resize the window accordingly.
+    - 当使用比例时，用户的意图是在屏幕上平铺多个窗口，因此尺寸计算中应当包含窗口边框。
+    - 当使用固定尺寸时，用户的目的是测试某个特定客户端窗口的大小，或截取指定尺寸的截图，因此这时尺寸设置应直接作用于窗口内容本身（不包括边框）。
+    - 设置窗口大小后，为了保证代码的合理性，窗口大小始终会转换为包含边框的值。也就是说，先设置 `set-column-width 1000`，然后再更改 niri 的边框宽度，窗口大小就会相应调整。
 
-1. Fullscreen windows are a normal part of the scrolling layout.
+3. 全屏窗口是滚动布局的正常组成部分。
 
-    This is a cool idea that scrollable tiling is uniquely positioned to implement.
-    Fullscreen windows aren't on some "special" layer that covers everything; instead, they are normal tiles that you can switch away from, without disturbing the fullscreen status.
+    这是一个很棒的创意，而可滚动平铺技术恰好能完美实现这一点。全屏窗口并非位于覆盖整个屏幕的“特殊”图层上；相反，它们只是普通的平铺图块，您可以随时切换，而不会影响全屏状态。
 
-    Of course, you do want to cover your entire monitor when focused on a fullscreen window.
-    This is specifically hardcoded into the logic: when the view is stationary on a focused fullscreen window, the top layer-shell layer and the floating windows hide away.
+    当然，当焦点集中在一个全屏窗口时，您肯定希望它覆盖整个显示器。这是在逻辑中明确硬编码的：当视图固定在一个已聚焦的全屏窗口上时，顶层外壳层和浮动窗口都会隐藏起来。
 
-    This is also why fullscreening a floating window makes it go into the scrolling layout.
+    这也是为什么将浮动窗口全屏显示后，它会进入滚动布局的原因。
 
-## Default config
+## 默认配置
 
-The [default config](https://github.com/YaLTeR/niri/blob/main/resources/default-config.kdl) is intended to give a familiar, helpful, and not too jarring experience to new niri users.
-Importantly, it is not a "suggested rice config"; we don't want to startle people with full-on rainbow borders and crazy shaders.
+[默认配置](https://github.com/YaLTeR/niri/blob/main/resources/default-config.kdl)旨在为niri新用户提供熟悉、便捷且不会过于突兀的体验。需要注意的是，这并非“推荐的Rice配置”；我们不想用过于炫酷的彩虹边框和花哨的着色器吓到用户。
 
-Since we're not a complete desktop environment (and don't have the contributor base to become one), we cannot provide a fully integrated experience—distro spins are better positioned to do this.
-As such, new niri users are expected to read through and tinker with the default niri config.
+由于我们并非一个完整的桌面环境（而且也没有足够的贡献者群体来发展成为一个完整的桌面环境），因此我们无法提供完全集成的体验——发行版在这方面更有优势。因此，我们希望新的 niri 用户能够阅读并调整 niri 的默认配置。
 
-The default config is therefore thoroughly commented with links to the relevant wiki sections.
-We don't include every possible option in the default config to avoid overwhelming users too much; anything overly specific or uncommon can stay on the wiki.
-The general rule is to include things that users are reasonably expected to want to change or know how to do.
-We do also advertise our more unique features though like screencast block-out-from.
+因此，默认配置包含详尽的注释，并附有指向相关 wiki 章节的链接。为了避免用户感到信息过载，我们并未在默认配置中包含所有可能的选项；任何过于具体或不常用的选项都可以保留在 wiki 中。一般原则是，默认配置仅包含用户理应想要更改或知道如何操作的内容。当然，我们也会宣传一些更独特的功能，例如屏幕录制屏蔽。
 
-We default to CSD (`prefer-no-csd` is commented out).
-This gives new users easy and familiar way to move and close windows via their titlebars, especially considering that niri doesn't have serverside titlebars (so far at least).
+我们默认使用 CSD（`prefer-no-csd` 已被注释掉）。这为新用户提供了一种简单而熟悉的方式，可以通过标题栏移动和关闭窗口，尤其考虑到 niri 目前还没有服务器端标题栏（至少到目前为止是这样）。
 
-Focus rings are drawn fully behind windows by default.
-While this unfortunately messes with window transparency, [which is a common source of confusion](./FAQ.md#why-are-transparent-windows-tinted-why-is-the-borderfocus-ring-showing-up-through-semitransparent-windows), defaulting to drawing focus rings only around windows would be even worse because it has holes inside clientside rounded corners.
-The ideal solution here would be to propose a Wayland protocol for windows to report their corner radius to the compositor (which would generally help for serverside decorations in different compositors).
+默认情况下，焦点环会完全绘制在窗口后面。虽然这会影响窗口的透明度，[这也是一个常见的误解来源](./FAQ.md#why-are-transparent-windows-tinted-why-is-the-borderfocus-ring-showing-up-through-semitransparent-windows)，但如果默认只在窗口周围绘制焦点环，情况会更糟，因为这样会在客户端的圆角处留下空隙。理想的解决方案是提出一个 Wayland 协议，让窗口向合成器报告其圆角半径（这通常有助于不同合成器中的服务器端装饰）。
 
-The default focus ring is quite thick at 4 px to look well with clientside-decorated windows and be obviously noticeable, and the default gaps are also quite big at 16 px to look well with the default focus ring width.
+默认的焦点环宽度为 4 像素，与客户端装饰的窗口搭配使用效果很好，而且非常醒目；默认的间隙也为 16 像素，与默认的焦点环宽度搭配使用效果很好。
 
-The default input settings like touchpad tap and natural-scroll are how I believe most people want to use their computers.
+默认输入设置例如触摸板点击和自然滚动等是我认为大多数人使用他们电脑的方式。
 
-Shadows default to off because they are a fairly performance-intensive shader, and because many clientside-decorated windows already draw their own shadows.
+阴影默认是关闭的，因为阴影是一种性能消耗较大的着色器，而且许多客户端装饰窗口已经绘制了自己的阴影。
 
-The default screenshot-path matches GNOME Shell.
+默认屏幕截图路径与 GNOME Shell 一致。
 
-Default window rules are limited to fixing known severe issues (WezTerm) and doing something the absolute majority likely wants (make Firefox Picture-in-Picture player floating—it can't do that on its own currently, maybe the pip protocol will change that).
+默认窗口规则仅限于修复已知的严重问题（WezTerm）以及执行绝大多数人可能想要的操作（使 Firefox 画中画播放器浮动——它目前无法自行实现这一点，也许 pip 协议会改变这一点）。
 
-The default binds largely come from my own experience using PaperWM, and from other compositors.
-They assume QWERTY.
-The binds are ordered in a way to gradually introduce you to different bind configuration concepts.
+默认的快捷键配置主要来源于我自己使用 PaperWM 和其他合成器时的经验。这些快捷键默认假设使用 QWERTY 键盘布局。它们的排列方式旨在循序渐进地引导你理解不同的快捷键配置概念。
 
-The general system is: if a hotkey switches somewhere, then adding <kbd>Ctrl</kbd> will move the focused window or column there.
-Adding <kbd>Shift</kbd> does an alternative action: for focus and movement it starts going across monitors, for resizes it starts acting on window height rather than width, etc.
-Workspace switching on <kbd>Mod</kbd><kbd>U</kbd>/<kbd>I</kbd> is one key up from <kbd>Mod</kbd><kbd>J</kbd>/<kbd>K</kbd> used for window switching.
+整体的快捷键设计逻辑如下：
+如果某个快捷键用于切换位置，那么在此基础上加上 <kbd>Ctrl</kbd>，就会变成移动焦点窗口或列到该位置。加上 <kbd>Shift</kbd> 则会触发替代操作：对于焦点或移动类快捷键，它会跨显示器移动或切换；对于调整大小类快捷键，它会从控制宽度改为控制高度，依此类推。工作区切换的快捷键 <kbd>Mod</kbd><kbd>U</kbd> / <kbd>I</kbd>，位于用于窗口切换的 <kbd>Mod</kbd><kbd>J</kbd> / <kbd>K</kbd> 的上一排键，这样排列是为了方便记忆和连贯操作。
 
-Since <kbd>Alt</kbd> is a modifier in nested niri, binds with explicit <kbd>Alt</kbd> are mainly the ones only useful on the host, for example spawning a screen locker.
+由于 <kbd>Alt</kbd> 是嵌套 niri 中的修饰符，因此带有显式 <kbd>Alt</kbd> 的绑定主要只在主机上有用，例如生成屏幕锁定程序。

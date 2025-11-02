@@ -36,7 +36,7 @@
 * [包含](./Configuration:-Include.md)
 
 ## Development
-* [Design Principles](./Development:-Design-Principles.md)
+* [设计原则](./Development:-Design-Principles.md)
 * [Developing niri](./Development:-Developing-niri.md)
 * [Documenting niri](./Development:-Documenting-niri.md)
 * [Fractional Layout](./Development:-Fractional-Layout.md)
