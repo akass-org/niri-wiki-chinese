@@ -1,35 +1,25 @@
-There are two main coordinate spaces in niri: physical (pixels of every individual output) and logical (shared among all outputs, takes into account the scale of every output).
-Wayland clients mostly work in the logical space, and it's the most convenient space to do all the layout in, since it bakes in the output scaling factor.
+niri 中有两个主要的坐标空间：物理空间（每个单独输出的像素）和逻辑空间（所有输出共享，考虑每个输出的缩放比例）。Wayland 客户端主要在逻辑空间中工作，它是进行所有布局的最方便空间，因为它已经包含了输出缩放因子。
 
-However, many things need to be sized or positioned at integer physical coordinates.
-For example, Wayland toplevel buffers are assumed to be placed at an integer physical pixel on an output (and `WaylandSurfaceRenderElement` will do that for you).
-Borders and focus rings should also have a width equal to an integer number of physical pixels to stay crisp (not to mention that `SolidColorRenderElement` does not anti-alias lines at fractional pixel positions).
+然而，许多元素需要以整数物理坐标进行大小或定位。例如，Wayland 顶层缓冲区（toplevel buffer）假设放置在输出设备上的整数物理像素位置（`WaylandSurfaceRenderElement` 会帮你实现）。边框和焦点环的宽度也应等于整数个物理像素，以保持清晰（更不用说 `SolidColorRenderElement` 不会对分数像素位置的线条进行抗锯齿处理）。
 
-Integer physical coordinates do not necessarily correspond to integer logical coordinates though.
-Even with an integer scale = 2, a physical pixel at (1, 1) will be at the logical position of (0.5, 0.5).
-This problem becomes much worse with fractional scale factors where most integer logical coordinates will fall on fractional physical coordinates.
+整数物理坐标并不一定对应于整数逻辑坐标。即使比例因子为 2，物理坐标为 (1, 1) 的像素在逻辑坐标上也会是 (0.5, 0.5)。当比例因子为分数时，这个问题会变得更加严重，因为大多数整数逻辑坐标会落在分数物理坐标上。
 
-Thus, niri uses fractional logical coordinates for most of its layout.
-However, one needs to be very careful to keep things aligned to the physical grid to avoid artifacts like:
+因此，niri 的大部分布局都使用分数逻辑坐标。但是，需要非常小心地保持元素与物理网格对齐，以避免出现以下问题：
 
-* Border width alternating 1 px thicker/thinner
-* Border showing 1 px off from the window at certain positions
-* 1 px gaps around rounded corners
-* Slightly blurry window contents during resizes
-* And so on...
+* 边框宽度交替加粗/减细 1 像素
+* 边框在某些位置会超出窗口边缘 1 像素
+* 圆角周围有 1 像素的间隙
+* 调整窗口大小时，窗口内容略微模糊
+* 等等……
 
-The way it's handled in niri is:
+niri 的处理方式是：
 
-1. All relevant sizes on a workspace are rounded to an integer physical coordinate according to the current output scale. Things like struts, gaps, border widths, working area location.
+1. 工作区中所有相关尺寸均根据当前输出比例四舍五入为整数物理坐标。这些尺寸包括边缘保留区、间隙、边框宽度和工作区域位置等。
 
-    It's important to understand that they remain fractional numbers in the logical space, but these numbers correspond to an integer number of pixels in the physical space.
-    The rounding looks something like: `(logical_size * scale).round() / scale`.
-    Whenever a workspace moves to an output with a different scale (or the output scale changes), all sizes are re-rounded from their original configured values to align with the new physical space.
+    需要注意的是，这些数字在逻辑空间中仍然是小数，但在物理空间中则对应于整数像素数。舍入方式类似于：`(logical_size * scale).round() / scale`。每当工作区移动到具有不同比例的输出（或输出比例发生变化）时，所有尺寸都会根据其原始配置值重新舍入，以与新的物理空间保持一致。
 
-2. The view offset and individual column/tile render offsets are *not* rounded to physical pixels, but:
-3. `tiles_with_render_positions()` rounds tile positions to physical pixels as it returns them,
-4. Custom shaders like opening, closing and resizing windows, are also careful to keep positions and sizes rounded to the physical pixels.
+2. 视图偏移量和各个列/平铺单元渲染偏移量*不会*四舍五入到物理像素，而是：
+3. `tiles_with_render_positions()` 函数在返回平铺单元位置时会将其四舍五入到物理像素值。
+4. 自定义着色器（例如打开、关闭和调整窗口大小）也会注意保持位置和大小与物理像素相等。
 
-The idea is that every tile can assume that it is rendered at an integer physical coordinate, therefore when shifting the position by, say, border width (also rounded to integer physical coordinates), the new position will stay rounded to integer physical coordinates.
-The same logic works for the rest of the layout thanks to gaps, struts and working area being similarly rounded.
-This way, the entire layout is always aligned, as long as it is positioned at an integer physical coordinate (which rounding the tile positions effectively achieves).
+其理念是，每个平铺单元都可以假定其渲染位置为整数物理坐标，因此，当移动平铺单元位置（例如，移动边框宽度，也四舍五入为整数物理坐标）时，新的位置仍然保持整数物理坐标。由于间隙、边缘保留区和工作区域也同样进行了四舍五入，因此布局的其余部分也遵循相同的逻辑。这样，只要整个布局位于整数物理坐标上（平铺单元位置的四舍五入有效地实现了这一点），它就能始终保持对齐。
