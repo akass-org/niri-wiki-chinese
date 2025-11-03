@@ -106,10 +106,10 @@ nav:
     - 手势: Configuration:-Gestures.md
     - 调试选项: Configuration:-Debug-Options.md
     - 包含: Configuration:-Include.md
-  - Development:
-    - Design Principles: Development:-Design-Principles.md
-    - Developing niri: Development:-Developing-niri.md
-    - Documenting niri: Development:-Documenting-niri.md
-    - Fractional Layout: Development:-Fractional-Layout.md
-    - Redraw Loop: Development:-Redraw-Loop.md
-    - Animation Timing: Development:-Animation-Timing.md
+  - 开发:
+    - 设计原则: Development:-Design-Principles.md
+    - 开发 niri: Development:-Developing-niri.md
+    - niri 文档: Development:-Documenting-niri.md
+    - 分数布局: Development:-Fractional-Layout.md
+    - 重绘循环: Development:-Redraw-Loop.md
+    - 动画时机: Development:-Animation-Timing.md
