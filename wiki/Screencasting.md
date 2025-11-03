@@ -137,4 +137,17 @@ binds {
 
 ![窗口化的 Google Slides 演示文稿，另一个窗口显示演讲者视图，还有一个窗口显示 Zoom UI 正在录制演示文稿。](https://github.com/user-attachments/assets/b2b49eea-f5a0-4c0a-b537-51fd1949a59d)
 
+### 屏幕镜像
+
+在进行演示时，将一个输出镜像到另一个输出可能会很有用。
+目前，niri 没有内置的输出镜像功能，但你可以使用第三方工具 [`wl-mirror`](https://github.com/Ferdi265/wl-mirror) ，它可以将一个输出镜像到一个窗口。
+请注意，下面的命令需要安装 [`jq`](https://jqlang.org/download/) 。
+```kdl
+binds {
+    Mod+P repeat=false { spawn-sh "wl-mirror $(niri msg --json focused-output | jq -r .name)"; }
+}
+```
+聚焦到你想要镜像的输出，按下 <kbd>Mod</kbd><kbd>P</kbd> ，然后将 `wl-mirror` 窗口移动到目标输出。
+最后，将 `wl-mirror` 窗口全屏（默认快捷键为 <kbd>Mod</kbd><kbd>Shift</kbd><kbd>F</kbd>）。
+
 [OBS]: https://obsproject.com/
