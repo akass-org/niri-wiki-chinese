@@ -86,7 +86,7 @@ nav:
     - Nvidia: Nvidia.md
     - Xwayland: Xwayland.md
     - 手势操作: Gestures.md
-    - Fullscreen and Maximize: Fullscreen-and-Maximize.md
+    - 全屏和最大化: Fullscreen-and-Maximize.md
     - 打包 niri: Packaging-niri.md
     - 集成 niri: Integrating-niri.md
     - 无障碍: Accessibility.md
