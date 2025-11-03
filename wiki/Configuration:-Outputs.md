@@ -27,6 +27,10 @@ output "eDP-1" {
     layout {
         // ...eDP-1 的布局设置...
     }
+
+    // 自定义模式。注意：可能会损坏您的显示器。
+    // mode custom=true "1920x1080@100"
+    // modeline 173.00  1920 2048 2248 2576  1080 1083 1088 1120 "-hsync" "+vsync"
 }
 
 output "HDMI-A-1" {
@@ -83,6 +87,42 @@ output "HDMI-A-1" {
 //（例如，用于测试目的）。
 output "eDP-1" {
     mode "1280x720"
+}
+```
+
+#### `mode custom=true`
+
+<sup>Since: next release</sup>
+
+您可以通过设置 `custom=true` 来配置一个自定义模式（非显示器提供的模式）。
+在这种情况下，刷新率是必填项。
+
+> [!CAUTION]
+> 自定义模式可能会损坏您的显示器，尤其是 CRT 显示器。
+> 请遵循显示器说明书中的最大支持限制。
+
+```kdl
+// 为该显示器使用自定义模式。
+output "HDMI-A-1" {
+    mode custom=true "2560x1440@143.912"
+}
+```
+
+### `modeline`
+
+<sup>Since: next release</sup>
+
+通过 modeline 直接配置显示器的模式，这将覆盖任何已配置的 `mode`。
+Modeline 可以通过诸如 [cvt](https://man.archlinux.org/man/cvt.1.en) 或 [gtf](https://man.archlinux.org/man/gtf.1.en) 之类的工具计算。
+
+> [!CAUTION]
+> 超出规范的 modeline 可能会损坏您的显示器，尤其是 CRT 显示器。
+> 请遵循显示器说明书中的最大支持限制。
+
+```kdl
+// 为该显示器使用 modeline 模式。
+output "eDP-3" {
+    modeline 173.00  1920 2048 2248 2576  1080 1083 1088 1120 "-hsync" "+vsync"
 }
 ```
 
