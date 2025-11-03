@@ -1,5 +1,5 @@
 获取 niri 最简单的方法是使用包管理器安装。
-以下是一些选项：[Fedora COPR](https://copr.fedorainfracloud.org/coprs/yalter/niri/) 和 [nightly COPR](https://copr.fedorainfracloud.org/coprs/yalter/niri-git/)（由我个人维护），[NixOS Flake](https://github.com/sodiboo/niri-flake)，以及下面 repology 中提供的一些更多选项。
+以下是一些选项：[Fedora COPR](https://copr.fedorainfracloud.org/coprs/yalter/niri/) 和 [nightly COPR](https://copr.fedorainfracloud.org/coprs/yalter/niri-git/)（由我个人维护），[NixOS Flake](https://github.com/sodiboo/niri-flake)，以及下面 repology 中提供的一些更多选项, 包括适用于基于 Debian 发行版的[pacstall 软件包](https://pacstall.dev/packages/niri/)。
 如果您想自己编译 niri，请参阅 [构建](#build) 部分；如果您想打包 niri，请参阅 [打包 niri](./Packaging-niri.md) 页面。
 
 [![打包状态](https://repology.org/badge/vertical-allrepos/niri.svg)](https://repology.org/project/niri/versions)
