@@ -115,7 +115,7 @@ window-rule {
 
 ![用红色边框和阴影标示的正在录制的窗口。](https://github.com/user-attachments/assets/375b381e-3a87-4e94-8676-44404971d893)
 
-### 窗口化（虚拟/分离式）全屏
+### 窗口化（虚拟/分离式）全屏 {#windowed-fakedetached-fullscreen}
 
 <sup>Since: 25.05</sup>
 
