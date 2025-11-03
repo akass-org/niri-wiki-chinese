@@ -6,11 +6,14 @@ niri 的文档文件位于 `docs/wiki/` 目录下，并且至少可以在三个�
 
 ## GitHub 仓库的 wiki
 
-这是通过 `.github/workflows/ci.yml` 中的 `publish-wiki` 作业生成的。为了使此作业在您的 fork 中按预期运行，您需要在 GitHub 仓库的设置中启用 wiki 功能。作为贡献者，这有助于验证 wiki 是否按预期生成。
+这是通过 `.github/workflows/ci.yml` 中的 `publish-wiki` 作业生成的。
+为了使此作业在您的 fork 中按预期运行，您需要在 GitHub 仓库的设置中启用 wiki 功能。
+作为贡献者，这有助于验证 wiki 是否按预期生成。
 
 ## 文档网站
 
-文档网站由 [mkdocs](https://www.mkdocs.org/) 生成。配置文件位于 `docs/` 目录下。
+文档网站由 [mkdocs](https://www.mkdocs.org/) 生成。
+配置文件位于 `docs/` 目录下。
 
 要在本地设置和运行文档站点，建议使用 [uv](https://docs.astral.sh/uv/)。
 
