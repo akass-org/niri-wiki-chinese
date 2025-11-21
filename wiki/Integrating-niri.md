@@ -51,7 +51,7 @@ Niri 与标准的 systemd 自启动机制兼容。
 
 除此之外，您可能需要预配置一些桌面 shell 组件，以使体验不那么简陋。
 Niri 的默认配置会启动 [Waybar](https://github.com/Alexays/Waybar)，这是一个很好的起点，但您可能需要考虑更改其默认配置，使其不那么“大杂烩”，并添加 `niri/workspaces` 模块。
-您可能还需要一个桌面背景工具（[swaybg](https://github.com/swaywm/swaybg) 或 [swww](https://github.com/LGFae/swww)），以及一个比默认的 `swaylock` 更好的屏幕锁定程序，例如 [hyprlock](https://github.com/hyprwm/hyprlock/)。
+您可能还需要一个桌面背景工具（[swaybg](https://github.com/swaywm/swaybg) 或 [awww (以前叫 swww)](https://codeberg.org/LGFae/awww/)），以及一个比默认的 `swaylock` 更好的屏幕锁定程序，例如 [hyprlock](https://github.com/hyprwm/hyprlock/)。
 
 另外，一些桌面环境和 shell 可以与 niri 协同工作，并提供一个更完整的打包体验：
 
