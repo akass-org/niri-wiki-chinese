@@ -19,6 +19,9 @@ systemctl --user add-wants niri.service dms
 执行完这些命令后，注销并在显示管理器中选择 Niri，然后重新登录。
 如果不使用显示管理器，可在 TTY 中运行 `niri-session`。
 
+默认的 niri 配置会启动 Waybar，因此屏幕上可能会出现两个状态栏。  
+解决办法：先执行 `pkill waybar` 停止 Waybar，然后打开 `~/.config/niri/config.kdl`，删除其中的 `spawn-at-startup "waybar"` 一行即可。
+
 ## 更慢但更稳妥的开始
 
 获取 niri 最简单的方法是使用包管理器安装。
