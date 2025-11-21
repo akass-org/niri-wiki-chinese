@@ -1,25 +1,25 @@
-## Quick start
+## 快速开始
 
-Use these commands to install niri with [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell) for a fairly out-of-the-box experience.
+使用以下命令安装 niri 并搭配 [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell) 以获得接近开箱即用的体验。
 
 Fedora:
-```
+```shell
 sudo dnf copr enable avengemedia/dms
 sudo dnf install niri dms
 systemctl --user add-wants niri.service dms
 ```
 
-Arch Linux (via [paru](https://github.com/morganamilo/paru)):
-```
+Arch Linux (通过 [paru](https://github.com/morganamilo/paru)):
+```shell
 sudo pacman -Syu niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk
 paru -S dms-shell-bin
 systemctl --user add-wants niri.service dms
 ```
 
-After running these commands, log out, choose Niri in your display manager, and log back in.
-Or, if not using a display manager, run `niri-session` on a TTY.
+执行完这些命令后，注销并在显示管理器中选择 Niri，然后重新登录。
+如果不使用显示管理器，可在 TTY 中运行 `niri-session`。
 
-## Slower and more considered start
+## 更慢但更稳妥的开始
 
 获取 niri 最简单的方法是使用包管理器安装。
 以下是一些选项：[Fedora COPR](https://copr.fedorainfracloud.org/coprs/yalter/niri/) 和 [nightly COPR](https://copr.fedorainfracloud.org/coprs/yalter/niri-git/)（由我个人维护），[NixOS Flake](https://github.com/sodiboo/niri-flake)，以及下面 repology 中提供的一些更多选项, 包括适用于基于 Debian 发行版的[pacstall 软件包](https://pacstall.dev/packages/niri/)。
