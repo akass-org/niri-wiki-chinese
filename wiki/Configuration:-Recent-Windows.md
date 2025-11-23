@@ -1,10 +1,10 @@
-### Overview
+### 概览
 
 <sup>Since: next release</sup>
 
-In this section you can configure the recent windows switcher (Alt-Tab).
+在本节中，您可以配置最近窗口切换器（Alt-Tab）。
 
-Here is an outline of the available settings and their default values:
+以下是可用设置及其默认值的概览：
 
 ```kdl
 recent-windows {
@@ -37,33 +37,33 @@ recent-windows {
 }
 ```
 
-`off` disables the recent windows switcher altogether.
+`off` 会完全禁用最近窗口切换器。
 
 ### `open-delay-ms`
 
-Delay, in milliseconds, between pressing the Alt-Tab bind and the recent windows switcher visually appearing on screen.
+从按下 Alt-Tab 绑定到最近窗口切换器在屏幕上显示之间的延迟，以毫秒为单位。
 
-The switcher is delayed by default so that quickly tapping Alt-Tab to switch windows wouldn't cause annoying fullscreen visual changes.
+默认情况下切换器会延迟显示，这样在快速轻按 Alt-Tab 切换窗口时，不会引起令人厌烦的全屏视觉变化。
 
 ```kdl
 recent-windows {
-    // Make the switcher appear instantly.
+    // 让切换器立即出现。
     open-delay-ms 0
 }
 ```
 
 ### `highlight`
 
-Controls the highlight behind the focused window preview in the recent windows switcher.
+控制最近窗口切换器中聚焦窗口预览背后的高亮效果。
 
-- `active-color`: normal color of the focused window highlight.
-- `urgent-color`: color of an urgent focused window highlight, also visible in a darker shade on unfocused windows.
-- `padding`: padding of the highlight around the window preview, in logical pixels.
-- `corner-radius`: corner radius of the highlight.
+- `active-color`：聚焦窗口高亮的正常颜色。
+- `urgent-color`：紧急聚焦窗口高亮的颜色，在未聚焦窗口上会以较深的色调显示。
+- `padding`：高亮在窗口预览周围的内边距，以逻辑像素为单位。
+- `corner-radius`：高亮的圆角半径。
 
 ```kdl
 recent-windows {
-    // Round the corners on the highlight.
+    // 让高亮具有圆角。
     highlight {
         corner-radius 14
     }
@@ -72,20 +72,20 @@ recent-windows {
 
 ### `previews`
 
-Controls the window previews in the switcher.
+控制切换器中的窗口预览。
 
-- `max-scale`: maximum scale of the window previews.
-Windows cannot be scaled bigger than this value.
-- `max-height`: maximum height of the window previews.
-Further limits the size of the previews in order to occupy less space on large monitors.
+- `max-scale`：窗口预览的最大缩放比例。
+窗口无法被缩放到比此值更大。
+- `max-height`：窗口预览的最大高度。
+进一步限制预览大小，以便在大型显示器上占用更少的空间。
 
-On smaller monitors, the previews will be primarily limited by `max-scale`, and on larger monitors they will be primarily limited by `max-height`.
+在较小的显示器上，预览尺寸主要受 `max-scale` 限制；在较大的显示器上，则主要受 `max-height` 限制。
 
-The `max-scale` limit is imposed twice: on the final window scale, and on the window height which cannot exceed `monitor height × max scale`.
+`max-scale` 限制会应用两次：作用于最终的窗口缩放比例，以及窗口高度（不能超过 `显示器高度 × 最大缩放比例`）。
 
 ```kdl
 recent-windows {
-    // Make the previews smaller to fit more on screen.
+    // 缩小预览以在屏幕上容纳更多窗口。
     previews {
         max-height 320
     }
@@ -94,7 +94,7 @@ recent-windows {
 
 ```kdl
 recent-windows {
-    // Make the previews larger to see the window contents.
+    // 放大预览以便查看窗口内容。
     previews {
         max-height 1080
         max-scale 0.75
@@ -104,31 +104,31 @@ recent-windows {
 
 ### `binds`
 
-Configure binds that open and navigate the recent windows switcher.
+配置用于打开和导航最近窗口切换器的绑定。
 
-The defaults are <kbd>Alt</kbd><kbd>Tab</kbd> / <kbd>Mod</kbd><kbd>Tab</kbd> to switch across all windows, and <kbd>Alt</kbd><kbd>\`</kbd> / <kbd>Mod</kbd><kbd>\`</kbd> to switch between windows of the current application.
-Adding <kbd>Shift</kbd> will switch windows backwards.
+默认用于在所有窗口间切换的绑定为 <kbd>Alt</kbd><kbd>Tab</kbd> / <kbd>Mod</kbd><kbd>Tab</kbd>,用于在当前应用的窗口间切换的绑定为 <kbd>Alt</kbd><kbd>\`</kbd> / <kbd>Mod</kbd><kbd>\`</kbd> 。
+添加 <kbd>Shift</kbd> 将反向切换窗口。
 
-Adding the recent windows `binds {}` section to your config removes all default binds.
-You can copy the ones you need from the summary at the top of this wiki page.
+在配置中添加 `binds {}` 配置段会移除所有默认绑定。
+您可以从本 wiki 页面顶部的概览中复制所需的绑定。
 
 ```kdl
 recent-windows {
-    // Even an empty binds {} section will remove all default binds.
+    // 即使是空的 binds {} 节也会移除所有默认绑定。
     binds {
     }
 }
 ```
 
-The available actions are `next-window` and `previous-window`.
-They can optionally have the following properties:
+可用的操作是 `next-window` 和 `previous-window`。
+它们可以选择性地拥有以下属性：
 
-- `filter="app-id"`: filters the switcher to the windows of the currently selected application, as determined by the Wayland app ID.
-- `scope="all"`, `scope="output"`, `scope="workspace"`: sets the pre-selected scope when this bind is used to open the recent windows switcher.
+- `filter="app-id"`：将切换器过滤到当前选中应用的窗口，由 Wayland 应用 ID 确定。
+- `scope="all"`、`scope="output"`、`scope="workspace"`：设置使用此绑定打开最近窗口切换器时预选的作用域。
 
 ```kdl
 recent-windows {
-    // Pre-select the "Output" scope when switching windows.
+    // 切换窗口时预选「Output」作用域。
     binds {
         Mod+Tab         { next-window     scope="output"; }
         Mod+Shift+Tab   { previous-window scope="output"; }
@@ -138,30 +138,30 @@ recent-windows {
 }
 ```
 
-The recent windows binds have lower precedence than the [normal binds](./Configuration:-Key-Bindings.md), meaning that if you have <kbd>Alt</kbd><kbd>Tab</kbd> bound to something else in the normal binds, the `recent-windows` bind won't work.
-In this case, you can remove the conflicting normal bind.
+最近窗口绑定的优先级低于[常规绑定](./Configuration:-Key-Bindings.md)，这意味着如果您在常规绑定中将 <kbd>Alt</kbd><kbd>Tab</kbd> 绑定到了其他操作，`recent-windows` 绑定将无法生效。
+在这种情况下，您可以移除冲突的常规绑定。
 
-All binds in this section must have a modifier key like <kbd>Alt</kbd> or <kbd>Mod</kbd> because the recent windows switcher remains open only while you hold any modifier key.
+本节中的所有绑定必须包含修饰键，如 <kbd>Alt</kbd> 或 <kbd>Mod</kbd>，因为最近窗口切换器仅在按住任意修饰键时才会保持打开。
 
-#### Bindings inside the switcher
+#### 切换器内部的绑定
 
-When the switcher is open, some hardcoded binds are available:
+当切换器打开时，可以使用一些硬编码的绑定：
 
-- <kbd>Escape</kbd> cancels the switcher.
-- <kbd>Enter</kbd> closes the switcher confirming the current window.
-- <kbd>A</kbd>, <kbd>W</kbd>, <kbd>O</kbd> select a specific scope.
-- <kbd>S</kbd> cycles between scopes, as indicated by the panel at the top.
-- <kbd>←</kbd>, <kbd>→</kbd>, <kbd>Home</kbd>, <kbd>End</kbd> move the selection directionally.
+- <kbd>Escape</kbd> 取消切换器。
+- <kbd>Enter</kbd> 关闭切换器并确认当前窗口。
+- <kbd>A</kbd>、<kbd>W</kbd>、<kbd>O</kbd> 选择特定作用域。
+- <kbd>S</kbd> 在作用域之间循环切换，如顶部面板所示。
+- <kbd>←</kbd>、<kbd>→</kbd>、<kbd>Home</kbd>、<kbd>End</kbd> 按方向移动选择。
 
-Additionally, certain regular binds will automatically work in the switcher:
+此外，某些常规绑定会在切换器中自动生效：
 
-- focus column left/right and their variants: will move the selection left/right inside the switcher.
-- focus column first/last: will move the selection to the first or last window.
-- close window: will close the window currently focused in the switcher.
-- screenshot: will open the screenshot UI.
+- focus column left/right 及其变体：将在切换器内向左/向右移动选择。
+- focus column first/last：将选择移动到第一个或最后一个窗口。
+- close window：将关闭切换器中当前聚焦的窗口。
+- screenshot：将打开截图界面。
 
-The way this works is by finding all regular binds corresponding to these actions and taking just the trigger key without modifiers.
-For example, if you have <kbd>Mod</kbd><kbd>Shift</kbd><kbd>C</kbd> bound to `close-window`, in the window switcher pressing <kbd>C</kbd> on its own will close the window.
+其工作原理是查找对应于这些操作的所有常规绑定，并仅使用触发键而不带修饰键。
+例如，如果您将 <kbd>Mod</kbd><kbd>Shift</kbd><kbd>C</kbd> 绑定到 `close-window`，在窗口切换器中单独按下 <kbd>C</kbd> 键将会关闭窗口。
 
-This way we don't need to hardcode things like HJKL directional movements.
-If you have, say, Colemak-DH MNEI binds instead, they will work for you in the window switcher (as long as they don't conflict with the hardcoded ones).
+这样我们就不需要硬编码如 HJKL 方向移动之类的设置。
+如果您使用的是 Colemak-DH MNEI 绑定，它们在窗口切换器中同样会生效（只要不与硬编码的绑定冲突）。
