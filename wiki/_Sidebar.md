@@ -33,7 +33,7 @@
 * [图层规则](./Configuration:-Layer-Rules.md)
 * [动画](./Configuration:-Animations.md)
 * [手势](./Configuration:-Gestures.md)
-* [Recent Windows](./Configuration:-Recent-Windows.md)
+* [最近窗口](./Configuration:-Recent-Windows.md)
 * [调试选项](./Configuration:-Debug-Options.md)
 * [包含](./Configuration:-Include.md)
 
