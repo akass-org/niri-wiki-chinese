@@ -103,6 +103,7 @@ nav:
     - 杂项: Configuration:-Miscellaneous.md
     - 窗口规则: Configuration:-Window-Rules.md
     - 图层规则: Configuration:-Layer-Rules.md
+    - Recent Windows: Configuration:-Recent-Windows.md
     - 动画: Configuration:-Animations.md
     - 手势: Configuration:-Gestures.md
     - 调试选项: Configuration:-Debug-Options.md

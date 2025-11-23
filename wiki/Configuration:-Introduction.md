@@ -12,6 +12,7 @@
 * [层级规则 `layer-rule {}`](./Configuration:-Layer-Rules.md)
 * [动画 `animations {}`](./Configuration:-Animations.md)
 * [手势 `gestures {}`](./Configuration:-Gestures.md)
+* [`recent-windows {}`](./Configuration:-Recent-Windows.md)
 * [`debug {}`](./Configuration:-Debug-Options.md)
 * [包含其他配置 `include "other.kdl"`](./Configuration:-Include.md)
 
