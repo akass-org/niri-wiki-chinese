@@ -143,7 +143,7 @@ profile {
 }
 ```
 
-### Why does Firefox or Thunderbird have 1 px smaller border?
+### 为什么 Firefox 或 Thunderbird 边框会少 1 像素？
 
-They draw their own 1 px dark border around the window, which obscures one pixel of niri's border.
-If you don't like this, set the [`clip-to-geometry true` window rule](./Configuration:-Window-Rules.md#clip-to-geometry).
+这些程序会在窗口周围自行绘制 1 像素的深色边框，这会遮挡 niri 边框的 1 个像素。
+若不喜欢此效果，可设置 [`clip-to-geometry true` 窗口规则](./Configuration:-Window-Rules.md#clip-to-geometry).
