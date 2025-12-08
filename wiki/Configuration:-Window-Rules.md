@@ -143,7 +143,8 @@ window-rule {
 
     // ...但是不匹配 Telegram 的媒体查看器。
     // 如果你在 Firefox 中打开一个标题为 "Media viewer" 的标签页，
-    // 它不会被排除，因为它不满足此排除指令的 app-id 条件。
+    // 它不会被排除，
+    // 因为它不满足此排除指令的 app-id 条件。
     exclude app-id=r#"^org\.telegram\.desktop$"# title="Media viewer"
 }
 ```
@@ -368,7 +369,8 @@ window-rule {
 如果窗口在当前未获得焦点的输出上打开，该窗口将不会自动获得焦点。
 
 ```kdl
-// 在特定的显示器上打开 Firefox 和 Telegram（但不包括其媒体查看器）。
+// 在特定的显示器上
+// 打开 Firefox 和 Telegram（但不包括其媒体查看器）。
 window-rule {
     match app-id="firefox$"
     match app-id=r#"^org\.telegram\.desktop$"#
