@@ -261,7 +261,7 @@ input {
 
 - `calibration-matrix`：设置为六个浮点数以更改校准矩阵。示例请参阅 [`LIBINPUT_CALIBRATION_MATRIX` 文档](https://wayland.freedesktop.org/libinput/doc/latest/device-configuration-via-udev.html)。
     - <sup>Since: 25.02</sup> 适用于 `tablet`
-    - <sup>Since: next release</sup> 适用于 `touch`
+    - <sup>Since: 25.11</sup> 适用于 `touch`
 
 数位板和触摸屏是绝对定位设备，可以映射到特定的输出，如下所示：
 

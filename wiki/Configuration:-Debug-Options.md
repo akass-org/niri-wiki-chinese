@@ -118,7 +118,7 @@ debug {
 
 ### `ignore-drm-device`
 
-<sup>Since: next release</sup>
+<sup>Since: 25.11</sup>
 
 列出 niri 将忽略的 DRM 设备。
 在进行 GPU 直通且不希望 niri 打开特定设备时很有用。
@@ -319,7 +319,7 @@ debug {
 如果您遇到这种问题，请设置此调试标志，这将阻止 niri 更改最大 bpc。
 AMDGPU 错误报告：https://gitlab.freedesktop.org/drm/amd/-/issues/4487。
 
-<sup>Since: next release</sup>
+<sup>Since: 25.11</sup>
 This setting is deprecated and does nothing: niri no longer sets max bpc.
 The old niri behavior with this setting enabled matches the new behavior.
 

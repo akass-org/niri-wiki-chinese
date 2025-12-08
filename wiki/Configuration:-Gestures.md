@@ -99,7 +99,7 @@ gestures {
 }
 ```
 
-<sup>Since: next release</sup> 您可以通过名称选择特定的热区：`top-left`、`top-right`、`bottom-left`、`bottom-right`。
+<sup>Since: 25.11</sup> 您可以通过名称选择特定的热区：`top-left`、`top-right`、`bottom-left`、`bottom-right`。
 如果未明确设置任何角，则默认激活左上角。
 
 ```kdl

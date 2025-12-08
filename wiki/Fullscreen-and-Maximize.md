@@ -14,7 +14,7 @@
 
 ## 最大化到边缘的窗口
 
-<sup>Since: next release</sup>
+<sup>Since: 25.11</sup>
 
 你可以通过 `maximize-window-to-edges` 最大化单个窗口。
 这与你在其他桌面环境和操作系统中可以找到的最大化功能相同：它会将一个窗口扩展到可用屏幕区域的边缘。

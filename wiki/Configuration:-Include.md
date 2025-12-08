@@ -1,4 +1,4 @@
-<sup>Since: next release</sup>
+<sup>Since: 25.11</sup>
 
 您可以在配置的顶部包含其他文件。
 

@@ -97,7 +97,7 @@ layout {
 }
 ```
 
-<sup>Since: next release</sup> 您可以为特定的[输出](./Configuration:-Outputs.md#layout-config-overrides)和[命名工作区](./Configuration:-Named-Workspaces.md#layout-config-overrides)覆写这些设置。
+<sup>Since: 25.11</sup> 您可以为特定的[输出](./Configuration:-Outputs.md#layout-config-overrides)和[命名工作区](./Configuration:-Named-Workspaces.md#layout-config-overrides)覆写这些设置。
 
 ### `gaps`
 

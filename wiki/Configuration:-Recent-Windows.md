@@ -1,6 +1,6 @@
 ### 概览
 
-<sup>Since: next release</sup>
+<sup>Since: 25.11</sup>
 
 在本节中，您可以配置最近窗口切换器（Alt-Tab）。
 

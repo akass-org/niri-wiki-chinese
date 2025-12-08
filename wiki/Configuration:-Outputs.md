@@ -92,7 +92,7 @@ output "eDP-1" {
 
 #### `mode custom=true`
 
-<sup>Since: next release</sup>
+<sup>Since: 25.11</sup>
 
 您可以通过设置 `custom=true` 来配置一个自定义模式（非显示器提供的模式）。
 在这种情况下，刷新率是必填项。
@@ -114,7 +114,7 @@ output "HDMI-A-1" {
 
 ### `modeline`
 
-<sup>Since: next release</sup>
+<sup>Since: 25.11</sup>
 
 通过 modeline 直接配置显示器的模式，这将覆盖任何已配置的 `mode`。
 Modeline 可以通过诸如 [cvt](https://man.archlinux.org/man/cvt.1.en) 或 [gtf](https://man.archlinux.org/man/gtf.1.en) 之类的工具计算。
@@ -255,7 +255,7 @@ output "DP-2" {
 
 <sup>Until: 25.05</sup> 此颜色的 alpha 通道将会被忽略。
 
-<sup>Since: next release</sup> 此设置已弃用，请在 [输出 `layout {}` 配置段](#layout-config-overrides) 中设置 `background-color`。
+<sup>Since: 25.11</sup> 此设置已弃用，请在 [输出 `layout {}` 配置段](#layout-config-overrides) 中设置 `background-color`。
 
 ```kdl
 output "HDMI-A-1" {
@@ -280,7 +280,7 @@ output "HDMI-A-1" {
 
 ### 热区 `hot-corners`
 
-<sup>Since: next release</sup>
+<sup>Since: 25.11</sup>
 
 为此输出自定义热区。
 默认情况下，[手势设置中的](./Configuration:-Gestures.md#hot-corners) 热区适用于所有输出。
@@ -308,7 +308,7 @@ output "DP-2" {
 
 ### 布局配置覆写 {#layout-config-overrides}
 
-<sup>Since: next release</sup>
+<sup>Since: 25.11</sup>
 
 您可以使用 `layout {}` 配置段为输出自定义布局设置：
 

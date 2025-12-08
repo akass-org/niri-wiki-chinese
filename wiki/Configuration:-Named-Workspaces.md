@@ -48,7 +48,7 @@ window-rule {
 
 ### 布局配置覆写 {#layout-config-overrides}
 
-<sup>Since: next release</sup>
+<sup>Since: 25.11</sup>
 
 您可以使用 `layout {}` 块为命名工作区自定义布局设置：
 
