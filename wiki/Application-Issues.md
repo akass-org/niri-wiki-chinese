@@ -52,6 +52,17 @@ WezTerm 中存在 [另一个 bug](https://github.com/wezterm/wezterm/issues/6472
 由于某种原因，Zen Browser 中禁用了 DMABUF 屏幕录制，因此在 niri 上无法开箱即用地使用屏幕录制功能。
 要解决此问题，请在 `about:config` 中将 `widget.dmabuf.force-enabled` 设置为 `true`。
 
+### GTK 4 dead keys / Compose
+
+GTK 4.20 [stopped](https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/8556) handling dead keys and Compose on its own on Wayland.
+To make them work, either run an IME like IBus or Fcitx5, or set the `GTK_IM_MODULE=simple` environment variable.
+
+```kdl
+environment {
+    GTK_IM_MODULE "simple"
+}
+```
+
 ### 全屏游戏
 
 部分游戏，无论是 Linux 原生版还是 Wine 版，在使用非堆叠式桌面环境时都会出现各种问题。
