@@ -16,8 +16,8 @@ paru -S dms-shell-bin matugen wl-clipboard cliphist cava qt6-multimedia-ffmpeg
 systemctl --user add-wants niri.service dms
 ```
 
-Ubuntu 25.10 and above:
-```
+Ubuntu 25.10 及以上:
+```shell
 sudo add-apt-repository ppa:avengemedia/danklinux
 sudo add-apt-repository ppa:avengemedia/dms
 sudo apt install niri dms
