@@ -16,6 +16,13 @@ paru -S dms-shell-bin matugen wl-clipboard cliphist cava qt6-multimedia-ffmpeg
 systemctl --user add-wants niri.service dms
 ```
 
+Ubuntu 25.10 and above:
+```
+sudo add-apt-repository ppa:avengemedia/danklinux
+sudo add-apt-repository ppa:avengemedia/dms
+sudo apt install niri dms
+```
+
 执行完这些命令后，注销并在显示管理器中选择 Niri，然后重新登录。
 如果不使用显示管理器，可在 TTY 中运行 `niri-session`。
 
