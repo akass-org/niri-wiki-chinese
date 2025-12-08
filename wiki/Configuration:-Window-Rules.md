@@ -421,7 +421,7 @@ window-rule {
 
 <sup>Since: 25.11</sup>
 
-Make the window open [maximized to edges](./Fullscreen-and-Maximize.md).
+让窗口以[最大化到边缘](./Fullscreen-and-Maximize.md)的形式打开。
 
 ```kdl
 window-rule {
@@ -429,7 +429,7 @@ window-rule {
 }
 ```
 
-You can also set this to `false` to *prevent* a window from opening maximized to edges.
+你也可以将其设置为 `false` 来*防止*窗口以最大化到边缘的形式打开。
 
 ```kdl
 window-rule {
@@ -623,7 +623,7 @@ window-rule {
 <sup>Since: 25.02</sup>
 
 为从此窗口创建的列设置默认显示模式。
-Can be `normal` or `tabbed`.
+可以为 `normal` 或 `tabbed`。
 
 这在窗口进入自己的列时使用。
 例如：
