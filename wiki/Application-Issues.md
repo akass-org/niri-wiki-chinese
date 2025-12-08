@@ -54,8 +54,8 @@ WezTerm 中存在 [另一个 bug](https://github.com/wezterm/wezterm/issues/6472
 
 ### GTK 4 dead keys / Compose
 
-GTK 4.20 [stopped](https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/8556) handling dead keys and Compose on its own on Wayland.
-To make them work, either run an IME like IBus or Fcitx5, or set the `GTK_IM_MODULE=simple` environment variable.
+GTK 4.20 [已停止](https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/8556) 在 Wayland 上自行处理死键和 Compose 键。
+若需使用这些功能，可运行 IBus 或 Fcitx5 等输入法框架，或设置环境变量 `GTK_IM_MODULE=simple`。
 
 ```kdl
 environment {
