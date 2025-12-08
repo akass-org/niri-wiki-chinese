@@ -320,8 +320,8 @@ debug {
 AMDGPU 错误报告：https://gitlab.freedesktop.org/drm/amd/-/issues/4487。
 
 <sup>Since: 25.11</sup>
-This setting is deprecated and does nothing: niri no longer sets max bpc.
-The old niri behavior with this setting enabled matches the new behavior.
+此设置已被废弃且不会产生任何作用：niri 不再设置最大 bpc。
+启用此设置的旧版 niri 行为与当前新版本行为一致。
 
 ```kdl
 debug {
