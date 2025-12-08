@@ -24,9 +24,8 @@ environment {
 
 ### JetBrains IDEs
 
-JetBrains IDEs can run directly on Wayland, but it's not the default.
-
-For JetBrainsRuntime > 17, you can set the flag `-Dawt.toolkit.name=WLToolkit` inside of `help -> edit custom vm options -> add`.
+JetBrains 的 IDE 可以直接运行在 Wayland 上，但是这并非默认启用。
+对于 JetBrainsRuntime > 17 的版本，你可以在 `帮助 -> 自定义虚拟机选项 -> 添加` 中添加参数 `-Dawt.toolkit.name=WLToolkit`。
 
 ### WezTerm
 

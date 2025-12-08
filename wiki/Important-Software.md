@@ -27,7 +27,7 @@ dconf write /org/gnome/desktop/interface/color-scheme '"prefer-dark"'
 如果您不想安装 `nautilus`（比如您使用的是 `nemo`），可以在 `niri-portals.conf` 中设置 `org.freedesktop.impl.portal.FileChooser=gtk;`，以便为文件选择器对话框使用 GTK portal。
 
 > [!WARNING]
-> Do not set the `GDK_BACKEND` environment variable globally as this will break the screencast portal.
+> 不要全局设置 `GDK_BACKEND` 环境变量，因为这会破坏屏幕录制门户功能。
 
 ### 认证代理
 

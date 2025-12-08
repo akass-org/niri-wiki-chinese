@@ -40,7 +40,7 @@ switch-events {
 在平板模式下，键盘和鼠标通常无法使用，因此您可以使用这些事件来激活屏幕键盘。
 
 > [!NOTE]
-> The commands below are just examples, you will need to provide your own on-screen keyboard, such as [sysboard](https://github.com/System64fumo/sysboard) or [wvkbd](https://github.com/jjsullivan5196/wvkbd).
+> 下面的命令仅供参考，您需要自行安装屏幕键盘软件，例如[sysboard](https://github.com/System64fumo/sysboard) 或 [wvkbd](https://github.com/jjsullivan5196/wvkbd)。
 
 ```kdl
 switch-events {
