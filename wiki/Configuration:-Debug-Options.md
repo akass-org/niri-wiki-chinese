@@ -320,6 +320,10 @@ debug {
 如果您遇到这种问题，请设置此调试标志，这将阻止 niri 更改最大 bpc。
 AMDGPU 错误报告：https://gitlab.freedesktop.org/drm/amd/-/issues/4487。
 
+<sup>Since: next release</sup>
+This setting is deprecated and does nothing: niri no longer sets max bpc.
+The old niri behavior with this setting enabled matches the new behavior.
+
 ```kdl
 debug {
     keep-max-bpc-unchanged
