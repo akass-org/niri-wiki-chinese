@@ -22,6 +22,12 @@ environment {
 也就是说，仍然使用 Wayland 后端运行 VSCode，但将 `DISPLAY` 指向正在运行的 Xwayland 实例。
 显然，VSCode 当前会无条件地向 X 服务器查询键位映射。
 
+### JetBrains IDEs
+
+JetBrains IDEs can run directly on Wayland, but it's not the default.
+
+For JetBrainsRuntime > 17, you can set the flag `-Dawt.toolkit.name=WLToolkit` inside of `help -> edit custom vm options -> add`.
+
 ### WezTerm
 
 > [!NOTE]

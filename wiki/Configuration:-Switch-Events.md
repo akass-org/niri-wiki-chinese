@@ -39,6 +39,9 @@ switch-events {
 当可转换形态的笔记本电脑进入或退出平板模式时，会触发这些事件。
 在平板模式下，键盘和鼠标通常无法使用，因此您可以使用这些事件来激活屏幕键盘。
 
+> [!NOTE]
+> The commands below are just examples, you will need to provide your own on-screen keyboard, such as [sysboard](https://github.com/System64fumo/sysboard) or [wvkbd](https://github.com/jjsullivan5196/wvkbd).
+
 ```kdl
 switch-events {
     tablet-mode-on { spawn "bash" "-c" "gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true"; }

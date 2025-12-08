@@ -26,6 +26,9 @@ dconf write /org/gnome/desktop/interface/color-scheme '"prefer-dark"'
 
 如果您不想安装 `nautilus`（比如您使用的是 `nemo`），可以在 `niri-portals.conf` 中设置 `org.freedesktop.impl.portal.FileChooser=gtk;`，以便为文件选择器对话框使用 GTK portal。
 
+> [!WARNING]
+> Do not set the `GDK_BACKEND` environment variable globally as this will break the screencast portal.
+
 ### 认证代理
 
 当应用程序需要请求 root 权限时需要它。类似 `plasma-polkit-agent` 的东西可以很好地工作。请使用 [systemd](./Example-systemd-Setup.md) 或 [`spawn-at-startup`](./Configuration:-Miscellaneous.md#spawn-at-startup) 启动它。
