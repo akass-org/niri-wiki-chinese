@@ -621,6 +621,7 @@ window-rule {
 <sup>Since: 25.02</sup>
 
 为从此窗口创建的列设置默认显示模式。
+Can be `normal` or `tabbed`.
 
 这在窗口进入自己的列时使用。
 例如：
