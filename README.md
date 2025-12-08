@@ -42,4 +42,4 @@ https://docs.akass.cn/niri/
 > [!WARNING]
 > 注意：这是非官方翻译，如有疑问请以官方英文文档为准。
 >
-> 本翻译基于 Commit [7c0dcdd](https://github.com/YaLTeR/niri/commit/7c0dcddee782d2ca68620ec423d08d932ef059df)
+> 本翻译基于 Commit [f874b2f](https://github.com/YaLTeR/niri/commit/f874b2fce50e0f7ba21e270c86cfa168a1506b82)
