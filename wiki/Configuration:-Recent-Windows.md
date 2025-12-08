@@ -43,24 +43,24 @@ recent-windows {
 
 ### `debounce-ms`
 
-Delay, in milliseconds, between the window receiving focus and getting "committed" to the recent windows list.
+窗口获得焦点后，到被“提交”至最近窗口列表之间的延迟时间，以毫秒计。
 
-When you want to focus some window, you might end up focusing some unrelated windows on the way:
+当您尝试聚焦某个窗口时，中途可能会短暂聚焦一些无关的窗口：
 
-- with keyboard navigation, the windows between your current one and the target one;
-- with [`focus-follows-mouse`](./Configuration:-Input.md#focus-follows-mouse), the windows you happen to cross with the mouse pointer on the way to the target window.
+- 使用键盘导航时，途经当前窗口与目标窗口之间的所有窗口；
+- 使用 [`focus-follows-mouse`](./Configuration:-Input.md#focus-follows-mouse) 时，鼠标指针在移动至目标窗口途中经过的所有窗口。
 
-The debounce delay prevents those intermediate windows from polluting the recent windows list.
+防抖延迟可防止这些中间窗口污染最近窗口列表。
 
-Note that some actions, like keyboard input into the target window, will skip this delay and commit the window to the list immediately.
-This way, the recent windows list stays responsive while not getting polluted too much with unintended windows.
+请注意，某些操作，如向目标窗口输入键盘内容，会跳过此延迟，并立即将窗口提交至列表中。
+这样，最近窗口列表既能保持响应性，又不会因大量非目标窗口的干扰而变得杂乱。
 
-If you want windows to appear in recent windows right away, including intermediate windows, you can reduce the delay or set it to zero:
+若希望窗口（包括中间窗口）能立即出现在最近窗口列表中，可减少延迟时间或将其设为零：
 
 ```kdl
 recent-windows {
-    // Commit windows to the recent windows list as soon as they're focused,
-    // with no debounce delay.
+    // 窗口一旦获得焦点，立即提交至最近窗口列表，
+    // 不设置防抖延迟。
     debounce-ms 0
 }
 ```
