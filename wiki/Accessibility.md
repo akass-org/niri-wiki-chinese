@@ -10,7 +10,7 @@
 
 - 工作区切换，例如当您切换到第二个工作区时，它会播报“工作区 2”；
 - 退出确认对话框（默认通过 <kbd>Super</kbd><kbd>Shift</kbd><kbd>E</kbd> 触发）；
-- <sup>Since: 25.11</sup> niri has an <kbd>Alt</kbd><kbd>Tab</kbd> window switcher where it will announce the selected window title;
+- <sup>Since: 25.11</sup> niri 具备 <kbd>Alt</kbd><kbd>Tab</kbd> 窗口切换功能，切换时会播报所选窗口的标题;
 - 进入截图界面和桌面概览（niri 会在这些元素获得焦点时进行播报，目前暂无其他功能）；
 - 每当发生配置解析错误时；
 - 重要快捷键列表（目前作为一个整体公告播报，不支持 Tab 键导航；默认通过 <kbd>Super</kbd><kbd>Shift</kbd><kbd>/</kbd> 触发）。
