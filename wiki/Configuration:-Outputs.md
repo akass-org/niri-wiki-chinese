@@ -97,6 +97,10 @@ output "eDP-1" {
 您可以通过设置 `custom=true` 来配置一个自定义模式（非显示器提供的模式）。
 在这种情况下，刷新率是必填项。
 
+Custom modes are not guaranteed to work.
+Niri is asking the monitor to run in a mode not supported by the manufacturer.
+Use at your own risk.
+
 > [!CAUTION]
 > 自定义模式可能会损坏您的显示器，尤其是 CRT 显示器。
 > 请遵循显示器说明书中的最大支持限制。
@@ -114,6 +118,10 @@ output "HDMI-A-1" {
 
 通过 modeline 直接配置显示器的模式，这将覆盖任何已配置的 `mode`。
 Modeline 可以通过诸如 [cvt](https://man.archlinux.org/man/cvt.1.en) 或 [gtf](https://man.archlinux.org/man/gtf.1.en) 之类的工具计算。
+
+Modelines are not guaranteed to work.
+Niri is asking the monitor to run in a mode not supported by the manufacturer.
+Use at your own risk.
 
 > [!CAUTION]
 > 超出规范的 modeline 可能会损坏您的显示器，尤其是 CRT 显示器。
