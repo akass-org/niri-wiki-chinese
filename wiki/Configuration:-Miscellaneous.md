@@ -141,6 +141,13 @@ environment {
 }
 ```
 
+Note that these variables do not propagate to the systemd global environment, so tools and applications started by systemd do not see them.
+In particular, if you start a desktop shell like DankMaterialShell through systemd, then use its built-in application launcher, the apps won't see these environment variables.
+
+If you want all processes to see the environment variables, you can set them in your login shell config instead (i.e. `~/.bash_profile`).
+The `niri-session` shell script runs through the login shell and imports all environment variables to systemd before starting niri.
+Keep in mind that all compositors will see variables set in the login shell, not just niri.
+
 ### `cursor`
 
 通过设置 `XCURSOR_THEME` 和 `XCURSOR_SIZE` 环境变量，来更改光标的主题和大小。

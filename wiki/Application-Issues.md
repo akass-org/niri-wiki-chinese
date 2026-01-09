@@ -68,6 +68,10 @@ environment {
 }
 ```
 
+
+Note that the niri environment config does not propagate to apps and shells started by systemd, for example to DankMaterialShell and its application launcher.
+You can set the variable in your login shell config (i.e. `~/.bash_profile`) instead, though keep in mind that then it will be set for all compositors, not just niri.
+
 ### 全屏游戏
 
 部分游戏，无论是 Linux 原生版还是 Wine 版，在使用非堆叠式桌面环境时都会出现各种问题。
