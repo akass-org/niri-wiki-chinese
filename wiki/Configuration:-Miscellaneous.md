@@ -141,12 +141,12 @@ environment {
 }
 ```
 
-Note that these variables do not propagate to the systemd global environment, so tools and applications started by systemd do not see them.
-In particular, if you start a desktop shell like DankMaterialShell through systemd, then use its built-in application launcher, the apps won't see these environment variables.
+请注意，这些环境变量不会传播到 systemd 全局环境中，因此由 systemd 启动的工具和应用程序无法识别到这些变量。
+具体来说，如果您通过 systemd 启动一个桌面 shell，例如 DankMaterialShell，然后使用其内置的应用程序启动器，那么这些应用程序将无法获取到这些环境变量。
 
-If you want all processes to see the environment variables, you can set them in your login shell config instead (i.e. `~/.bash_profile`).
-The `niri-session` shell script runs through the login shell and imports all environment variables to systemd before starting niri.
-Keep in mind that all compositors will see variables set in the login shell, not just niri.
+如果您希望所有进程都能识别到这些环境变量，您可以改为在登录 shell 的配置中设置它们（即 `~/.bash_profile`）。
+`niri-session` 这个 shell 脚本会通过登录 shell 运行，并在启动 niri 之前将所有环境变量导入到 systemd 中。
+需要注意的是，所有合成器都能获取到在登录 shell 中设置的变量，而不仅仅是 niri。
 
 ### `cursor`
 

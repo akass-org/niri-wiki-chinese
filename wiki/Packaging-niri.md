@@ -30,24 +30,24 @@
 
 有关发行版集成的更多信息，请参阅 [集成 niri](./Integrating-niri.md) 页面。
 
-### Recommended dependencies
+### 推荐依赖
 
-First of all, make sure niri depends on `libwayland-server`.
-This library is currently loaded dynamically, so it's not picked up as a dependency at niri build time.
+首先，请确保 niri 依赖于 `libwayland-server`。
+该库目前是动态加载的，因此在构建 niri 时不会将其作为依赖项获取。
 
-Then, the following dependencies are optional, but strongly recommended.
-Set them as automatically-installed optional dependencies, if possible.
+然后，以下依赖项是可选的，但强烈建议安装。
+如果可以，请将它们设置为自动安装的可选依赖项。
 
-- `xwayland-satellite`: required to run X11 applications (Steam, Discord, etc.).
-- `xdg-desktop-portal-gnome`: required for screencasting.
-- `xdg-desktop-portal-gtk`: configured as the fallback portal in `niri-portals.conf`.
-(This is in general the standard fallback portal that you want installed.)
-- `gnome-keyring`: configured as the Secret portal provider in `niri-portals.conf`.
-- Your distro's GPU driver package, such as `mesa-dri-drivers` and `mesa-libEGL`.
-Working hardware acceleration is required for running niri.
-- Some notification daemon like `mako`, generally required for apps to work correctly.
+- `xwayland-satellite`：用于运行 X11 应用程序（Steam、Discord 等）。
+- `xdg-desktop-portal-gnome`：用于屏幕录制。
+- `xdg-desktop-portal-gtk`：在 `niri-portals.conf` 中配置为备用门户。
+（这通常是您希望安装的标准备用门户。）
+- `gnome-keyring`：在 `niri-portals.conf` 中配置为密钥管理门户提供者。
+- 您发行版的 GPU 驱动包，例如 `mesa-dri-drivers` 和 `mesa-libEGL`。
+运行 niri 需要可用的硬件加速支持。
+- 某些通知守护进程，如 `mako`，通常为应用程序正常运行所必需。
 
-Finally, you may want to auto-install some of the applications bound in niri's [default configuration file](https://github.com/YaLTeR/niri/blob/main/resources/default-config.kdl) (search for `spawn`), such as `alacritty` and `fuzzel`.
+最后，您可能希望自动安装一些在 niri 的 [默认配置文件](https://github.com/YaLTeR/niri/blob/main/resources/default-config.kdl) 中绑定的应用程序（搜索 `spawn` 关键字），例如 `alacritty` 和 `fuzzel`。
 
 ### 运行测试
 

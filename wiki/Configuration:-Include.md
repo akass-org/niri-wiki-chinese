@@ -114,28 +114,28 @@ window-rule {
 }
 ```
 
-### Optional includes
+### 可选包含
 
 <sup>Since: next release</sup>
 
-By default, including a nonexistent file will cause an error.
-You can allow nonexistent includes by setting `optional=true`:
+默认情况下，包含一个不存在的文件会导致错误。
+您可以通过设置 `optional=true` 来允许包含不存在的文件：
 
 ```kdl,must-fail
-// Won't fail if this file doesn't exist.
+// 如果此文件不存在也不会失败。
 include optional=true "optional-config.kdl"
 
-// Regular include, will fail if the file doesn't exist.
+// 常规包含，如果文件不存在则会失败。
 include "required-config.kdl"
 ```
 
-When an optional include file is missing, niri will emit a warning in the logs on every config reload.
-This reminds you that the file is missing while still loading the config successfully.
+当某个可选包含文件缺失时，niri 会在每次重新加载配置时在日志中输出警告。
+这会在成功加载配置的同时，提醒您该文件缺失。
 
-The optional file is still watched for changes, so if you create it later, the config will automatically reload and apply the new settings.
+系统仍会监视可选文件的变更，因此如果您之后创建了该文件，配置将自动重新加载并应用新设置。
 
-Note that `optional` only affects whether a missing file causes an error.
-If the file exists but contains invalid syntax or other errors, those errors will still cause a parsing failure.
+请注意，`optional` 参数只影响缺失文件是否导致错误。
+如果文件存在但包含无效语法或其他错误，这些错误仍会导致解析失败。
 
 
 ### 合并

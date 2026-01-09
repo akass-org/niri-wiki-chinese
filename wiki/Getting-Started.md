@@ -29,7 +29,7 @@ sudo apt install niri dms
 默认的 niri 配置会启动 Waybar，因此屏幕上可能会出现两个状态栏。  
 解决办法：先执行 `pkill waybar` 停止 Waybar，然后打开 `~/.config/niri/config.kdl`，删除其中的 `spawn-at-startup "waybar"` 一行即可。
 
-Check the DankMaterialShell's [compositor setup page](https://danklinux.com/docs/dankmaterialshell/compositors#niri-configuration) to learn how to configure DMS-specific binds and other niri integrations.
+查看 DankMaterialShell 的 [合成器设置页面](https://danklinux.com/docs/dankmaterialshell/compositors#niri-configuration)，了解如何配置特定于 DMS 的绑定和其他 niri 集成。
 
 ## 更慢但更稳妥的开始
 

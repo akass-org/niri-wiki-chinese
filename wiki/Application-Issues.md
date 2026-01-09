@@ -69,8 +69,8 @@ environment {
 ```
 
 
-Note that the niri environment config does not propagate to apps and shells started by systemd, for example to DankMaterialShell and its application launcher.
-You can set the variable in your login shell config (i.e. `~/.bash_profile`) instead, though keep in mind that then it will be set for all compositors, not just niri.
+请注意，niri 的环境配置不会传播到由 systemd 启动的应用程序和 shell，例如 DankMaterialShell 及其应用程序启动器。
+您可以改为在登录 shell 配置中设置变量（即 `~/.bash_profile`），但请注意，这样一来它将为所有合成器设置，而不仅仅是 niri。
 
 ### 全屏游戏
 

@@ -382,13 +382,13 @@ binds {
 }
 ```
 
-<sup>Since: next release</sup> You can show the mouse pointer on window screenshots with the `show-pointer=true` property.
-The pointer will be included only if the window is currently receiving pointer input (usually this means the pointer is on top of the window).
+<sup>Since: next release</sup> 您可以通过 `show-pointer=true` 属性在窗口截图中显示鼠标指针。
+仅当窗口当前正在接收指针输入时（通常这意味着指针位于窗口上方）才会包含指针。
 
 ```kdl
 binds {
-    // The pointer will be visible on the screenshot
-    // if it's on top of the window.
+    // 如果指针位于窗口上方
+    // 则截图中将显示指针。
     Alt+Print { screenshot-window show-pointer=true; }
 }
 ```

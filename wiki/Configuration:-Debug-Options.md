@@ -107,10 +107,10 @@ debug {
 
 ### `force-disable-connectors-on-resume`
 
-Force-disables all outputs upon resuming niri (TTY switch or waking up from suspend).
-This causes a modeset/screen blank on all outputs.
+在恢复 niri（TTY 切换或从挂起中唤醒）时强制禁用所有输出。
+这会导致所有输出进行模式设置/屏幕清空。
 
-If niri rendering is corrupted, or monitors don't light up after a TTY switch, you can try this flag.
+如果 niri 渲染损坏，或在 TTY 切换后显示器没有点亮，您可以尝试使用此标志。
 
 ```kdl
 debug {
