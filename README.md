@@ -16,7 +16,7 @@ https://docs.akass.cn/niri/
 
 ## 翻译进度
 
-本项目正在积极翻译中，目前已完成的章节为 Usage 部分的所有文章。
+本项目正在积极翻译中，目前已翻译完成所有需要翻译的内容，正在重新精翻校对中。
 
 ## 贡献
 
@@ -42,4 +42,4 @@ https://docs.akass.cn/niri/
 > [!WARNING]
 > 注意：这是非官方翻译，如有疑问请以官方英文文档为准。
 >
-> 本翻译基于 Commit [f874b2f](https://github.com/YaLTeR/niri/commit/f874b2fce50e0f7ba21e270c86cfa168a1506b82)
+> 本翻译基于 Commit [9f8eadc](https://github.com/YaLTeR/niri/commit/9f8eadc5bc04994f395832e7135693f87aa899a9)
