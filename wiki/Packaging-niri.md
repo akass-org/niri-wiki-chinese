@@ -24,7 +24,7 @@
 | `resources/niri.service` (systemd) | `/usr/lib/systemd/user/` |
 | `resources/niri-shutdown.target` (systemd) | `/usr/lib/systemd/user/` |
 | `resources/dinit/niri` (dinit) | `/usr/lib/dinit.d/user/` |
-| `resources/dinit/niri-shutdown` (dinit) | `/usr/lib/dinit.d/user/` |
+| `resources/dinit/niri.target` (dinit) | `/usr/lib/dinit.d/user/` |
 
 这样做将使 niri 出现在 GDM 和其他显示管理器的会话选择中。
 
