@@ -30,6 +30,25 @@
 
 有关发行版集成的更多信息，请参阅 [集成 niri](./Integrating-niri.md) 页面。
 
+### Recommended dependencies
+
+First of all, make sure niri depends on `libwayland-server`.
+This library is currently loaded dynamically, so it's not picked up as a dependency at niri build time.
+
+Then, the following dependencies are optional, but strongly recommended.
+Set them as automatically-installed optional dependencies, if possible.
+
+- `xwayland-satellite`: required to run X11 applications (Steam, Discord, etc.).
+- `xdg-desktop-portal-gnome`: required for screencasting.
+- `xdg-desktop-portal-gtk`: configured as the fallback portal in `niri-portals.conf`.
+(This is in general the standard fallback portal that you want installed.)
+- `gnome-keyring`: configured as the Secret portal provider in `niri-portals.conf`.
+- Your distro's GPU driver package, such as `mesa-dri-drivers` and `mesa-libEGL`.
+Working hardware acceleration is required for running niri.
+- Some notification daemon like `mako`, generally required for apps to work correctly.
+
+Finally, you may want to auto-install some of the applications bound in niri's [default configuration file](https://github.com/YaLTeR/niri/blob/main/resources/default-config.kdl) (search for `spawn`), such as `alacritty` and `fuzzel`.
+
 ### 运行测试
 
 我们的大部分测试会启动 niri 合成器实例并测试 Wayland 客户端。
