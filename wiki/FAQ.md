@@ -66,10 +66,8 @@ I wouldn't be too surprised if, down the road, xwayland-satellite becomes the st
 
 ### Can I enable blur behind semitransparent windows?
 
-Not yet, follow/upvote [this issue](https://github.com/niri-wm/niri/issues/54).
-
-There's also [a PR](https://github.com/niri-wm/niri/pull/1634) adding blur to niri which you can build and run manually.
-Keep in mind that it's an experimental implementation that may have problems and performance concerns.
+Yes, since the next release.
+See the [window effects](./Window-Effects.md) wiki page.
 
 ### Can I make a window sticky / pinned / always on top / appear on all workspaces?
 
