@@ -48,12 +48,12 @@ markdown_extensions:
 plugins:
   - i18n:
       languages:
-        - locale: en
-          name: English
-          build: true
-          default: true
         - locale: zh
           name: 简体中文
+          build: true
+          default: true
+        - locale: en
+          name: English
           build: true
       reconfigure_material: true
   - search
@@ -75,12 +75,9 @@ validation:
     unrecognized_links: warn
 not_in_nav: |
   _Sidebar.md
-  _Sidebar.zh.md
+  _Sidebar.en.md
   Configuration:-Overview.md
-  Configuration:-Overview.zh.md
-  README.md
-  README.zh.md
-  Layer‐Shell-Components.zh.md
+  Configuration:-Overview.en.md
 # ah, wouldn't it be nice if we could autogenerate this with wiki/_Sidebar.md
 nav:
   - Home: README.md
