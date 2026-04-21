@@ -10,7 +10,6 @@ theme:
   logo: _assets/icons/logo.svg
   favicon: _assets/icons/logo.svg
   features:
-    - navigation.instant
     - search.suggest
     - content.code.copy
     - content.action.edit
@@ -33,6 +32,7 @@ theme:
         icon: material/brightness-4
         name: Switch to system preference
 markdown_extensions:
+  - attr_list
   - github-callouts
   - pymdownx.highlight:
       anchor_linenums: true
@@ -46,6 +46,16 @@ markdown_extensions:
   - toc:
       permalink: '#'
 plugins:
+  - i18n:
+      languages:
+        - locale: en
+          name: English
+          build: true
+          default: true
+        - locale: zh
+          name: 简体中文
+          build: true
+      reconfigure_material: true
   - search
 hooks:
   - hooks/shortcodes.py
@@ -60,15 +70,20 @@ validation:
     absolute_links: relative_to_docs
   links:
     not_found: warn
-    anchors: warn
+    anchors: ignore
     absolute_links: relative_to_docs
     unrecognized_links: warn
 not_in_nav: |
   _Sidebar.md
+  _Sidebar.zh.md
   Configuration:-Overview.md
+  Configuration:-Overview.zh.md
   README.md
+  README.zh.md
+  Layer‐Shell-Components.zh.md
 # ah, wouldn't it be nice if we could autogenerate this with wiki/_Sidebar.md
 nav:
+  - Home: README.md
   - Usage:
     - Getting Started: Getting-Started.md
     - Example systemd Setup: Example-systemd-Setup.md
