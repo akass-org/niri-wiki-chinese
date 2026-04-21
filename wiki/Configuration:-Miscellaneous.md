@@ -363,7 +363,7 @@ blur {
 
 #### `passes` and `offset`
 
-`passes` contols the number of downsample/upsample passes for dual kawase blur.
+`passes` controls the number of downsample/upsample passes for dual kawase blur.
 More passes produce a larger, smoother blur, but cost more GPU resources.
 
 `offset` is the pixel offset multiplier for each pass.
