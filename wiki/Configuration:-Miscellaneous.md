@@ -338,6 +338,7 @@ Blur configuration that affects all background blur.
 See the [window effects page](./Window-Effects.md) for an overview of background effects.
 
 ```kdl
+// These are the default values:
 blur {
     // off
     passes 3
