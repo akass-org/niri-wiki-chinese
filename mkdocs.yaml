@@ -10,7 +10,6 @@ theme:
   logo: _assets/icons/logo.svg
   favicon: _assets/icons/logo.svg
   features:
-    - navigation.instant
     - search.suggest
     - content.code.copy
     - content.action.edit
@@ -33,6 +32,7 @@ theme:
         icon: material/brightness-4
         name: Switch to system preference
 markdown_extensions:
+  - attr_list
   - github-callouts
   - pymdownx.highlight:
       anchor_linenums: true
@@ -46,6 +46,17 @@ markdown_extensions:
   - toc:
       permalink: '#'
 plugins:
+  - i18n:
+      docs_structure: folder
+      languages:
+        - locale: zh
+          name: 简体中文
+          build: true
+          default: true
+        - locale: en
+          name: English
+          build: true
+      reconfigure_material: true
   - search
 hooks:
   - hooks/shortcodes.py
@@ -60,57 +71,59 @@ validation:
     absolute_links: relative_to_docs
   links:
     not_found: warn
-    anchors: warn
+    anchors: ignore
     absolute_links: relative_to_docs
     unrecognized_links: warn
 not_in_nav: |
-  _Sidebar.md
-  Configuration:-Overview.md
-  README.md
+  zh/_Sidebar.md
+  en/_Sidebar.md
+  zh/Configuration:-Overview.md
+  en/Configuration:-Overview.md
 # ah, wouldn't it be nice if we could autogenerate this with wiki/_Sidebar.md
 nav:
+  - Home: zh/README.md
   - Usage:
-    - Getting Started: Getting-Started.md
-    - Example systemd Setup: Example-systemd-Setup.md
-    - Important Software: Important-Software.md
-    - Workspaces: Workspaces.md
-    - Floating Windows: Floating-Windows.md
-    - Tabs: Tabs.md
-    - Overview: Overview.md
-    - Screencasting: Screencasting.md
-    - Layer‐Shell Components: Layer‐Shell-Components.md
-    - IPC, niri msg: IPC.md
-    - Application-Specific Issues: Application-Issues.md
-    - Nvidia: Nvidia.md
-    - Xwayland: Xwayland.md
-    - Gestures: Gestures.md
-    - Fullscreen and Maximize: Fullscreen-and-Maximize.md
-    - Window Effects: Window-Effects.md
-    - Packaging niri: Packaging-niri.md
-    - Integrating niri: Integrating-niri.md
-    - Accessibility: Accessibility.md
-    - Name and Logo: Name-and-Logo.md
-    - FAQ: FAQ.md
+    - Getting Started: zh/Getting-Started.md
+    - Example systemd Setup: zh/Example-systemd-Setup.md
+    - Important Software: zh/Important-Software.md
+    - Workspaces: zh/Workspaces.md
+    - Floating Windows: zh/Floating-Windows.md
+    - Tabs: zh/Tabs.md
+    - Overview: zh/Overview.md
+    - Screencasting: zh/Screencasting.md
+    - Layer‐Shell Components: zh/Layer‐Shell-Components.md
+    - IPC, niri msg: zh/IPC.md
+    - Application-Specific Issues: zh/Application-Issues.md
+    - Nvidia: zh/Nvidia.md
+    - Xwayland: zh/Xwayland.md
+    - Gestures: zh/Gestures.md
+    - Fullscreen and Maximize: zh/Fullscreen-and-Maximize.md
+    - Window Effects: zh/Window-Effects.md
+    - Packaging niri: zh/Packaging-niri.md
+    - Integrating niri: zh/Integrating-niri.md
+    - Accessibility: zh/Accessibility.md
+    - Name and Logo: zh/Name-and-Logo.md
+    - FAQ: zh/FAQ.md
   - Configuration:
-    - Introduction: Configuration:-Introduction.md
-    - Input: Configuration:-Input.md
-    - Outputs: Configuration:-Outputs.md
-    - Key Bindings: Configuration:-Key-Bindings.md
-    - Switch Events: Configuration:-Switch-Events.md
-    - Layout: Configuration:-Layout.md
-    - Named Workspaces: Configuration:-Named-Workspaces.md
-    - Miscellaneous: Configuration:-Miscellaneous.md
-    - Window Rules: Configuration:-Window-Rules.md
-    - Layer Rules: Configuration:-Layer-Rules.md
-    - Animations: Configuration:-Animations.md
-    - Gestures: Configuration:-Gestures.md
-    - Recent Windows: Configuration:-Recent-Windows.md
-    - Debug Options: Configuration:-Debug-Options.md
-    - Include: Configuration:-Include.md
+    - Introduction: zh/Configuration:-Introduction.md
+    - Input: zh/Configuration:-Input.md
+    - Outputs: zh/Configuration:-Outputs.md
+    - Key Bindings: zh/Configuration:-Key-Bindings.md
+    - Switch Events: zh/Configuration:-Switch-Events.md
+    - Layout: zh/Configuration:-Layout.md
+    - Named Workspaces: zh/Configuration:-Named-Workspaces.md
+    - Miscellaneous: zh/Configuration:-Miscellaneous.md
+    - Window Rules: zh/Configuration:-Window-Rules.md
+    - Layer Rules: zh/Configuration:-Layer-Rules.md
+    - Animations: zh/Configuration:-Animations.md
+    - Gestures: zh/Configuration:-Gestures.md
+    - Recent Windows: zh/Configuration:-Recent-Windows.md
+    - Debug Options: zh/Configuration:-Debug-Options.md
+    - Include: zh/Configuration:-Include.md
   - Development:
-    - Design Principles: Development:-Design-Principles.md
-    - Developing niri: Development:-Developing-niri.md
-    - Documenting niri: Development:-Documenting-niri.md
-    - Fractional Layout: Development:-Fractional-Layout.md
-    - Redraw Loop: Development:-Redraw-Loop.md
-    - Animation Timing: Development:-Animation-Timing.md
+    - Design Principles: zh/Development:-Design-Principles.md
+    - Developing niri: zh/Development:-Developing-niri.md
+    - Documenting niri: zh/Development:-Documenting-niri.md
+    - Fractional Layout: zh/Development:-Fractional-Layout.md
+    - Redraw Loop: zh/Development:-Redraw-Loop.md
+    - Animation Timing: zh/Development:-Animation-Timing.md
