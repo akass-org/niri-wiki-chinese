@@ -53,6 +53,53 @@ plugins:
           name: 简体中文
           build: true
           default: true
+          nav_translations:
+            Home: 首页
+            Usage: 使用指南
+            Getting Started: 快速入门
+            Example systemd Setup: systemd 配置示例
+            Important Software: 重要软件
+            Workspaces: 工作区
+            Floating Windows: 浮动窗口
+            Tabs: 标签页
+            Overview: 桌面概览
+            Screencasting: 屏幕录制
+            Layer‐Shell Components: Layer-Shell 组件
+            IPC, niri msg: IPC, niri msg
+            Application-Specific Issues: 应用程序特定问题
+            Nvidia: Nvidia
+            Xwayland: Xwayland
+            Gestures: 手势操作
+            Fullscreen and Maximize: 全屏和最大化
+            Window Effects: 窗口效果
+            Packaging niri: 打包 niri
+            Integrating niri: 集成 niri
+            Accessibility: 无障碍
+            Name and Logo: 名称与徽标
+            FAQ: 常见问题
+            Configuration: 配置
+            Introduction: 简介
+            Input: 输入
+            Outputs: 输出
+            Key Bindings: 按键绑定
+            Switch Events: 开关事件
+            Layout: 布局
+            Named Workspaces: 命名工作区
+            Miscellaneous: 杂项
+            Window Rules: 窗口规则
+            Layer Rules: 图层规则
+            Animations: 动画
+            Gestures: 手势
+            Recent Windows: 最近窗口
+            Debug Options: 调试选项
+            Include: 包含
+            Development: 开发
+            Design Principles: 设计原则
+            Developing niri: 开发 niri
+            Documenting niri: 文档化 niri
+            Fractional Layout: 分数布局
+            Redraw Loop: 重绘循环
+            Animation Timing: 动画定时
         - locale: en
           name: English
           build: true
