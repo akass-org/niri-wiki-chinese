@@ -1,6 +1,6 @@
 ### Overview
 
-<sup>Since: next release</sup>
+<sup>Since: 26.04</sup>
 
 You can apply background effects to windows and layer-shell surfaces.
 These include blur, xray, saturation, and noise.
