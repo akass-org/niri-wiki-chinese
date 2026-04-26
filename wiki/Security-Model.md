@@ -29,6 +29,8 @@ Anything with access to niri's D-Bus interfaces can, among other things:
 - Record the user's screen via the screencast interface.
 - Fully listen to and emulate input from the user's keyboard via the accessibility interface.
 
+Also, while niri doesn't directly integrate Xwayland, it's worth reminding that anything with access to the X11 `$DISPLAY` (which comes both as a socket file on disk **and** as an abstract socket in the network namespace) can intercept and emulate all input and record the contents of any X11 windows on the same `$DISPLAY` (but not Wayland windows).
+
 ## Running untrusted clients
 
 Considering all of the above, for running untrusted clients, you need a proper sandbox that:
