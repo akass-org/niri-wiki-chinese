@@ -45,3 +45,17 @@ All unsafe protocols are made inaccessible through this filtered Wayland socket.
 One sandbox that satisfies all of these criteria is the [Flatpak](https://flatpak.org/) sandbox.
 
 Importantly, filtering just the Wayland socket (and leaving, for example, unrestricted D-Bus access) is **not enough** to prevent untrusted clients from doing bad things.
+
+## Lock screen
+
+When the session is locked via [ext-session-lock](https://wayland.app/protocols/ext-session-lock-v1), most actions (keybindings) are automatically disabled.
+Only a very small set of safe actions is allowed.
+In particular, spawning will not work, with the exception of binds explicitly configured with `allow-when-locked=true`.
+
+Importantly, the **quit** action is allowed—you can always quit niri, even when on a lock screen.
+Therefore, you must ensure that quitting niri does not drop you into an unprotected TTY commandline.
+Usually, a display manager, like GDM, will do this for you: when niri exits (via the quit bind or if it crashes), it'll put you back into a safe password prompt.
+
+Other than quitting, the only way to exit a lock screen is for the lock screen client to tell niri to unlock the session.
+If the lock screen client crashes, the session remains locked with a solid red background.
+In this case, another lock screen client can take over (so you can start a fresh lock screen if it crashes, and still unlock your session).
