@@ -74,6 +74,7 @@ plugins:
             Window Effects: 窗口效果
             Packaging niri: 打包 niri
             Integrating niri: 集成 niri
+            Security Model: 安全模型
             Accessibility: 无障碍
             Name and Logo: 名称与徽标
             FAQ: 常见问题
@@ -97,6 +98,7 @@ plugins:
             Design Principles: 设计原则
             Developing niri: 开发 niri
             Documenting niri: 文档化 niri
+            Releasing niri: 发布 niri
             Fractional Layout: 分数布局
             Redraw Loop: 重绘循环
             Animation Timing: 动画定时
@@ -148,6 +150,7 @@ nav:
     - Window Effects: zh/Window-Effects.md
     - Packaging niri: zh/Packaging-niri.md
     - Integrating niri: zh/Integrating-niri.md
+    - Security Model: zh/Security-Model.md
     - Accessibility: zh/Accessibility.md
     - Name and Logo: zh/Name-and-Logo.md
     - FAQ: zh/FAQ.md
@@ -171,6 +174,7 @@ nav:
     - Design Principles: zh/Development:-Design-Principles.md
     - Developing niri: zh/Development:-Developing-niri.md
     - Documenting niri: zh/Development:-Documenting-niri.md
+    - Releasing niri: zh/Development:-Releasing-niri.md
     - Fractional Layout: zh/Development:-Fractional-Layout.md
     - Redraw Loop: zh/Development:-Redraw-Loop.md
     - Animation Timing: zh/Development:-Animation-Timing.md

@@ -1,7 +1,7 @@
 niri 的文档文件位于 `docs/wiki/` 目录下，并且至少可以在三个系统中查看和浏览：
 
 - GitHub 仓库的 Markdown 文件预览
-- [GitHub 仓库的 wiki](https://github.com/YaLTeR/niri/wiki)
+- [GitHub 仓库的 wiki](https://github.com/niri-wm/niri/wiki)
 - [文档网站](https://yalter.github.io/niri/)
 
 ## GitHub 仓库的 wiki

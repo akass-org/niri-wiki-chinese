@@ -9,10 +9,9 @@ sudo dnf install niri dms
 systemctl --user add-wants niri.service dms
 ```
 
-Arch Linux (通过 [paru](https://github.com/morganamilo/paru)):
-```shell
-sudo pacman -Syu niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk alacritty
-paru -S dms-shell-bin matugen wl-clipboard cliphist cava qt6-multimedia-ffmpeg
+Arch Linux:
+```
+sudo pacman -Syu niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk alacritty dms-shell-niri matugen cava qt6-multimedia-ffmpeg
 systemctl --user add-wants niri.service dms
 ```
 
@@ -35,7 +34,7 @@ sudo apt install niri dms
 
 获取 niri 最简单的方法是使用包管理器安装。
 以下是一些选项：[Fedora COPR](https://copr.fedorainfracloud.org/coprs/yalter/niri/) 和 [nightly COPR](https://copr.fedorainfracloud.org/coprs/yalter/niri-git/)（由我个人维护），[NixOS Flake](https://github.com/sodiboo/niri-flake)，以及下面 repology 中提供的一些更多选项, 包括适用于基于 Debian 发行版的[pacstall 软件包](https://pacstall.dev/packages/niri/)。
-如果您想自己编译 niri，请参阅 [构建](#build) 部分；如果您想打包 niri，请参阅 [打包 niri](./Packaging-niri.md) 页面。
+如果您想自己编译 niri，请参阅 [构建](#building) 部分；如果您想打包 niri，请参阅 [打包 niri](./Packaging-niri.md) 页面。
 
 [![打包状态](https://repology.org/badge/vertical-allrepos/niri.svg)](https://repology.org/project/niri/versions)
 
@@ -147,13 +146,10 @@ Mesa 驱动与 niri 版本不同步是一个常见问题，因此请确保您的
 | <kbd>Mod</kbd><kbd>Ctrl</kbd><kbd>I</kbd> 或 <kbd>Mod</kbd><kbd>Ctrl</kbd><kbd>PageUp</kbd> | 将焦点列移动到上方的工作区 |
 | <kbd>Mod</kbd><kbd>Shift</kbd><kbd>U</kbd> 或 <kbd>Mod</kbd><kbd>Shift</kbd><kbd>PageDown</kbd> | 将焦点工作区向下移动 |
 | <kbd>Mod</kbd><kbd>Shift</kbd><kbd>I</kbd> 或 <kbd>Mod</kbd><kbd>Shift</kbd><kbd>PageUp</kbd> | 将焦点工作区向上移动 |
-| <kbd>Mod</kbd><kbd>,</kbd> | 将右侧的窗口合并到焦点列 |
-| <kbd>Mod</kbd><kbd>.</kbd> | 将焦点列底部的窗口弹出为独立列 |
 | <kbd>Mod</kbd><kbd>[</kbd> | 将焦点窗口向左合并或弹出 |
 | <kbd>Mod</kbd><kbd>]</kbd> | 将焦点窗口向右合并或弹出 |
-| <kbd>Mod</kbd><kbd>R</kbd> | 在预设列的宽度之间切换 |
-| <kbd>Mod</kbd><kbd>Shift</kbd><kbd>R</kbd> | 在预设列的高度之间切换 |
-| <kbd>Mod</kbd><kbd>F</kbd> | 最大化列 |
+| <kbd>Mod</kbd><kbd>R</kbd> 和 <kbd>Mod</kbd><kbd>Shift</kbd><kbd>R</kbd> | 在预设列宽之间向前和向后切换 |
+| <kbd>Mod</kbd><kbd>M</kbd> | 最大化窗口 |
 | <kbd>Mod</kbd><kbd>C</kbd> | 在视图中居中列 |
 | <kbd>Mod</kbd><kbd>-</kbd> | 将列宽减少 10% |
 | <kbd>Mod</kbd><kbd>=</kbd> | 将列宽增加 10% |
@@ -163,12 +159,12 @@ Mesa 驱动与 niri 版本不同步是一个常见问题，因此请确保您的
 | <kbd>Mod</kbd><kbd>Shift</kbd><kbd>F</kbd> | 切换焦点窗口的全屏状态 |
 | <kbd>Mod</kbd><kbd>V</kbd> | 将焦点窗口在浮动和平铺布局之间移动 |
 | <kbd>Mod</kbd><kbd>Shift</kbd><kbd>V</kbd> | 在浮动和平铺布局之间切换焦点 |
-| <kbd>PrtSc</kbd> | 截取区域截图。使用鼠标选择要截图的区域，然后按 空格 保存截图，或按 Esc 取消 |
+| <kbd>PrtSc</kbd> | 截取区域截图。使用鼠标选择要截图的区域，然后按 空格 保存截图，或按 Escape 取消 |
 | <kbd>Alt</kbd><kbd>PrtSc</kbd> | 将焦点窗口截图到剪贴板和 `~/Pictures/Screenshots/` |
 | <kbd>Ctrl</kbd><kbd>PrtSc</kbd> | 将焦点显示器截图到剪贴板和 `~/Pictures/Screenshots/` |
 | <kbd>Mod</kbd><kbd>Shift</kbd><kbd>E</kbd> 或 <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Delete</kbd> | 退出 niri |
 
-## 构建 {#build}
+## 构建 {#building}
 
 首先，安装您的发行版的依赖项。
 

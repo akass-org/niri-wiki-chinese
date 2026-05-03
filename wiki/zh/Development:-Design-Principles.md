@@ -74,7 +74,7 @@
 
 ## 默认配置
 
-[默认配置](https://github.com/YaLTeR/niri/blob/main/resources/default-config.kdl)旨在为niri新用户提供熟悉、便捷且不会过于突兀的体验。
+[默认配置](https://github.com/niri-wm/niri/blob/main/resources/default-config.kdl)旨在为niri新用户提供熟悉、便捷且不会过于突兀的体验。
 需要注意的是，这并非“推荐的Rice配置”；我们不想用过于炫酷的彩虹边框和花哨的着色器吓到用户。
 
 由于我们并非一个完整的桌面环境（而且也没有足够的贡献者群体来发展成为一个完整的桌面环境），因此我们无法提供完全集成的体验——发行版在这方面更有优势。

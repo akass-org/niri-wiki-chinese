@@ -47,7 +47,7 @@
 运行 niri 需要可用的硬件加速支持。
 - 某些通知守护进程，如 `mako`，通常为应用程序正常运行所必需。
 
-最后，您可能希望自动安装一些在 niri 的 [默认配置文件](https://github.com/YaLTeR/niri/blob/main/resources/default-config.kdl) 中绑定的应用程序（搜索 `spawn` 关键字），例如 `alacritty` 和 `fuzzel`。
+最后，您可能希望自动安装一些在 niri 的 [默认配置文件](https://github.com/niri-wm/niri/blob/main/resources/default-config.kdl) 中绑定的应用程序（搜索 `spawn` 关键字），例如 `alacritty` 和 `fuzzel`。
 
 ### 运行测试
 

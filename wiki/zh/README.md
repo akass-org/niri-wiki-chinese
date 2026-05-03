@@ -4,7 +4,7 @@
 如果您正在寻找配置 niri 的方法，请查看[配置简介](./Configuration:-Introduction.md)。
 
 如果您想为 niri 做出贡献，有很多与代码和非代码相关的方式可以去做。
-请参阅 [CONTRIBUTING.md](https://github.com/YaLTeR/niri/blob/main/CONTRIBUTING.md) 了解概览。
+请参阅 [CONTRIBUTING.md](https://github.com/niri-wm/niri/blob/main/CONTRIBUTING.md) 了解概览。
 
 如果您还没有访问过，请看看我们的新维基网站！https://yalter.github.io/niri/
 
