@@ -312,11 +312,90 @@ hotkey-overlay {
 
 配置创建/失败时通知的设置。
 
-设置 `disable-failed` 标志，可以禁用“解析配置文件失败”的通知。
+设置 `disable-failed` 标志，可以禁用”解析配置文件失败”的通知。
 比如，如果您已用自己的方式来处理这类错误。
 
 ```kdl
 config-notification {
     disable-failed
+}
+```
+
+### `blur`
+
+<sup>Since: 26.04</sup>
+
+影响所有背景模糊的模糊配置。
+
+请参见 [窗口效果页面](./Window-Effects.md) 了解背景效果的概述。
+
+```kdl
+// 以下是默认值：
+blur {
+    // off
+    passes 3
+    offset 3
+    noise 0.02
+    saturation 1.5
+}
+```
+
+#### `off`
+
+默认情况下，窗口或 layer-shell 界面可以通过 `ext-background-effect` 协议请求模糊效果。
+你也可以通过 [窗口](./Configuration:-Window-Rules.md#background-effect) 或 [图层](./Configuration:-Layer-Rules.md#background-effect) 规则中的 `blur true` 背景效果手动启用它。
+
+设置 `off` 标志将禁用所有模糊效果，包括窗口请求的模糊和窗口规则中配置的模糊。
+
+```kdl
+blur {
+    off
+}
+```
+
+#### `passes` 和 `offset`
+
+`passes` 控制双 kawase 模糊的下采样/上采样次数。
+更多次数产生更大、更平滑的模糊，但会消耗更多 GPU 资源。
+
+`offset` 是每次采样的像素偏移乘数。
+`1` 为原始的双 kawase 模糊。
+较大的值产生更平滑的模糊，且不会增加额外的 GPU 开销。
+
+然而，设置过大的 `offset` 会产生视觉伪影。
+你需要增加 `passes` 才能使用更大的 `offset` 而不出现伪影。
+
+配置模糊时，建议先尝试增加 `offset`（因为它不会增加 GPU 负载），直到开始出现伪影。
+然后，如果你仍需要更平滑的模糊，再将 `passes` 增加 1。
+重复此过程直到达到理想的视觉效果。
+
+```kdl
+blur {
+    passes 3
+    offset 3.0
+}
+```
+
+#### `noise`
+
+在模糊效果之上添加噪点的数量。
+
+这有助于减少色带伪影。
+
+```kdl
+blur {
+    noise 0.02
+}
+```
+
+#### `saturation`
+
+应用于模糊背景的色彩饱和度。
+
+高于 `1` 的值增加饱和度；低于 `1` 的值降低饱和度。
+
+```kdl
+blur {
+    saturation 1.5
 }
 ```
