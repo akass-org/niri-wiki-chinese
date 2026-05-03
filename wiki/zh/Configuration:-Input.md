@@ -263,6 +263,13 @@ input {
     - <sup>Since: 25.02</sup> 适用于 `tablet`
     - <sup>Since: 25.11</sup> 适用于 `touch`
 
+- `map-to-focused-output`：<sup>Since: 26.04</sup> 将数位板映射到焦点输出，其优先级高于 `map-to-output`。
+
+- `map-to-focused-window`：<sup>Since: next release</sup> 将数位板映射到焦点窗口的几何区域，其优先级高于 `map-to-focused-output` 和 `map-to-output`。当没有窗口获得焦点时（例如在概览中），会回退到上述选项。
+
+    当数位板也通过 `map-to-output` 映射到特定输出时，`map-to-focused-window` 标志会将数位板映射到该输出上的活动窗口。
+    如果数位板没有映射到任何特定输出，那么无论窗口在何处，它都会将数位板映射到当前焦点窗口。
+
 数位板和触摸屏是绝对定位设备，可以映射到特定的输出，如下所示：
 
 ```kdl
