@@ -175,7 +175,7 @@ POST_MERGE_HEAD=$(git rev-parse HEAD)
 echo ""
 echo "[4/6] 分析上游变更..."
 
-mapfile -t CHANGES < <(git diff --name-status "$PRE_MERGE_HEAD" "$POST_MERGE_HEAD" -- "wiki/*.md" 2>/dev/null || true)
+mapfile -t CHANGES < <(git diff --name-status "$PRE_MERGE_HEAD" "$POST_MERGE_HEAD" -- "wiki/*.md" 2>/dev/null | grep -P '^[AMD]\twiki/[^/]+\.md$' || true)
 
 if [ ${#CHANGES[@]} -eq 0 ]; then
     echo "  ℹ️ 没有检测到 wiki/*.md 的变更，无需同步"
@@ -229,7 +229,7 @@ for file in "${ADDED_MODIFIED[@]}"; do
     fi
 
     # 安全检查 2: 检测中文文件（防止误移）
-    CN_CHARS=$(grep -oP '[\x{4e00}-\x{9fff}]' "$file" 2>/dev/null | wc -l || echo 0)
+    CN_CHARS=$(grep -oP '[\x{4e00}-\x{9fff}]' "$file" 2>/dev/null | wc -l | tr -d '[:space:]')
 
     if [ "$CN_CHARS" -gt 50 ]; then
         echo "  ⚠️ 警告: $file 包含 $CN_CHARS 个中文字符，可能是中文翻译！"
