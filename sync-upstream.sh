@@ -229,7 +229,8 @@ for file in "${ADDED_MODIFIED[@]}"; do
     fi
 
     # 安全检查 2: 检测中文文件（防止误移）
-    CN_CHARS=$(grep -oP '[\x{4e00}-\x{9fff}]' "$file" 2>/dev/null | wc -l | tr -d '[:space:]')
+    CN_CHARS=$(grep -oP '[\x{4e00}-\x{9fff}]' "$file" 2>/dev/null | wc -l | tr -d '[:space:]') || true
+    CN_CHARS=${CN_CHARS:-0}
 
     if [ "$CN_CHARS" -gt 50 ]; then
         echo "  ⚠️ 警告: $file 包含 $CN_CHARS 个中文字符，可能是中文翻译！"
