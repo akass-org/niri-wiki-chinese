@@ -93,6 +93,26 @@ layer-rule {
 }
 ```
 
+#### `layer`
+
+<sup>Since: 26.04</sup>
+
+匹配位于此 layer-shell 层上的界面。
+可设置为 `"background"`、`"bottom"`、`"top"` 或 `"overlay"`。
+
+```kdl
+// 让所有 overlay 层的界面浮起来。
+layer-rule {
+    match layer="overlay"
+
+    baba-is-float true
+}
+```
+
+### 动态属性
+
+这些属性会持续应用于已打开的 layer-shell 界面。
+
 #### `opacity`
 
 设置界面的不透明度。
@@ -191,3 +211,68 @@ layer-rule {
     baba-is-float true
 }
 ```
+
+#### `background-effect`
+
+<sup>Since: 26.04</sup>
+
+覆盖此界面的背景效果选项。
+
+- `xray`：设置为 `true` 以启用 xray 效果，或设置为 `false` 以禁用它。
+- `blur`：设置为 `true` 以启用此界面后面的模糊效果，或设置为 `false` 以强制禁用它。
+- `noise`：添加到背景上的像素噪点数量（有助于减轻模糊产生的色带问题）。
+- `saturation`：背景的颜色饱和度（`0` 为去饱和，`1` 为正常，`2` 为 200% 饱和度）。
+
+请参见 [窗口效果页面](./Window-Effects.md) 了解背景效果的概述。
+
+```kdl
+// 使 top 和 overlay 层使用常规模糊（如果已启用），
+// 而 bottom 和 background 层继续使用高效的 xray 模糊。
+layer-rule {
+    match layer="top"
+    match layer="overlay"
+
+    background-effect {
+        xray false
+    }
+}
+```
+
+#### `popups`
+
+<sup>Since: 26.04</sup>
+
+覆盖此 layer-shell 界面的弹出窗口（例如点击 Waybar 中的某个项目所打开的菜单）的属性。
+
+这些属性的工作方式与对应的图层规则属性相同，不同之处在于它们应用于界面的弹出窗口而非界面本身。
+
+`opacity` 会*叠加*在界面自身的透明度规则之上，因此同时设置两者将使得弹出窗口比界面本身更透明。
+其他属性独立应用。
+
+> [!NOTE]
+> 此块仅影响应用通过 Wayland 的 [xdg-popup](https://wayland.app/protocols/xdg-shell#xdg_popup) 创建的弹出窗口（这应该涵盖了大多数情况）。
+>
+> 一些桌面 shell 会通过在常规 layer-shell 界面中绘制看起来像弹出窗口的内容来模拟弹出窗口。
+> 从 niri 的角度来看，这些只是 layer-shell 界面而非弹出窗口，因此此块不会对它们生效。
+>
+> 此块也不会影响输入法弹出窗口，例如 Fcitx。
+
+```kdl
+// 模糊 Waybar 弹出菜单后面的背景。
+layer-rule {
+    match namespace="^waybar$"
+
+    popups {
+        // 匹配默认的 GTK 3 弹出窗口圆角半径。
+        geometry-corner-radius 6
+        opacity 0.85
+
+        background-effect {
+            blur true
+        }
+    }
+}
+```
+
+请记住，只有当弹出窗口的形状为（圆角）矩形，并且 layer-shell 界面正确地将其 Wayland 几何区域设置为排除任何阴影时，背景效果才能正确显示。
+具有自定义形状的弹出窗口需要应用实现 [ext-background-effect protocol](https://wayland.app/protocols/ext-background-effect-v1) 才能正确运作。
