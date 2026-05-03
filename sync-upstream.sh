@@ -96,10 +96,12 @@ echo "[1/6] 更新 $SYNC_BRANCH 分支..."
 if ! git show-ref --verify --quiet "refs/heads/$SYNC_BRANCH"; then
     echo "  首次运行: 创建 $SYNC_BRANCH 分支跟踪 upstream/main"
     run git fetch "$UPSTREAM_REMOTE" "$UPSTREAM_BRANCH"
+    run git lfs fetch "$UPSTREAM_REMOTE" "$UPSTREAM_BRANCH" 2>/dev/null || true
     run git switch -C "$SYNC_BRANCH" "$UPSTREAM_REMOTE/$UPSTREAM_BRANCH"
 else
     run git switch "$SYNC_BRANCH"
     run git fetch "$UPSTREAM_REMOTE" "$UPSTREAM_BRANCH"
+    run git lfs fetch "$UPSTREAM_REMOTE" "$UPSTREAM_BRANCH" 2>/dev/null || true
     if ! run git merge --ff-only "$UPSTREAM_REMOTE/$UPSTREAM_BRANCH"; then
         echo ""
         echo "⚠️ $SYNC_BRANCH 无法快进合并。正在重置到上游最新状态..."
@@ -313,6 +315,42 @@ for file in wiki/*.md; do
     echo "     请手动处理。"
     warnings=$((warnings + 1))
 done
+
+# 处理 Git LFS 图片（上游用 LFS 存储图片，subtree 同步过来的是指针文件）
+echo ""
+echo "  检查 Git LFS 图片..."
+lfs_fixed=0
+for img in wiki/img/*.png; do
+    [ -e "$img" ] || continue
+    # 检测是否为 LFS 指针文件
+    if head -c 10 "$img" 2>/dev/null | grep -q 'version'; then
+        OID=$(grep 'oid' "$img" 2>/dev/null | cut -d: -f2 | tr -d ' ')
+        OID_PATH=$(echo "$OID" | sed 's/^sha256://')
+        OBJ=".git/lfs/objects/${OID_PATH:0:2}/${OID_PATH:2:2}/$OID_PATH"
+
+        if [ -f "$OBJ" ]; then
+            if ! $DRY_RUN; then
+                cp "$OBJ" "$img"
+            fi
+            lfs_fixed=$((lfs_fixed + 1))
+        else
+            # 尝试从 upstream 拉取 LFS 对象
+            echo "  拉取 LFS 对象: $OID (from upstream)"
+            if ! $DRY_RUN; then
+                git lfs fetch "$UPSTREAM_REMOTE" --all 2>/dev/null || true
+                if [ -f "$OBJ" ]; then
+                    cp "$OBJ" "$img"
+                    lfs_fixed=$((lfs_fixed + 1))
+                else
+                    echo "  ⚠️ 无法获取 LFS 对象: $(basename "$img")"
+                fi
+            fi
+        fi
+    fi
+done
+if [ "$lfs_fixed" -gt 0 ]; then
+    echo "  已还原 $lfs_fixed 个 LFS 图片文件"
+fi
 
 # ===== Step 6: 提交 =====
 echo ""
