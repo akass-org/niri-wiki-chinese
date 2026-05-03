@@ -16,6 +16,12 @@ include "colors.kdl"
 被包含的配置文件可以继续包含更多文件。
 所有被包含的文件都会被监视其更改，当其中任何一个文件发生变化时，配置将实时重新加载。
 
+可以通过文件名或路径进行包含：
+
+* 相对于当前文件的路径：`other.kdl` 或 `./other.kdl`
+* 绝对路径：`/path/to/file.kdl`
+* <sup>Since: 26.04</sup> 家目录路径：`~/file.kdl` 将展开为 `/home/user/file.kdl`
+
 包含操作仅在配置的顶部有效：
 
 ```kdl,must-fail
@@ -116,7 +122,7 @@ window-rule {
 
 ### 可选包含
 
-<sup>Since: next release</sup>
+<sup>Since: 26.04</sup>
 
 默认情况下，包含一个不存在的文件会导致错误。
 您可以通过设置 `optional=true` 来允许包含不存在的文件：
