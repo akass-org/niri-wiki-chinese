@@ -14,6 +14,7 @@
 layer-rule {
     match namespace="waybar"
     match at-startup=true
+    match layer="top"
 
     // 持久生效的属性。
     opacity 0.5
@@ -34,6 +35,25 @@ layer-rule {
     geometry-corner-radius 12
     place-within-backdrop true
     baba-is-float true
+
+    background-effect {
+        xray true
+        blur true
+        noise 0.05
+        saturation 3
+    }
+
+    popups {
+        opacity 0.5
+        geometry-corner-radius 6
+
+        background-effect {
+            xray true
+            blur true
+            noise 0.05
+            saturation 3
+        }
+    }
 }
 ```
 
@@ -69,9 +89,25 @@ layer-rule {
 }
 ```
 
+#### `layer`
+
+<sup>Since: 26.04</sup>
+
+匹配位于此 layer-shell 层上的界面。
+可设置为 `"background"`、`"bottom"`、`"top"` 或 `"overlay"`。
+
+```kdl
+// 让所有 overlay 层的界面浮起来。
+layer-rule {
+    match layer="overlay"
+
+    baba-is-float true
+}
+```
+
 ### 动态属性
 
-这些属性持续生效于打开的 layer-shell 界面。
+这些属性会持续应用于已打开的 layer-shell 界面。
 
 #### `block-out-from`
 
@@ -92,26 +128,6 @@ layer-rule {
     block-out-from "screencast"
 }
 ```
-
-#### `layer`
-
-<sup>Since: 26.04</sup>
-
-匹配位于此 layer-shell 层上的界面。
-可设置为 `"background"`、`"bottom"`、`"top"` 或 `"overlay"`。
-
-```kdl
-// 让所有 overlay 层的界面浮起来。
-layer-rule {
-    match layer="overlay"
-
-    baba-is-float true
-}
-```
-
-### 动态属性
-
-这些属性会持续应用于已打开的 layer-shell 界面。
 
 #### `opacity`
 

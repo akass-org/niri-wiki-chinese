@@ -100,6 +100,25 @@ window-rule {
     tiled-state true
     baba-is-float true
 
+    background-effect {
+        xray true
+        blur true
+        noise 0.05
+        saturation 3
+    }
+
+    popups {
+        opacity 0.5
+        geometry-corner-radius 15
+
+        background-effect {
+            xray true
+            blur true
+            noise 0.05
+            saturation 3
+        }
+    }
+
     min-width 100
     max-width 200
     min-height 300
@@ -908,6 +927,7 @@ window-rule {
 https://github.com/user-attachments/assets/3f4cb1a4-40b2-4766-98b7-eec014c19509
 
 </video>
+
 #### `background-effect`
 
 <sup>Since: 26.04</sup>
