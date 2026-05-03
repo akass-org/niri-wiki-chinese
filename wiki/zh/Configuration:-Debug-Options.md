@@ -107,6 +107,8 @@ debug {
 
 ### `force-disable-connectors-on-resume`
 
+<sup>Since: 26.04</sup>
+
 在恢复 niri（TTY 切换或从挂起中唤醒）时强制禁用所有输出。
 这会导致所有输出进行模式设置/屏幕清空。
 
