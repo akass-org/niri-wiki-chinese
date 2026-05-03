@@ -382,7 +382,7 @@ binds {
 }
 ```
 
-<sup>Since: next release</sup> 您可以通过 `show-pointer=true` 属性在窗口截图中显示鼠标指针。
+<sup>Since: 26.04</sup> 您可以通过 `show-pointer=true` 属性在窗口截图中显示鼠标指针。
 仅当窗口当前正在接收指针输入时（通常这意味着指针位于窗口上方）才会包含指针。
 
 ```kdl
