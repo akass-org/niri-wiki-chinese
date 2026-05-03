@@ -16,7 +16,7 @@
 
 <sup>Since: 25.11</sup>
 
-你可以通过 `maximize-window-to-edges` 最大化单个窗口。
+你可以通过 `maximize-window-to-edges` 最大化单个窗口（默认绑定为 <kbd>Mod</kbd><kbd>M</kbd>）。
 这与你在其他桌面环境和操作系统中可以找到的最大化功能相同：它会将一个窗口扩展到可用屏幕区域的边缘。
 你仍然可以看到你的任务栏，但不会看到 struts、间隙或边框。
 
