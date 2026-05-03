@@ -187,7 +187,8 @@ for line in "${CHANGES[@]}"; do
     echo "    $line"
 done
 
-ADDED_MODIFIED=()
+ADDED=()
+MODIFIED=()
 DELETED=()
 
 for line in "${CHANGES[@]}"; do
@@ -195,8 +196,11 @@ for line in "${CHANGES[@]}"; do
     file=${line:2}
 
     case "$status" in
-        A|M)
-            ADDED_MODIFIED+=("$file")
+        A)
+            ADDED+=("$file")
+            ;;
+        M)
+            MODIFIED+=("$file")
             ;;
         D)
             DELETED+=("$file")
@@ -206,6 +210,40 @@ for line in "${CHANGES[@]}"; do
             ;;
     esac
 done
+
+# 显示分类摘要
+echo ""
+echo "  📊 上游变更摘要:"
+echo "     ┌──────────┬──────┐"
+printf "     │ 新增      │ %4d │\n" ${#ADDED[@]}
+printf "     │ 修改      │ %4d │\n" ${#MODIFIED[@]}
+printf "     │ 删除      │ %4d │\n" ${#DELETED[@]}
+echo "     └──────────┴──────┘"
+
+if [ ${#ADDED[@]} -gt 0 ]; then
+    echo ""
+    echo "  ✚ 新增文件:"
+    for f in "${ADDED[@]}"; do
+        echo "    - $(basename "$f")"
+    done
+fi
+if [ ${#MODIFIED[@]} -gt 0 ]; then
+    echo ""
+    echo "  ✎ 修改文件:"
+    for f in "${MODIFIED[@]}"; do
+        echo "    - $(basename "$f")"
+    done
+fi
+if [ ${#DELETED[@]} -gt 0 ]; then
+    echo ""
+    echo "  ✕ 上游删除:"
+    for f in "${DELETED[@]}"; do
+        echo "    - $(basename "$f")"
+    done
+fi
+
+# 合并 新增+修改 用于后续移动
+ADDED_MODIFIED=("${ADDED[@]}" "${MODIFIED[@]}")
 
 # ===== Step 5: 移动文件到 wiki/en/ =====
 echo ""
@@ -295,17 +333,20 @@ fi
 echo ""
 echo "=== 同步完成 ==="
 echo ""
-echo "统计:"
-echo "  移动/覆盖: $moved 个文件"
-echo "  跳过:     $skipped 个文件"
-if [ "$warnings" -gt 0 ]; then
-    echo "  ⚠️ 警告:   $warnings 个"
-fi
-if [ ${#DELETED[@]} -gt 0 ]; then
-    echo "  上游删除: ${#DELETED[@]} 个文件（请检查 wiki/en/ 残留）"
-fi
+echo "  📊 上游变更摘要:"
+echo "     ┌──────────────────┬──────┐"
+printf "     │ 新增文件          │ %4d │\n" ${#ADDED[@]}
+printf "     │ 修改文件          │ %4d │\n" ${#MODIFIED[@]}
+printf "     │ 删除文件          │ %4d │\n" ${#DELETED[@]}
+echo "     ├──────────────────┼──────┤"
+printf "     │ 已同步到 wiki/en/ │ %4d │\n" $moved
+printf "     │ 跳过              │ %4d │\n" $skipped
+echo "     └──────────────────┴──────┘"
 echo "  wiki/zh/:  完全未动"
-echo ""
+if [ "$warnings" -gt 0 ]; then
+    echo ""
+    echo "  ⚠️ 警告: $warnings 个（详见上方日志）"
+fi
 
 if $DRY_RUN; then
     echo "这是 --dry-run 模式，没有实际执行任何操作。"
