@@ -4,7 +4,7 @@
 ### 配置
 
 Niri 将从 `$XDG_CONFIG_HOME/niri/config.kdl` 或 `~/.config/niri/config.kdl` 加载配置，如果这两个文件都不存在，则会回退到 `/etc/niri/config.kdl`。
-如果这两个文件都缺失，niri 将使用在构建时已嵌入到 niri 二进制文件中的 [默认配置文件](https://github.com/niri-wm/niri/blob/main/resources/default-config.kdl) 的内容创建 `$XDG_CONFIG_HOME/niri/config.kdl`容。
+如果这两个文件都缺失，niri 将使用在构建时已嵌入到 niri 二进制文件中的 [默认配置文件](https://github.com/niri-wm/niri/blob/main/resources/default-config.kdl) 的内容创建 `$XDG_CONFIG_HOME/niri/config.kdl` 的内容。
 
 这意味着您可以通过创建 `/etc/niri/config.kdl` 来自定义您的发行版的默认设置。
 当此文件存在时，niri *不会* 自动在 `~/.config/niri/` 创建配置文件，因此您需要指导用户如何自行创建。

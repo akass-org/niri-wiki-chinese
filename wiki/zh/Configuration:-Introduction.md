@@ -19,7 +19,7 @@
 ### 加载
 
 Niri 将从 `$XDG_CONFIG_HOME/niri/config.kdl` 或 `~/.config/niri/config.kdl` 加载配置，如果这两个文件都不存在，则会回退到 `/etc/niri/config.kdl`。
-如果这两个文件都缺失，niri 将使用在构建时已嵌入到 niri 二进制文件中的 [默认配置文件](https://github.com/YaLTeR/niri/blob/main/resources/default-config.kdl) 的内容创建 `$XDG_CONFIG_HOME/niri/config.kdl`容。
+如果这两个文件都缺失，niri 将使用在构建时已嵌入到 niri 二进制文件中的 [默认配置文件](https://github.com/niri-wm/niri/blob/main/resources/default-config.kdl) 的内容创建 `$XDG_CONFIG_HOME/niri/config.kdl` 的内容。
 请使用默认配置文件作为自定义配置的起点。
 
 配置支持实时重载。
