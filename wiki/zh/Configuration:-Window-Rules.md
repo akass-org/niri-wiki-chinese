@@ -908,6 +908,94 @@ window-rule {
 https://github.com/user-attachments/assets/3f4cb1a4-40b2-4766-98b7-eec014c19509
 
 </video>
+#### `background-effect`
+
+<sup>Since: 26.04</sup>
+
+覆盖此窗口的背景效果选项。
+
+- `xray`：设置为 `true` 以启用 xray 效果，或设置为 `false` 以禁用它。
+- `blur`：设置为 `true` 以启用此窗口后面的模糊效果，或设置为 `false` 以强制禁用它。
+- `noise`：添加到背景上的像素噪点数量（有助于减轻模糊产生的色带问题）。
+- `saturation`：背景的颜色饱和度（`0` 为去饱和，`1` 为正常，`2` 为 200% 饱和度）。
+
+请参见 [窗口效果页面](./Window-Effects.md) 了解背景效果的概述。
+
+```kdl
+// 使浮动窗口使用常规模糊（如果已启用），
+// 而平铺窗口继续使用高效的 xray 模糊。
+//
+// 警告：非 xray 模糊目前处于实验阶段，存在已知限制。
+// 特别是在窗口打开和关闭动画期间无法工作。
+window-rule {
+    match is-floating=true
+
+    background-effect {
+        xray false
+    }
+}
+```
+
+#### `popups`
+
+<sup>Since: 26.04</sup>
+
+覆盖此窗口的弹出窗口（菜单和工具提示）的属性。
+
+这些属性的工作方式与对应的窗口规则属性相同，不同之处在于它们应用于窗口的弹出窗口而非窗口本身。
+
+`opacity` 会*叠加*在窗口自身的透明度规则之上，因此同时设置两者将使得弹出窗口比窗口本身更透明。
+其他属性独立应用。
+
+> [!NOTE]
+> 此块仅影响应用通过 Wayland 的 [xdg-popup](https://wayland.app/protocols/xdg-shell#xdg_popup) 创建的弹出窗口（这应该涵盖了大多数情况）。
+>
+> 以下是一些看起来像弹出窗口但不会生效的情况：
+>
+> - 完全由客户端模拟的，即根本不是弹出窗口，客户端只是在其窗口内部绘制了一个看起来像弹出窗口的东西。
+> 这在游戏引擎和 Web 应用中很常见，例如 Google Docs 中的右键菜单或 Discord 等 Electron 应用。
+>
+> - 使用了 wl-subsurface 而不是 xdg-popup。
+> 常见于使用 GTK 3 的旧款应用中，值得注意的是 Firefox 在某些菜单中仍使用这种方式。
+> Subsurface 是表面的不可分割的部分，它们通常不是弹出窗口，因此 niri 对这些应用这些规则是没有意义的。
+>
+> 这些模拟的弹出窗口还有其他缺点：它们无法可靠地延伸到自身窗口之外，如果应用试图这样做，它们将被诸如 `clip-to-geometry` 等规则裁剪。
+> 因此，大多数现代应用都会正确地使用 xdg-popup，这是在 Wayland 上显示弹出窗口的预期方式。
+>
+> 此块也不会影响输入法弹出窗口，例如 Fcitx。
+>
+> 对于桌面 shell 或桌面组件创建的弹出窗口，请使用对应的 [图层规则](./Configuration:-Layer-Rules.md#popups)。
+
+```kdl
+// 模糊 Nautilus 中弹出菜单后面的背景。
+window-rule {
+    match app-id="Nautilus"
+
+    popups {
+        // 匹配默认的 libadwaita 弹出窗口圆角半径。
+        geometry-corner-radius 15
+
+        // 注意：通过你的 GTK 主题 CSS 设置背景透明度
+        // 效果会更好，这里仅作为示例。
+        // 这里的设置只是为了更明显地展示效果。
+        opacity 0.5
+
+        background-effect {
+            blur true
+        }
+    }
+}
+```
+
+请记住，只有当弹出窗口的形状为（圆角）矩形，并且窗口正确地将其 Wayland 几何区域设置为排除任何阴影时，背景效果才能正确显示。
+例如，带有指向箭头的 GTK 4 弹出窗口（`has-arrow=true` 属性）*不是*圆角矩形——箭头会凸出来——因此如果启用了模糊，模糊效果也会从弹出窗口中凸出来。
+
+| 正确                                                       | 错误                                                                        |
+|------------------------------------------------------------|-----------------------------------------------------------------------------|
+| 弹出窗口是圆角矩形，模糊效果正常。                              | 弹出窗口不是圆角矩形，模糊效果向上延伸到箭头所在位置。                            |
+| ![](./img/popup-no-arrow.png)                               | ![](./img/popup-arrow.png)                                                  |
+
+这些具有自定义形状的弹出窗口需要应用实现 [ext-background-effect protocol](https://wayland.app/protocols/ext-background-effect-v1) 才能正确运作。
 
 #### 大小覆盖
 
