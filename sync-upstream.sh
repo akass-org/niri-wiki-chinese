@@ -158,6 +158,11 @@ if ! $MERGE_OK; then
             echo "  解决: $f -> 保留本地版本（含 zh/en 导航结构）"
             git checkout --ours "$f"
             git add "$f"
+        elif [[ "$f" == wiki/img/*.png ]]; then
+            # Shared documentation images are owned by upstream; their branch is canonical.
+            echo "  解决: $f -> 采用上游版本"
+            git checkout --theirs "$f"
+            git add "$f"
         else
             echo "❌ 无法自动解决冲突: $f"
             echo "  请手动处理后运行: git add $f && git commit"
