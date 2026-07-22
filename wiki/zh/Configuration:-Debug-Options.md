@@ -324,27 +324,6 @@ debug {
 }
 ```
 
-### `keep-max-bpc-unchanged`
-
-<sup>Since: 25.08</sup>
-
-连接显示器时，niri 会将其最大 bpc 设置为 8，以减少显示带宽并可能允许同时连接更多显示器。
-将 bpc 限制为 8 不是问题，因为我们尚不支持 HDR 或色彩管理，无法真正利用更高的 bpc。
-
-显然，将最大 bpc 设置为 8 会破坏某些由 AMDGPU 驱动的显示器。
-如果您遇到这种问题，请设置此调试标志，这将阻止 niri 更改最大 bpc。
-AMDGPU 错误报告：https://gitlab.freedesktop.org/drm/amd/-/issues/4487。
-
-<sup>Since: 25.11</sup>
-此设置已被废弃且不会产生任何作用：niri 不再设置最大 bpc。
-启用此设置的旧版 niri 行为与当前新版本行为一致。
-
-```kdl
-debug {
-    keep-max-bpc-unchanged
-}
-```
-
 ### 按键绑定
 
 这些不是调试选项，而是按键绑定。

@@ -15,6 +15,7 @@ output "eDP-1" {
     variable-refresh-rate // on-demand=true
     focus-at-startup
     backdrop-color "#001100"
+    // max-bpc 8
 
     hot-corners {
         // off
@@ -275,6 +276,27 @@ output "HDMI-A-1" {
 ```kdl
 output "HDMI-A-1" {
     backdrop-color "#001100"
+}
+```
+
+### `max-bpc`
+
+<sup>Since: next release</sup>
+
+设置此输出的最大每通道位数（BPC）。
+
+通常*无需*设置此选项。
+它会影响显示信号在线缆中的编码方式，*并不*直接影响颜色位数或帧缓冲格式。
+
+将 `max-bpc` 设为较低的值，或许能帮助您解决带宽问题（无法设置其他合成器可以使用的显示器配置）。
+否则，建议保持不设置此选项（使用默认值，通常较高），让 GPU 驱动程序自动决定合适的值。
+
+有效值为 `6`、`8`、`10`、`12`、`14`、`16`。
+
+```kdl
+// 将 HDMI-A-1 的 max-bpc 设为 8，以降低带宽占用。
+output "HDMI-A-1" {
+    max-bpc 8
 }
 ```
 

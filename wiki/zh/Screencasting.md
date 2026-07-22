@@ -53,12 +53,12 @@ Niri 提供了一个特殊的屏幕录制流，您可以动态更改它。
 
 ![显示 niri Dynamic Cast Target 的屏幕录制对话框。](https://github.com/user-attachments/assets/e236ce74-98ec-4f3a-a99b-29ac1ff324dd)
 
-选择该选项后，它将作为一个空的、透明的视频流启动。
-然后，您可以使用以下几个绑定来更改它显示的内容：
+选择该选项，然后使用以下几个绑定来更改它显示的内容。
+在首次选择录制目标前，视频流不会启动。
 
 - `set-dynamic-cast-window` 录制当前焦点窗口。
 - `set-dynamic-cast-monitor` 录制当前焦点显示器。
-- `clear-dynamic-cast-target` 恢复到空视频流。
+- `clear-dynamic-cast-target` 将其重置为空视频流。
 
 您也可以从命令行调用这些操作，例如交互式选择要录制的窗口：
 

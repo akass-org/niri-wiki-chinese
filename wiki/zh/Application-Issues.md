@@ -2,14 +2,19 @@
 
 基于 Electron 的应用程序可以直接在 Wayland 上运行，但这并非默认设置。
 
-对于 Electron > 28 版本，您可以设置一个环境变量：
+对于 Electron ≥ 39，若应用未默认使用 Wayland，您可以使用这个命令行参数（指定）：
+```
+--ozone-platform=wayland
+```
+
+对于 Electron < 39 的，您可以设置一个环境变量：
 ```kdl
 environment {
     ELECTRON_OZONE_PLATFORM_HINT "auto"
 }
 ```
 
-对于更早的版本，您需要向目标应用程序传递命令行参数：
+对于 Electron ≤ 28 的，您需要向目标应用程序传递命令行参数：
 ```
 --enable-features=UseOzonePlatform --ozone-platform-hint=auto
 ```
@@ -25,7 +30,10 @@ environment {
 ### JetBrains IDEs
 
 JetBrains 的 IDE 可以直接运行在 Wayland 上，但是这并非默认启用。
+
 对于 JetBrainsRuntime > 17 的版本，你可以在 `帮助 -> 自定义虚拟机选项 -> 添加` 中添加参数 `-Dawt.toolkit.name=WLToolkit`。
+
+如果设置窗口无法在 Wayland 下加载，并且随后界面失去响应，请同时在自定义虚拟机选项中添加参数 `-Dsun.awt.wl.WindowDecorationStyle=builtin`。这会为设置窗口添加标题栏，但至少能让 IDE 恢复可用。
 
 ### WezTerm
 
@@ -67,7 +75,6 @@ environment {
     GTK_IM_MODULE "simple"
 }
 ```
-
 
 请注意，niri 的环境配置不会传播到由 systemd 启动的应用程序和 shell，例如 DankMaterialShell 及其应用程序启动器。
 您可以改为在登录 shell 配置中设置变量（即 `~/.bash_profile`），但请注意，这样一来它将为所有合成器设置，而不仅仅是 niri。
