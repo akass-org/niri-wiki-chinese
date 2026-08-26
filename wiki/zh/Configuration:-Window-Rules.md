@@ -58,6 +58,7 @@ window-rule {
     default-column-display "tabbed"
     default-floating-position x=100 y=200 relative-to="bottom-left"
     scroll-factor 0.75
+    on-xdg-activate "focus"
 
     focus-ring {
         // off
@@ -593,6 +594,35 @@ window-rule {
 >
 > 这是因为在 Wayland 协议中，窗口标题（和应用 ID）并未实现双缓冲，因此它们与特定的窗口内容并不绑定。
 > Firefox 无法以一种可靠的方式，来同步“切换到另一个可见标签页”和“更改窗口标题”这两个操作。
+
+#### `on-xdg-activate`
+
+<sup>Since: next release</sup>
+
+设置当窗口通过 [xdg-activation](https://wayland.app/protocols/xdg-activation-v1) 请求激活时 niri 的行为。
+
+可选值：
+
+- `"ignore"`：什么都不做：既不聚焦窗口，也不将其标记为紧急。
+- `"set-urgent"`：总是将窗口标记为紧急，而不是聚焦它。
+- `"focus"`：总是聚焦窗口，即使激活请求没有序列号。
+
+未设置此规则时的默认行为，会根据应用程序在创建激活令牌时提供的序列号，在聚焦窗口和将其标记为紧急之间进行选择。
+带有有效序列号的请求会聚焦目标窗口，没有序列号的请求会将其标记为紧急。
+
+带有序列号但无效的请求总是被忽略，您可以使用 [`honor-xdg-activation-with-invalid-serial`](https://niri-wm.github.io/niri/Configuration%3A-Debug-Options.html#honor-xdg-activation-with-invalid-serial) 调试标志来改变这一行为。
+
+这对于那些收到新消息时，或打开画中画等弹出窗口时窃取焦点的应用程序很有用。
+
+```kdl
+// 不要让 Firefox 画中画窃取焦点。
+window-rule {
+    match title="^Picture-in-Picture$"
+
+    open-floating true
+    on-xdg-activate "set-urgent"
+}
+```
 
 #### `opacity`
 

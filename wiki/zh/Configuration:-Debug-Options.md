@@ -33,6 +33,7 @@ debug {
     honor-xdg-activation-with-invalid-serial
     skip-cursor-only-updates-during-vrr
     deactivate-unfocused-windows
+    disable-10bit-output
 }
 
 binds {
@@ -283,6 +284,8 @@ debug {
 默认情况下，niri 忽略具有无效序列号的 xdg-activation 令牌，以防止窗口随机窃取焦点。
 此调试标志使 niri 接受此类令牌，使上述常用的应用程序在点击其托盘图标或通知时获得焦点。
 
+使用 [`on-xdg-activate` 窗口规则](./Configuration:-Window-Rules.md#on-xdg-activate) 可以控制 niri 在接受 xdg-activation 请求时对各个窗口执行的操作。
+
 有趣的是，点击通知会向应用程序发送一个来自通知守护程序的完全有效的激活令牌，但这些应用程序似乎完全忽略了它。
 也许未来这些应用程序/工具包（Electron、Qt）会被修复，使此调试标志变得不必要。
 
@@ -321,6 +324,21 @@ Niri 在未聚焦的工作空间和不可见的标签页窗口上保持 Activate
 ```kdl
 debug {
     deactivate-unfocused-windows
+}
+```
+
+### `disable-10bit-output`
+
+<sup>Since: next release</sup>
+
+默认情况下，niri 会尝试向显示器输出 10 位色深格式（失败时回退到 8 位）。
+然而，目前这样会在某些 Intel + NVIDIA 混合显卡的设备上会导致问题：如屏幕不亮，或只显示白色，等等。
+
+在 Smithay 修复此问题之前，您可以通过设置此调试标志来禁用 10 位色深格式。
+
+```kdl
+debug {
+    disable-10bit-output
 }
 ```
 

@@ -66,6 +66,32 @@ niri 支持多种手势操作。
 
 使用四指垂直滑动来打开和关闭概览。
 
+### 触摸屏
+
+#### 交互式移动
+
+<sup>Since: 0.1.10</sup>
+
+您可以通过按住 <kbd>Mod</kbd> 键并用手指拖动窗口来移动窗口。
+
+水平拖动平铺窗口则会改为滚动视图。
+
+您可以在 [`insert-hint` 布局配置](./Configuration:-Layout.md#insert-hint) 中自定义窗口插入预览的外观。
+
+<sup>Since: 25.11</sup> 移动时用第二根手指轻点，可在浮动和平铺布局之间切换，以将窗口放入。
+
+### 数位板
+
+#### 交互式移动
+
+<sup>Since: next release</sup>
+
+您可以通过按住 <kbd>Mod</kbd> 键并用数位笔拖动窗口来移动窗口。
+
+水平拖动平铺窗口则会改为滚动视图。
+
+您可以在 [`insert-hint` 布局配置](./Configuration:-Layout.md#insert-hint) 中自定义窗口插入预览的外观。
+
 ### 所有指针设备
 
 #### 拖放时触边滚动视图
