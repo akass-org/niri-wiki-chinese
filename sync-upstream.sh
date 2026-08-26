@@ -90,29 +90,25 @@ echo "=== 同步上游文档 ==="
 echo "Upstream: $UPSTREAM_REMOTE/$UPSTREAM_BRANCH"
 echo ""
 
-# ===== Step 1: 更新 sync-upstream 分支 =====
-echo "[1/6] 更新 $SYNC_BRANCH 分支..."
+# ===== Step 1: 抓取上游 =====
+echo "[1/6] 抓取 $UPSTREAM_REMOTE/$UPSTREAM_BRANCH..."
 
-if ! git show-ref --verify --quiet "refs/heads/$SYNC_BRANCH"; then
-    echo "  首次运行: 创建 $SYNC_BRANCH 分支跟踪 upstream/main"
-    run git fetch "$UPSTREAM_REMOTE" "$UPSTREAM_BRANCH"
-    run git lfs fetch "$UPSTREAM_REMOTE" "$UPSTREAM_BRANCH" 2>/dev/null || true
-    run git switch -C "$SYNC_BRANCH" "$UPSTREAM_REMOTE/$UPSTREAM_BRANCH"
-else
-    run git switch "$SYNC_BRANCH"
-    run git fetch "$UPSTREAM_REMOTE" "$UPSTREAM_BRANCH"
-    run git lfs fetch "$UPSTREAM_REMOTE" "$UPSTREAM_BRANCH" 2>/dev/null || true
-    if ! run git merge --ff-only "$UPSTREAM_REMOTE/$UPSTREAM_BRANCH"; then
-        echo ""
-        echo "⚠️ $SYNC_BRANCH 无法快进合并。正在重置到上游最新状态..."
-        run git reset --hard "$UPSTREAM_REMOTE/$UPSTREAM_BRANCH"
-    fi
+run git fetch "$UPSTREAM_REMOTE" "$UPSTREAM_BRANCH"
+run git lfs fetch "$UPSTREAM_REMOTE" "$UPSTREAM_BRANCH" 2>/dev/null || true
+
+# sync-upstream 只是记录"上次同步到上游哪里"的书签，用 branch -f 更新即可，
+# 无需 checkout（checkout 会要求整个工作区干净，比如本脚本自己不能有改动）。
+if [[ "$(git branch --show-current)" == "$SYNC_BRANCH" ]]; then
+    run git switch main
 fi
+run git branch -f "$SYNC_BRANCH" "$UPSTREAM_REMOTE/$UPSTREAM_BRANCH"
 
 # ===== Step 2: subtree split =====
 echo ""
 echo "[2/6] 提取 docs 目录到 $UPSTREAM_DOCS_BRANCH..."
-run git subtree split --prefix="$DOCS_PREFIX" --rejoin -b "$UPSTREAM_DOCS_BRANCH"
+# 直接对 upstream/main 做 split，不切换分支；
+# 不用 --rejoin：rejoin 会在当前分支上留下合并提交，污染历史且没有任何收益。
+run git subtree split --prefix="$DOCS_PREFIX" -b "$UPSTREAM_DOCS_BRANCH" "$UPSTREAM_REMOTE/$UPSTREAM_BRANCH"
 
 # ===== Step 3: 合并到 main =====
 echo ""
@@ -143,9 +139,9 @@ fi
 
 # 处理合并冲突
 if ! $MERGE_OK; then
-    CONFLICTED=$(git diff --name-only --diff-filter=U 2>/dev/null || true)
+    mapfile -t CONFLICTED < <(git diff --name-only --diff-filter=U 2>/dev/null || true)
 
-    if [ -z "$CONFLICTED" ]; then
+    if [ ${#CONFLICTED[@]} -eq 0 ]; then
         echo "❌ 合并失败但未检测到冲突文件，请手动检查"
         exit 1
     fi
@@ -153,7 +149,7 @@ if ! $MERGE_OK; then
     echo ""
     echo "🔧 检测到合并冲突，正在自动解决..."
 
-    for f in $CONFLICTED; do
+    for f in "${CONFLICTED[@]}"; do
         if [ "$f" = "mkdocs.yaml" ]; then
             echo "  解决: $f -> 保留本地版本（含 zh/en 导航结构）"
             git checkout --ours "$f"
@@ -163,6 +159,10 @@ if ! $MERGE_OK; then
             echo "  解决: $f -> 采用上游版本"
             git checkout --theirs "$f"
             git add "$f"
+        elif [[ "$f" == wiki/en/*.md && ! -f "$f" ]]; then
+            # rename/delete 冲突：上游删除了该页面，本地此前把它移到了 wiki/en/，跟随上游删除
+            echo "  解决: $f -> 上游已删除该页面，跟随删除"
+            git rm -q -f "$f"
         else
             echo "❌ 无法自动解决冲突: $f"
             echo "  请手动处理后运行: git add $f && git commit"
@@ -182,17 +182,26 @@ POST_MERGE_HEAD=$(git rev-parse HEAD)
 echo ""
 echo "[4/6] 分析上游变更..."
 
-mapfile -t CHANGES < <(git diff --name-status "$PRE_MERGE_HEAD" "$POST_MERGE_HEAD" -- "wiki/*.md" 2>/dev/null | grep -P '^[AMD]\twiki/[^/]+\.md$' || true)
+# 注意：合并时 git 的重命名检测会自动把上游对 wiki/X.md 的修改/删除
+# 应用到本地的 wiki/en/X.md（因为之前已移动过）。所以变更既可能落在
+# wiki/en/（已就位，无需移动），也可能落在 wiki/ 根目录（上游全新页面，
+# 本地无对应文件，需要手动移入 wiki/en/）。
+mapfile -t CHANGES < <(git diff --name-status "$PRE_MERGE_HEAD" "$POST_MERGE_HEAD" -- "wiki/*.md" 2>/dev/null | grep -P '^[AMD]\twiki/(en/)?[^/]+\.md$' || true)
 
 if [ ${#CHANGES[@]} -eq 0 ]; then
-    echo "  ℹ️ 没有检测到 wiki/*.md 的变更，无需同步"
-    exit 0
+    if git diff --quiet "$PRE_MERGE_HEAD" "$POST_MERGE_HEAD" 2>/dev/null; then
+        echo "  ℹ️ 上游没有新变更，无需同步"
+        exit 0
+    fi
+    echo "  ℹ️ 没有 wiki 页面变更（可能有图片/配置等其他变更），继续后续检查"
 fi
 
-echo "  检测到 ${#CHANGES[@]} 个文件变更:"
-for line in "${CHANGES[@]}"; do
-    echo "    $line"
-done
+if [ ${#CHANGES[@]} -gt 0 ]; then
+    echo "  检测到 ${#CHANGES[@]} 个文件变更:"
+    for line in "${CHANGES[@]}"; do
+        echo "    $line"
+    done
+fi
 
 ADDED=()
 MODIFIED=()
@@ -266,6 +275,13 @@ for file in "${ADDED_MODIFIED[@]}"; do
     base=$(basename "$file")
     target="wiki/en/$base"
 
+    # 合并的重命名检测已把变更直接落到 wiki/en/，无需移动
+    if [[ "$file" == wiki/en/* ]]; then
+        echo "  已同步: $file"
+        moved=$((moved + 1))
+        continue
+    fi
+
     # 安全检查 1: 文件是否存在
     if [ ! -f "$file" ]; then
         echo "  ⚠️ 跳过 (文件不存在): $file"
@@ -287,7 +303,7 @@ for file in "${ADDED_MODIFIED[@]}"; do
 
     # 安全检查 3: 对比提示
     if [ -f "$target" ]; then
-        DIFF_LINES=$(git diff --stat "$target" "$file" 2>/dev/null | tail -1 | grep -oP '\d+' | tail -1 || echo "?")
+        DIFF_LINES=$(git diff --no-index --stat "$target" "$file" 2>/dev/null | tail -1 | grep -oP '\d+' | head -1 || echo "?")
         echo "  覆盖: $file -> $target (差异约 $DIFF_LINES 行)"
     else
         echo "  新增: $file -> $target"
