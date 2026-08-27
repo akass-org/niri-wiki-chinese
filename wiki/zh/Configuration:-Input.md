@@ -2,7 +2,7 @@
 
 在本节中，您可以配置键盘和鼠标等输入设备，以及一些与输入相关的选项。
 
-每种设备类型都有对应的配置段：`keyboard`（键盘）、`touchpad`（触摸板）、`mouse`（鼠标）、`trackpoint`（指点杆）、`tablet`（数位板）、`touch`（触摸屏）。
+每种设备类型都有对应的配置段：`keyboard`（键盘）、`touchpad`（触摸板）、`mouse`（鼠标）、`trackpoint`（指点杆）、`trackball`（轨迹球）、`tablet`（数位板）、`touch`（触摸屏）。
 这些配置段中的设置将应用于该类型的所有设备。
 目前，尚无法为特定设备单独进行配置（但此功能已在计划中）。
 
@@ -116,7 +116,7 @@ input {
 #### 布局 {#layout}
 
 在 `xkb` 配置段中，您可以设置布局（layout）、变体（variant）、选项（options）、型号（model）和规则（rules）。
-这些设置将会直接传递给 libxkbcommon，大多数其他 Wayland 合成器也使用改库。
+这些设置将会直接传递给 libxkbcommon，大多数其他 Wayland 合成器也使用该库。
 有关更多信息，请参阅 `xkeyboard-config(7)` 手册。
 
 ```kdl
@@ -346,7 +346,7 @@ input {
 ```
 
 <sup>Since: 0.1.8</sup> 您可以选择设置 `max-scroll-amount`。
-这样，如果 focus-follows-mouse 会导致视图滚动超过设定的量，则不会聚焦改窗口。
+这样，如果 focus-follows-mouse 会导致视图滚动超过设定的量，则不会聚焦该窗口。
 该值是工作区宽度的百分比。
 
 ```kdl

@@ -26,7 +26,7 @@
 不过，这更多是一个调试功能。
 您可以通过 `niri msg --json event-stream` 或者手动连接到 niri 套接字并请求事件流来获取原始事件。
 
-您可以在[此处](https://yalter.github.io/niri/niri_ipc/enum.Event.html)找到完整的事件列表及文档。
+您可以在[此处](https://niri-wm.github.io/niri/niri_ipc/enum.Event.html)找到完整的事件列表及文档。
 
 ### 编程访问
 
@@ -45,7 +45,7 @@ $ socat STDIO "$NIRI_SOCKET"
 {"Ok":{"FocusedWindow":{"id":12,"title":"t socat STDIO /run/u ~","app_id":"Alacritty","workspace_id":6,"is_focused":true}}}
 ```
 
-回复是一个 `Ok` 或 `Err`，它包装了与您从 `niri msg --json` 获取的 JSON 对象一致。
+回复内容是一个 `Ok` 或 `Err`，它包装的 JSON 对象与您从 `niri msg --json` 获取的 JSON 对象相同。
 
 对于更复杂的请求，您可以使用 `socat` 来查找 `niri msg` 如何格式化它们：
 
@@ -57,7 +57,7 @@ $ env NIRI_SOCKET=./temp.sock niri msg action focus-workspace 2
 {"Action":{"FocusWorkspace":{"reference":{"Index":2}}}}
 ```
 
-您可以在 [niri-ipc 子包文档](https://yalter.github.io/niri/niri_ipc/) 中找到所有可用的请求和响应类型。
+您可以在 [niri-ipc 子包文档](https://niri-wm.github.io/niri/niri_ipc/) 中找到所有可用的请求和响应类型。
 
 ### 向后兼容性
 

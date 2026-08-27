@@ -40,7 +40,7 @@ Niri 会在全屏窗口后面渲染一个纯黑色背景。
 当窗口本身仍然过小（例如，如果你尝试将一个固定大小的对话框窗口全屏）时，这个背景有助于匹配屏幕尺寸，这是 [由 Wayland 协议定义的行为](https://wayland.app/protocols/xdg-shell#xdg_toplevel:request:set_fullscreen)。
 
 当一个全屏窗口获得焦点且没有在进行动画时，它会覆盖浮动窗口和顶部的 layer-shell 层。
-例如，如果你希望你的 layer-shell 通知或启动器能够显示在全屏窗口之上，请将配置相应的工具，将它们置于覆盖层 layer-shell 层上。
+例如，如果你希望你的 layer-shell 通知或启动器能够显示在全屏窗口之上，请配置相应的工具，将它们置于覆盖层 layer-shell 层上。
 
 ![一个全屏窗口的截图。](./img/fullscreen-window.png)
 

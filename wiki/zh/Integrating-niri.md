@@ -57,7 +57,7 @@ Niri 与标准的 systemd 自启动机制兼容。
 Niri 的默认配置会启动 [Waybar](https://github.com/Alexays/Waybar)，这是一个很好的起点，但您可能需要考虑更改其默认配置，使其不那么“大杂烩”，并添加 `niri/workspaces` 模块。
 您可能还需要一个桌面背景工具（[swaybg](https://github.com/swaywm/swaybg) 或 [awww (以前叫 swww)](https://codeberg.org/LGFae/awww/)），以及一个比默认的 `swaylock` 更好的屏幕锁定程序，例如 [hyprlock](https://github.com/hyprwm/hyprlock/)。
 
-另外，一些桌面环境和 shell 可以与 niri 协同工作，并提供一个更完整的打包体验：
+作为替代方案，一些桌面环境和 shell 也能与 niri 协同工作，提供一体化的完整体验：
 
 - [LXQt](https://lxqt-project.org/) 官方支持 niri，有关设置详情，请参阅[他们的 wiki](https://lxqt-project.org/wiki/Wayland-Session)。
 - 许多 [XFCE](https://www.xfce.org/) 组件可以在 Wayland 上运行，包括 niri。有关详情，请参阅[他们的 wiki](https://wiki.xfce.org/releng/wayland_roadmap#component_specific_status)。

@@ -59,7 +59,7 @@ hotkey-overlay {
 要运行 X11 应用程序，您可以使用 [xwayland-satellite](https://github.com/Supreeeme/xwayland-satellite)。
 有关说明，请查阅 [Xwayland wiki 页面](./Xwayland.md)。
 
-请注意，您可以通过传递正确的参数，让许多 Electron 应用程序（如 VSCode）在 Wayland 上原生运行，例如 `code --ozone-platform-hint=auto`。
+请注意，您可以通过传递正确的参数，让许多 Electron 应用程序（如 VSCode）在 Wayland 上原生运行，正如[此处](./Application-Issues.md#electron-applications)所述。
 
 ### 为什么 niri 不像其他合成器那样直接集成 Xwayland？ {#why-doesnt-niri-integrate-xwayland-like-other-compositors}
 
@@ -122,7 +122,7 @@ Firefox 似乎首先会以一个通用的 Firefox 标题打开 Bitwarden 窗口�
 - 使用 `focus-follows-mouse max-scroll-amount="0%"`，这将防止在会导致滚动的情况下触发 `focus-follows-mouse`。
 - 设置 `prefer-no-csd`，这通常会导致客户端移除那些调整大小的边距。
 
-### 如何从死锁的屏幕保护程序/红屏状态中恢复？
+### 如何从崩溃的屏幕锁定程序/红屏状态中恢复？
 
 当您的屏幕锁定程序异常退出时，您会看到一个红屏。
 这是 niri 的锁定会话背景。

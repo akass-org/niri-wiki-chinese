@@ -111,7 +111,7 @@ layer-rule {
 
 #### `block-out-from`
 
-您可以阻止 xdg-desktop-portal 屏幕录制或所有屏幕捕获捕获界面。
+您可以阻止 xdg-desktop-portal 屏幕录制或所有屏幕捕获中的某些界面。
 它们将被替换为纯黑色矩形。
 
 这对于通知可能很有用。

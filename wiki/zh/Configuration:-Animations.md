@@ -255,7 +255,7 @@ animations {
 > 自定义着色器不保证向后兼容。
 > 我在开发新功能时，可能会更改它们的接口。
 
-示例：关闭时将用纯色渐变填充当前几何形状，并逐渐淡出。
+示例：关闭时将用纯色渐变填充当前几何区域，并逐渐淡出。
 
 ```kdl
 animations {
@@ -306,7 +306,7 @@ animations {
 - 使用 `move-column-left` 和 `move-column-right` 移动窗口列。
 - 使用 `move-window-up` 和 `move-window-down` 在同一列内移动窗口。
 - 在窗口打开或关闭时，移动其他窗口以腾出空间。
-- 窗口进入新列/从旧窗口排出时时，窗口在列之间的移动。
+- 在吞入/排出时窗口在列之间的移动。
 
 此动画*不包括*摄像机视角移动，例如左右滚动工作区。
 
@@ -325,7 +325,7 @@ animations {
 窗口大小调整动画。
 
 只有手动调整窗口大小时才会有动画，即当你使用 `switch-preset-column-width` 或 `maximize-column` 调整窗口大小时。
-此外，非常小的调整（直到 10 像素）都没有动画。
+此外，非常小的调整（不超过 10 像素）都没有动画。
 
 ```kdl
 animations {
@@ -430,7 +430,7 @@ animations {
 
 <sup>Since: 25.11</sup>
 
-The close fade-out animation of the recent windows switcher.
+最近窗口切换器的关闭淡出动画。
 
 ```kdl
 animations {

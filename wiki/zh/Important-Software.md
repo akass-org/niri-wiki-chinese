@@ -31,7 +31,7 @@ dconf write /org/gnome/desktop/interface/color-scheme '"prefer-dark"'
 
 ### 认证代理
 
-当应用程序需要请求 root 权限时需要它。类似 `plasma-polkit-agent` 的东西可以很好地工作。请使用 [systemd](./Example-systemd-Setup.md) 或 [`spawn-at-startup`](./Configuration:-Miscellaneous.md#spawn-at-startup) 启动它。
+当应用程序需要请求 root 权限时需要它。像 `plasma-polkit-agent` 这样的工具就可以正常工作。通过 [systemd](./Example-systemd-Setup.md) 或 [`spawn-at-startup`](./Configuration:-Miscellaneous.md#spawn-at-startup) 来启动它。
 
 请注意，要在 Fedora 上使用 systemd 启动 `plasma-polkit-agent`，您需要覆盖其 systemd 服务以添加正确的依赖关系。请运行：
 

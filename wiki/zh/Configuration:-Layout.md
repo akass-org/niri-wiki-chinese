@@ -104,7 +104,7 @@ layout {
 设置窗口周围（内部和外部）的间隙，以逻辑像素为单位。
 
 <sup>Since: 0.1.7</sup> 您可以使用小数值。
-改值将会按照每个输出的缩放因子被四舍五入换算为物理像素值。
+该值将会按照每个输出的缩放因子被四舍五入换算为物理像素值。
 例如，在 `scale 2` 的输出上使用 `gaps 0.5` 将产生 1 物理像素宽的间隙。
 
 <sup>Since: 0.1.8</sup> 您可以使用负的 `struts` 值来模拟“内部”与“外部”间隙（参见下面的 struts 部分）。
@@ -177,6 +177,7 @@ layout {
 ### `preset-column-widths`
 
 设置 `switch-preset-column-width` 动作（Mod+R）所切换的宽度。
+<sup>Since: 25.08</sup> 您可以使用 `switch-preset-column-width-back` 动作 (Mod+Shift+R) 进行反向切换.
 
 `proportion` 将宽度设置为输出宽度的比例，并扣除了间隙。
 例如，无论间隙设置多大，您都可以在一个输出上完美放置四个 `proportion 0.25` 宽度的窗口。
@@ -229,6 +230,7 @@ layout {
 <sup>Since: 0.1.9</sup>
 
 设置 `switch-preset-window-height` 操作（Mod+Shift+R）所切换的高度。
+<sup>Since: 25.08</sup> 您可以使用 `switch-preset-window-height-back` 动作（默认未绑定）反向切换。
 
 `proportion` 将高度设置为输出高度的比例，扣除了间隙。
 默认预设高度是输出的 <sup>1</sup>&frasl;<sub>3</sub>, <sup>1</sup>&frasl;<sub>2</sub> 和 <sup>2</sup>&frasl;<sub>3</sub>。
@@ -272,7 +274,7 @@ layout {
 
 ```kdl
 layout {
-    // foces-ring 具有相同的选项。
+    // focus-ring 具有相同的选项。
     border {
         // 取消注释此行以禁用边框。
         // off
@@ -313,7 +315,7 @@ layout {
 颜色可以通过多种方式设置：
 
 - CSS 命名颜色：`"red"`
-- RGB 十六进制：`"#rgb"`, `"#rgba"`, `"#rrggbb"`
+- RGB 十六进制：`"#rgb"`, `"#rgba"`, `"#rrggbb"`, `"#rrggbbaa"`
 - CSS 风格表示法：`"rgb(255, 127, 0)"`, `"rgba()"`, `"hsl()"` 等等。
 
 `active-color` 是活动窗口周围焦点环/边框的颜色，`inactive-color` 是所有其他窗口周围焦点环/边框的颜色。

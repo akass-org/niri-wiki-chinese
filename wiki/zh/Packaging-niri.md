@@ -39,7 +39,7 @@
 如果可以，请将它们设置为自动安装的可选依赖项。
 
 - `xwayland-satellite`：用于运行 X11 应用程序（Steam、Discord 等）。
-- `xdg-desktop-portal-gnome`：用于屏幕录制。
+- `xdg-desktop-portal-gnome`：用于屏幕录制所必须。
 - `xdg-desktop-portal-gtk`：在 `niri-portals.conf` 中配置为备用门户。
 （这通常是您希望安装的标准备用门户。）
 - `gnome-keyring`：在 `niri-portals.conf` 中配置为密钥管理门户提供者。
@@ -100,7 +100,7 @@ $ export NIRI_BUILD_VERSION_STRING="25.01-1 (e35c630)"
 
 ### 崩溃回溯（Panics）
 
-清晰刻度可读的崩溃（panic）回溯对于诊断 niri 崩溃（crash）至关重要。
+清晰可读的崩溃（panic）回溯对于诊断 niri 崩溃（crash）至关重要。
 请使用 `niri panic` 命令来测试您的软件包是否能生成良好的回溯信息。
 
 ```

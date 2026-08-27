@@ -1,20 +1,20 @@
-### Electron 应用
+### Electron 应用 {#electron-applications}
 
 基于 Electron 的应用程序可以直接在 Wayland 上运行，但这并非默认设置。
 
-对于 Electron ≥ 39，若应用未默认使用 Wayland，您可以使用这个命令行参数（指定）：
+对于 Electron ≥ 39，若应用未默认使用 Wayland，您可以使用这个命令行参数：
 ```
 --ozone-platform=wayland
 ```
 
-对于 Electron < 39 的，您可以设置一个环境变量：
+对于 Electron < 39，您可以设置一个环境变量：
 ```kdl
 environment {
     ELECTRON_OZONE_PLATFORM_HINT "auto"
 }
 ```
 
-对于 Electron ≤ 28 的，您需要向目标应用程序传递命令行参数：
+对于 Electron ≤ 28，您需要向目标应用程序传递命令行参数：
 ```
 --enable-features=UseOzonePlatform --ozone-platform-hint=auto
 ```
@@ -67,7 +67,7 @@ WezTerm 中存在 [另一个 bug](https://github.com/wezterm/wezterm/issues/6472
 
 ### GTK 4 dead keys / Compose
 
-GTK 4.20 [已停止](https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/8556) 在 Wayland 上自行处理死键和 Compose 键。
+GTK 4.20 [已停止](https://gitlab.gnome.org/GNOME/gtk/-/merge_requests/8556) 在 Wayland 上自行处理死键和 Compose。
 若需使用这些功能，可运行 IBus 或 Fcitx5 等输入法框架，或设置环境变量 `GTK_IM_MODULE=simple`。
 
 ```kdl

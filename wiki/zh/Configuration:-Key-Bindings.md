@@ -15,7 +15,7 @@ binds {
 }
 ```
 
-快捷键由 `+` 号分隔的修饰键组成和一个末尾的 XKB 按键名称组成。
+快捷键由 `+` 号分隔的修饰键组成，末尾带一个 XKB 按键名称。
 
 有效的修饰键有：
 
@@ -171,7 +171,7 @@ binds {
 
 ### 动作
 
-您可以绑定的每个动作，也都可通过 `niri msg action` 命令以编程方式化调用。
+您可以绑定的每个动作，也都可通过 `niri msg action` 命令以编程方式调用。
 运行 `niri msg action` 可获取一份包含所有动作及其简短描述的完整列表。
 
 以下是一些需要更多解释的动作。
@@ -354,7 +354,7 @@ binds {
 用于截取屏幕截图的动作。
 
 - `screenshot`：打开内置的交互式截图界面。
-- `screenshot-screen`, `screenshow-window`：分别对聚焦的屏幕或窗口进行截图。
+- `screenshot-screen`, `screenshot-window`：分别对聚焦的屏幕或窗口进行截图。
 
 截图会根据 [`screenshot-path` 选项](./Configuration:-Miscellaneous.md#screenshot-path)同时存储到剪贴板和保存到磁盘。
 

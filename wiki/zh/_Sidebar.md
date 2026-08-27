@@ -39,10 +39,10 @@
 * [调试选项](./Configuration:-Debug-Options.md)
 * [包含](./Configuration:-Include.md)
 
-## Development
+## 开发
 * [设计原则](./Development:-Design-Principles.md)
 * [开发 niri](./Development:-Developing-niri.md)
-* [niri 文档](./Development:-Documenting-niri.md)
+* [编写 niri 文档](./Development:-Documenting-niri.md)
 * [发布 niri](./Development:-Releasing-niri.md)
 * [分数布局](./Development:-Fractional-Layout.md)
 * [重绘循环](./Development:-Redraw-Loop.md)
