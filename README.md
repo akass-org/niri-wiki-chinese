@@ -59,4 +59,4 @@ niri 的 docs 目录有更新时，跑一下这个脚本：
 > [!WARNING]
 > 注意：这是非官方翻译，如有疑问请以官方英文文档为准。
 >
-> 本翻译基于 Commit [5f6f131](https://github.com/niri-wm/niri/commit/5f6f131b24826a01374d5cd87b281bd7ea181537)
+> 本翻译基于 Commit [e9b215f](https://github.com/niri-wm/niri/commit/e9b215fef4b11ad36776553fb8bd45118ef03b03)
