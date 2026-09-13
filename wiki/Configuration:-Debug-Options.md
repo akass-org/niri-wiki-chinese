@@ -164,6 +164,8 @@ debug {
 
 ### `disable-pipewire-dmabuf`
 
+<sup>Since: next release</sup>
+
 Disable DMA-BUF sharing for PipeWire screencasts, forcing shared-memory buffers instead.
 
 Useful for testing shm screencasting.
