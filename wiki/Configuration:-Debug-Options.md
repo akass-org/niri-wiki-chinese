@@ -22,6 +22,7 @@ debug {
     ignore-drm-device "/dev/dri/renderD128"
     ignore-drm-device "/dev/dri/renderD130"
     force-pipewire-invalid-modifier
+    disable-pipewire-dmabuf
     dbus-interfaces-in-non-session-instances
     wait-for-frame-completion-before-queueing
     emulate-zero-presentation-time
@@ -158,6 +159,18 @@ Useful for testing the invalid modifier code path that is hit by drivers that do
 ```kdl
 debug {
     force-pipewire-invalid-modifier
+}
+```
+
+### `disable-pipewire-dmabuf`
+
+Disable DMA-BUF sharing for PipeWire screencasts, forcing shared-memory buffers instead.
+
+Useful for testing shm screencasting.
+
+```kdl
+debug {
+    disable-pipewire-dmabuf
 }
 ```
 
