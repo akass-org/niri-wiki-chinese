@@ -68,6 +68,14 @@ Some desktop environments and shells work with niri and can give a more out-of-t
 - There are complete desktop shells based on Quickshell that support niri, for example [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell) and [Noctalia](https://github.com/noctalia-dev/noctalia-shell).
 - You can run a [COSMIC](https://system76.com/cosmic/) session with niri using [cosmic-ext-extra-sessions](https://github.com/Drakulix/cosmic-ext-extra-sessions).
 
+### Default applications
+
+If you install niri alongside GNOME or KDE and want to keep their default app associations (e.g. which image viewer or video player to use), symlink their `mimeapps.list` like so:
+
+```
+ln -s /usr/share/applications/gnome-mimeapps.list ~/.local/share/applications/niri-mimeapps.list
+```
+
 ### NVIDIA
 
 The NVIDIA drivers currently have an issue with high VRAM usage due to a heap reuse quirk.
