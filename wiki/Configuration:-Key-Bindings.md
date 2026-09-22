@@ -15,7 +15,8 @@ binds {
 }
 ```
 
-The hotkey consists of modifiers separated by `+` signs, followed by an XKB key name in the end.
+The hotkey consists of modifiers separated by `+` signs, followed by a trigger key in the end.
+The trigger key can be either an XKB key name or <sup>Since: next release</sup> a modifier.
 
 Valid modifiers are:
 
@@ -30,6 +31,24 @@ Valid modifiers are:
 `Mod` is a special modifier that is equal to `Super` when running niri on a TTY, and to `Alt` when running niri as a nested winit window.
 This way, you can test niri in a window without causing too many conflicts with the host compositor's key bindings.
 For this reason, most of the default keys use the `Mod` modifier.
+
+Specific left or right modifier keys like `Alt_L` or `Alt_R` can be used as triggers, but not as modifiers:
+
+```kdl
+binds {
+    // Valid:
+    Ctrl+Alt_L { spawn "alacritty"; }
+
+    // Invalid:
+    // Alt_L+Ctrl { spawn "alacritty"; }
+
+    // Also, this is equivalent to just Alt_L
+    // because Alt_L implies the Alt modifier:
+    Alt+Alt_L { spawn "the Alt here is unnecessary but allowed"; }
+    // This is the same:
+    // Alt_L { spawn "alacritty"; }
+}
+```
 
 <sup>Since: 25.05</sup> You can customize the `Mod` key [in the `input` section of the config](./Configuration:-Input.md#mod-key-mod-key-nested).
 
