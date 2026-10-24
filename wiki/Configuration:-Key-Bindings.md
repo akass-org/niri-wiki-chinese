@@ -50,6 +50,20 @@ binds {
 }
 ```
 
+<sup>Since: next release</sup> Generic modifiers like `Shift` or `Alt` can be used as trigger keys.
+Binds consisting only of generic modifiers do not depend on the order that you press them:
+
+```kdl
+binds {
+    // Will trigger both when pressing Alt then Shift, and Shift then Alt.
+    Alt+Shift { spawn "alacritty"; }
+
+    // The trigger is not a generic modifier, so
+    // you need to press it last. Only Ctrl then Left Shift will work.
+    Ctrl+Shift_L { spawn "alacritty"; }
+}
+```
+
 <sup>Since: 25.05</sup> You can customize the `Mod` key [in the `input` section of the config](./Configuration:-Input.md#mod-key-mod-key-nested).
 
 > [!TIP]
