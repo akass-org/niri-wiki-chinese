@@ -186,6 +186,19 @@ binds {
 }
 ```
 
+By default, bound key presses/releases are not passed to applications.
+You can set `pass-through=true` if you want applications to see the bound key:
+
+```kdl
+binds {
+    // Let applications see the Alt key presses/releases.
+    Alt pass-through=true {
+        press { spawn "notify-send" "Pressed"; }
+        release { spawn "notify-send" "Released"; }
+    }
+}
+```
+
 ### Scroll Bindings
 
 You can bind mouse wheel scroll ticks using the following syntax.
