@@ -199,6 +199,19 @@ binds {
 }
 ```
 
+Keyboard release-only bindings are passed through by default though.
+You can set `pass-through=false` on those if you don't like that:
+
+```kdl
+binds {
+    // Do not pass Mod press/release event to applications.
+    // (They will still see the modifiers event.)
+    Mod pass-through=false {
+        release { toggle-overview; }
+    }
+}
+```
+
 ### Scroll Bindings
 
 You can bind mouse wheel scroll ticks using the following syntax.
