@@ -7,7 +7,7 @@ niri 主要是通过 portals 和 pipewire 提供的屏幕录制接口。
 要使用此功能，您需要一个可正常工作的 D-Bus 会话、pipewire、`xdg-desktop-portal-gnome`，以及[将 niri 作为会话运行](./Getting-Started.md)（即通过 `niri-session` 或从显示管理器启动）。
 在主流发行版中，这些组件通常都能“开箱即用”。
 
-此外，您也可以使用依赖于 `wlr-screencopy` 协议的工具，niri 也支持该协议。
+此外，您也可以使用依赖于 `ext-image-copy-capture` 协议的工具，或较旧的 `wlr-screencopy` 协议，niri 对两者都支持。
 
 niri 中内置有多项专为屏幕录制设计的特性。
 让我们一起来看看！

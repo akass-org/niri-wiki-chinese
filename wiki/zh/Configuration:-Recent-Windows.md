@@ -167,7 +167,23 @@ recent-windows {
 最近窗口绑定的优先级低于[常规绑定](./Configuration:-Key-Bindings.md)，这意味着如果您在常规绑定中将 <kbd>Alt</kbd><kbd>Tab</kbd> 绑定到了其他操作，`recent-windows` 绑定将无法生效。
 在这种情况下，您可以移除冲突的常规绑定。
 
-本节中的所有绑定必须包含修饰键，如 <kbd>Alt</kbd> 或 <kbd>Mod</kbd>，因为最近窗口切换器仅在按住任意修饰键时才会保持打开。
+本节中的所有绑定必须包含修饰键，如 <kbd>Alt</kbd> 或 <kbd>Mod</kbd>（且它不能与触发键相同），因为最近窗口切换器仅在按住任意修饰键时才会保持打开。
+
+```kdl
+recent-windows {
+    binds {
+        // 允许：含有修饰键，共两个键。
+        Ctrl+Alt { next-window; }
+
+        // 不允许：只有一个键。
+        // Alt { next-window; }
+
+        // 不允许：修饰键与按键相同
+        //（实际上相当于只有一个键）。
+        // Alt+Alt_L { next-window; }
+    }
+}
+```
 
 #### 切换器内部的绑定
 

@@ -15,7 +15,8 @@ binds {
 }
 ```
 
-快捷键由 `+` 号分隔的修饰键组成，末尾带一个 XKB 按键名称。
+快捷键由 `+` 号分隔的修饰键组成，末尾带一个触发键。
+触发键可以是 XKB 按键名称，或<sup>Since: next release</sup>一个修饰键。
 
 有效的修饰键有：
 
@@ -30,6 +31,38 @@ binds {
 `Mod` 是一个特殊的修饰键，当 niri 在 TTY 中运行时，它等同于 `Super`；当 niri 作为嵌套的 winit 窗口运行时，它等同于 `Alt`。
 这样的话，您就可以在窗口中测试 niri，而不会与宿主机合成器的按键绑定产生太多冲突。
 因此，大部分默认快捷键都使用了 `Mod` 修饰键。
+
+像 `Alt_L` 或 `Alt_R` 这样具体的左或右修饰键可以用作触发键，但不能用作修饰键：
+
+```kdl
+binds {
+    // 有效：
+    Ctrl+Alt_L { spawn "alacritty"; }
+
+    // 无效：
+    // Alt_L+Ctrl { spawn "alacritty"; }
+
+    // 另外，这等价于只写 Alt_L，
+    // 因为 Alt_L 已经隐含了 Alt 修饰键：
+    Alt+Alt_L { spawn "the Alt here is unnecessary but allowed"; }
+    // 这与下面这行相同：
+    // Alt_L { spawn "alacritty"; }
+}
+```
+
+<sup>Since: next release</sup> 像 `Shift` 或 `Alt` 这样的通用修饰键也可以用作触发键。
+仅由通用修饰键组成的绑定不依赖您按下的先后顺序：
+
+```kdl
+binds {
+    // 先按 Alt 再按 Shift，以及先按 Shift 再按 Alt，都会触发。
+    Alt+Shift { spawn "alacritty"; }
+
+    // 这里的触发键不是通用修饰键，因此
+    // 您需要最后按下它。只有先按 Ctrl 再按左 Shift 才会生效。
+    Ctrl+Shift_L { spawn "alacritty"; }
+}
+```
 
 <sup>Since: 25.05</sup> 您可以在配置文件的 [`input` 配置段](./Configuration:-Input.md#mod-key-mod-key-nested)中自定义 `Mod` 键。
 
@@ -53,14 +86,25 @@ binds {
 > 在这里，请看 `sym: Left` 和 `sym: Right`：这些就是按键名称。
 > 在这个例子中，我按下的是左键和右键。
 >
-> 请注意，绑定 Shift 组合键时，需要根据您的 XKB 布局，明确写出 Shift 以及该键未按下 Shift 时的原始名称。
-> 例如，在美式 QWERTY 布局中，<kbd>&lt;</kbd> 位于 <kbd>Shift</kbd> + <kbd>,</kbd> 上，因此要绑定它，您需要写成类似 `Mod+Shift+Comma` 的内容。
+> 请注意，绑定某个键时，需要写出输入该字符时按住的修饰键。
+> 因此，按住 Shift 输入的符号，其对应的绑定需要带上 Shift 修饰键。
+> 例如，在美式 QWERTY 布局中，<kbd>&lt;</kbd> 位于 <kbd>Shift</kbd> + <kbd>,</kbd> 上，因此要绑定它，您需要写成类似 `Mod+Shift+Less` 或 `Mod+Shift+Comma` 的内容（只写 `Mod+Less` 是不行的）。
 >
 > 再举一个例子，如果您配置了法语服 [BÉPO](https://en.wikipedia.org/wiki/B%C3%89PO) XKB 布局，您的 <kbd>&lt;</kbd> 位于 <kbd>AltGr</kbd> + <kbd>«</kbd> 上。
-> <kbd>AltGr</kbd> 是 `ISO_Level3_Shift`，或等效的 `Mod5`，因此要绑定它，您需要写成类似 `Mod+Mod5+guillemotleft` 的内容。
+> <kbd>AltGr</kbd> 是 `ISO_Level3_Shift`，或等效的 `Mod5`，因此要绑定它，您需要写成类似 `Mod+Mod5+Less` 或 `Mod+Mod5+guillemotleft` 的内容。
 >
-> 在解析拉丁字母键时，niri 会搜索**第一个*配置了该拉丁字母键的 XKB 布局。
-> 所以举个例子，如果同时配置了美式 QWERTY 和俄语 (RU) 布局，那么拉丁字母的快捷键将使用美式 QWERTY 布局来解析。
+> 在解析 ASCII（拉丁）键时，niri 会搜索*第一个*配置了该 ASCII 键的 XKB 布局。
+> 所以举个例子，如果同时配置了美式 Colemak 和俄语 (RU) 布局，那么 ASCII 绑定将使用美式 Colemak 布局来解析。
+>
+> 不过，来自当前布局的按键具有更高的优先级。
+> 例如，如果您同时配置了美式 QWERTY 和俄语布局，并同时绑定了 `Mod+Z` 和 `Mod+Cyrillic_ya`，那么在俄语布局下会触发 `Mod+Cyrillic_ya` 绑定，而在美式布局下会触发 `Mod+Z` 绑定。
+>
+> 另外，直接指定最终输入字符的绑定，优先级高于指定未按 Shift 时的原始键位。
+> 例如，在美式 QWERTY 布局下，如果两者都配置了，`Mod+Shift+At` 的优先级高于 `Mod+Shift+2`。
+>
+> <sup>Since: next release</sup> 以往配置快捷键时，必须写出触发键**未按下 Shift 时的原始键位**。
+> 例如在美式 QWERTY 布局下绑定 <kbd>&lt;</kbd> 只能写 `Mod+Shift+Comma`（因为该键位的原字符是 <kbd>,</kbd>）。
+> 现在已不再受此限制，两种写法均受支持。
 
 <sup>Since: 0.1.8</sup> 绑定默认会重复（即按住绑定键会使其重复触发）。
 您可以使用 `repeat=false` 为特定绑定禁用此功能：
@@ -80,6 +124,93 @@ binds {
 ```
 
 这主要用于滚动类的绑定。
+
+### 按下与释放绑定
+
+<sup>Since: next release</sup>
+
+您可以设置绑定在按键按下时、按键释放时，或两者都发生时触发。
+默认情况下，绑定在按键按下时触发。
+您可以使用 `press {}` 和 `release {}` 块来改变这一点：
+
+```kdl
+binds {
+    // 在按下时触发（默认行为）。
+    Mod+T { spawn "alacritty"; }
+
+    // 在释放时触发。
+    // 单独按下并释放 Mod 键来打开概览。
+    Mod {
+        release { toggle-overview; }
+    }
+
+    // 在按下和释放时分别触发不同的动作。
+    //
+    // 如果按下动作执行了，那么释放动作必定会执行，
+    // 无论您以何种方式释放按键。
+    // 您可以放心地把这种绑定用于对讲（push-to-talk）之类的场景。
+    Control_R {
+        press { spawn "notify-send" "Enable push-to-talk"; }
+        release { spawn "notify-send" "Disable push-to-talk"; }
+    }
+
+    // 只有在中间没有按下其他按键时，释放绑定才会触发。
+    // 因此，像这样的 Alt+Shift 绑定仍然不会妨碍您
+    // 在应用程序中使用 Alt+Shift+方向键等快捷键。
+    Alt+Shift {
+        release { switch-layout "next"; }
+    }
+}
+```
+
+当您想绑定一个修饰键时，释放绑定尤其有用。
+普通的按下绑定实际上会让您无法再拥有任何包含该修饰键的其他绑定。
+
+仅释放绑定只有在按住它期间没有按下其他任何键时才会触发。
+如果您有上面示例中的仅释放 `Mod` 绑定，并在按住 `Mod` 时按下了其他任意按键或鼠标键，那么该绑定不会触发（概览不会打开）。
+
+在同时具有按下和释放的绑定中，只要按下动作触发了，释放动作就必定会触发。
+因此，无论您以何种方式释放按键，您的对讲（push-to-talk）按下-释放绑定都不会卡在按下状态。
+
+默认情况下，任何同时含有按下和释放动作的绑定都不会重复。
+如有需要，您可以显式设置 `repeat=true`：
+
+```kdl
+binds {
+    // 不会自动重复，
+    // 因为它含有 release {} 段。
+    Mod+Shift+Q repeat=true {
+        press { spawn "notify-send" "Pressed (repeating)"; }
+        release { spawn "notify-send" "Released"; }
+    }
+}
+```
+
+默认情况下，已被捕获绑定的按键按下与释放事件不会透传给应用程序。
+若希望应用程序依然能接收到该按键事件，可设置 `pass-through=true`：
+
+```kdl
+binds {
+    // 让应用程序接收到 Alt 键的按下/释放事件。
+    Alt pass-through=true {
+        press { spawn "notify-send" "Pressed"; }
+        release { spawn "notify-send" "Released"; }
+    }
+}
+```
+
+不过，键盘上的“仅释放”绑定默认会将事件透传出去。
+若不需要此行为，可在对应绑定上设置 `pass-through=false`：
+
+```kdl
+binds {
+    // 不把 Mod 的按下/释放事件透传给应用程序。
+    //（但它们仍然会收到修饰键状态变化事件。）
+    Mod pass-through=false {
+        release { toggle-overview; }
+    }
+}
+```
 
 ### 滚动绑定
 
@@ -110,6 +241,9 @@ binds {
 当鼠标滚轮和触摸板滚动绑定的修饰键被按下时，应用程序将无法接收到任何滚动事件。
 例如，假设您有一个 `Mod+WheelScrollDown` 绑定，那么在按住 `Mod` 时，所有鼠标滚轮滚动都将被 niri 捕获。
 
+<sup>Since: next release</sup> niri 会按滚动轴分别拦截鼠标滚轮事件。
+如果您只绑定了 `Mod+WheelScrollDown` 并按住了 `Mod`，niri 只会拦截垂直滚动，而水平滚动依然会正常传递给应用程序。
+
 ### 鼠标点击绑定
 
 <sup>Since: 25.01</sup>
@@ -129,6 +263,20 @@ binds {
 鼠标点击操作的是点击的那一刻已获得焦点的窗口，而不是您正在点击的窗口。
 
 请注意，绑定 `Mod+MouseLeft` 或 `Mod+MouseRight` 将覆盖相应的手势操作（移动或调整窗口大小）。
+
+### 数位板笔按钮绑定
+
+<sup>Since: next release</sup>
+
+您可以使用以下语法来绑定数位板的笔按钮。
+
+```kdl
+binds {
+    Mod+TabletStylusButton1 { close-window; }
+    Mod+TabletStylusButton2 { close-window; }
+    Mod+TabletStylusButton3 { close-window; }
+}
+```
 
 ### 自定义快捷键悬浮窗标题 {#custom-hotkey-overlay-titles}
 
@@ -416,3 +564,19 @@ binds {
     Super+Alt+L allow-inhibiting=false { spawn "swaylock"; }
 }
 ```
+
+#### `toggle-touchpad`
+
+<sup>Since: next release</sup>
+
+在运行时开启或关闭触摸板。
+这样您无需编辑配置文件，就能快速禁用触摸板。
+
+```kdl
+binds {
+    Mod+F9 { toggle-touchpad; }
+}
+```
+
+开关状态会与配置中的 [`off` 设置](./Configuration:-Input.md#pointing-devices)叠加生效：配置与开关都必须允许使用触摸板，触摸板才会启用。
+开关状态在 niri 重启后会重置，并且同样适用于后续新接入（热插拔）的触摸板。

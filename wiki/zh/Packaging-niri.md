@@ -42,7 +42,8 @@
 - `xdg-desktop-portal-gnome`：用于屏幕录制所必须。
 - `xdg-desktop-portal-gtk`：在 `niri-portals.conf` 中配置为备用门户。
 （这通常是您希望安装的标准备用门户。）
-- `gnome-keyring`：在 `niri-portals.conf` 中配置为密钥管理门户提供者。
+- `oo7-portal` 或 `gnome-keyring`：在 `niri-portals.conf` 中配置为密钥管理门户提供者。
+- `gnome-control-center`：支持全局快捷键 portal 所必需的。
 - 您发行版的 GPU 驱动包，例如 `mesa-dri-drivers` 和 `mesa-libEGL`。
 运行 niri 需要可用的硬件加速支持。
 - 某些通知守护进程，如 `mako`，通常为应用程序正常运行所必需。

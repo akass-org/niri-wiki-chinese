@@ -36,6 +36,7 @@ input {
         natural-scroll
         // accel-speed 0.2
         // accel-profile "flat"
+        // pinch-sensitivity 1.0
         // scroll-factor 1.0
         // scroll-factor vertical=1.0 horizontal=-2.0
         // scroll-method "two-finger"
@@ -230,6 +231,9 @@ input {
 
 - `off`：如果设置，将不会从此设备发送任何事件。
 
+> [!TIP]
+> <sup>Since: next release</sup> 对于触摸板，您还可以在运行时使用 [`toggle-touchpad` 动作](./Configuration:-Key-Bindings.md#toggle-touchpad)来开关它，而无需编辑配置。
+
 一些设置在 `touchpad`（触摸板）、`mouse`（鼠标）、`trackpoint`（指点杆）和 `trackball`（轨迹球）之间是通用的：
 
 - `natural-scroll`：如果设置，则反转滚动方向。
@@ -249,6 +253,8 @@ input {
 - `dwtp`：使用指点杆时禁用。
 - `drag`：<sup>Since: 25.05</sup> 可以是 `true` 或 `false`，控制是否启用轻触拖拽。
 - `drag-lock`：<sup>Since: 25.02</sup> 如果设置，在拖拽过程中短暂抬起手指不会放下被拖拽的项目。请参阅 [libinput 文档](https://wayland.freedesktop.org/libinput/doc/latest/tapping.html#tap-and-drag)。
+- `pinch-sensitivity`：<sup>Since: next release</sup> 调节传递给应用程序的双指捏合手势灵敏度倍率。
+  大于 `1.0` 会提高灵敏度，小于 `1.0` 则降低灵敏度。
 - `tap-button-map`：可以是 `left-right-middle` 或 `left-middle-right`，控制哪个按钮对应双指轻触和三指轻触。
 - `click-method`：可以是 `button-areas` 或 `clickfinger`，更改[点击方法](https://wayland.freedesktop.org/libinput/doc/latest/clickpad-softbuttons.html)。
 - `disabled-on-external-mouse`：当插入外部指针设备时，不发送触控板事件。

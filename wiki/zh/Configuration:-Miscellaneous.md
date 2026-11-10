@@ -150,7 +150,7 @@ environment {
 ```
 
 请注意，这些环境变量不会传播到 systemd 全局环境中，因此由 systemd 启动的工具和应用程序无法识别到这些变量。
-具体来说，如果您通过 systemd 启动一个桌面 shell，例如 DankMaterialShell，然后使用其内置的应用程序启动器，那么这些应用程序将无法获取到这些环境变量。
+具体来说，如果您通过 systemd 启动一个桌面 shell，例如 Dux Modular Shell，然后使用其内置的应用程序启动器，那么这些应用程序将无法获取到这些环境变量。
 
 如果您希望所有进程都能识别到这些环境变量，您可以改为在登录 shell 的配置中设置它们（即 `~/.bash_profile`）。
 `niri-session` 这个 shell 脚本会通过登录 shell 运行，并在启动 niri 之前将所有环境变量导入到 systemd 中。

@@ -52,6 +52,12 @@ env RUN_SLOW_TESTS=1 PROPTEST_CASES=200000 PROPTEST_MAX_GLOBAL_REJECTS=200000 RU
 cargo build --release --features=profile-with-tracy-ondemand
 ```
 
+在启动集成了 Tracy 的 niri 之前，请先执行以下命令，授予 Tracy 采集 CPU 调度与上下文切换信息的权限（这对排查掉帧卡顿极其有用）：
+
+```
+sudo mount -o remount,gid=$(id -g),mode=750 /sys/kernel/tracing; echo -1 | sudo tee /proc/sys/kernel/perf_event_paranoid
+```
+
 然后你可以打开 Tracy（需要最新的稳定版本），并连接到正在运行的 niri 实例来收集性能分析数据。性能分析数据是“按需”收集的——也就是说，只有在 Tracy 连接时才会收集。如果你愿意，可以像这样运行 niri 构建作为你的主要合成器。
 
 > [!NOTE]

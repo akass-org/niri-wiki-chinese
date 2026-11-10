@@ -12,7 +12,8 @@ Portals **要求** [将 niri 作为会话运行](./Getting-Started.md)，这意�
 
 * `xdg-desktop-portal-gtk`：实现大多数基本功能，这是“默认回退 portal”。
 * `xdg-desktop-portal-gnome`：支持屏幕录制所必需的。
-* `gnome-keyring`：实现 Secret portal，某些应用程序需要它才能正常工作。
+* `oo7-portal` 或 `gnome-keyring`：实现 Secret portal，某些应用程序需要它才能正常工作。
+* `gnome-control-center`：支持全局快捷键 portal 所必需的。如果您想运行 GNOME 设置界面来编辑快捷键，请这样运行：`XDG_CURRENT_DESKTOP=gnome gnome-control-center`。
 
 然后 systemd 应该会自动按需启动它们。这些特定的 portals 在 `niri-portals.conf` 中配置，该文件[必须安装](./Getting-Started.md#manual-installation)在正确的位置。
 

@@ -64,7 +64,8 @@
 现在这三个工具将与 niri 会话一起启动，并在退出时停止。
 您还可以在编辑其配置文件后，使用类似 `systemctl --user restart waybar.service` 的命令重启它们。
 
-要从 niri 的启动中移除某个服务，只要将其符号链接从 `~/.config/systemd/user/niri.service.wants/` 目录中移除。然后运行 `systemctl --user daemon-reload` 即可。
+要从 niri 的启动中移除某个服务，只要将其符号链接从 `~/.config/systemd/user/niri.service.wants/` 目录中移除。
+然后运行 `systemctl --user daemon-reload` 即可。
 
 ### 在注销后运行程序
 

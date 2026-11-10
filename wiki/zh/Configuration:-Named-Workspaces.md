@@ -46,6 +46,19 @@ window-rule {
 这意味着命名工作区在更多情况下会“粘附”到其原始输出上，以体现其更永久的特性。
 当然，如果用户手动将命名工作区移动到另一台显示器，其原始输出仍会随之更新。
 
+<sup>Since: next release</sup> 现已支持配置多条 `open-on-output` 规则。
+如果首选输出未连接，工作区将回退到第二个输出，依此类推。
+
+```kdl
+workspace "browser" {
+    open-on-output "DP-9"
+    open-on-output "DP-4"
+}
+```
+
+每当有显示器连接或断开时，niri 都会重新评估这组输出的优先级。
+一旦连接了优先级更高的输出，工作区便会自动迁移过去。
+
 ### 布局配置覆写 {#layout-config-overrides}
 
 <sup>Since: 25.11</sup>

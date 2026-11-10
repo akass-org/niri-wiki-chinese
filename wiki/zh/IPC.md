@@ -47,14 +47,20 @@ $ socat STDIO "$NIRI_SOCKET"
 
 回复内容是一个 `Ok` 或 `Err`，它包装的 JSON 对象与您从 `niri msg --json` 获取的 JSON 对象相同。
 
-对于更复杂的请求，您可以使用 `socat` 来查找 `niri msg` 如何格式化它们：
+<sup>Since: next release</sup>
+对于更复杂的请求，您可以给 `niri msg` 传入 `--print-request`，查看请求应当如何格式化：
 
 ```sh
-$ socat STDIO UNIX-LISTEN:temp.sock
-# 然后，在另一个终端中：
-$ env NIRI_SOCKET=./temp.sock niri msg action focus-workspace 2
-# 随后， 在 socat 终端查看：
+$ niri msg --print-request action focus-workspace 2
 {"Action":{"FocusWorkspace":{"reference":{"Index":2}}}}
+```
+
+这就是您直接与 niri 套接字通信时应当使用的格式。
+您也可以使用 `niri msg raw-request`，无需借助 `socat` 即可直接发送原始 JSON 请求：
+
+```sh
+$ echo '{"Action":{"FocusWorkspace":{"reference":{"Id":8}}}}' | niri msg raw-request
+"Handled"
 ```
 
 您可以在 [niri-ipc 子包文档](https://niri-wm.github.io/niri/niri_ipc/) 中找到所有可用的请求和响应类型。

@@ -22,6 +22,7 @@ debug {
     ignore-drm-device "/dev/dri/renderD128"
     ignore-drm-device "/dev/dri/renderD130"
     force-pipewire-invalid-modifier
+    disable-pipewire-dmabuf
     dbus-interfaces-in-non-session-instances
     wait-for-frame-completion-before-queueing
     emulate-zero-presentation-time
@@ -34,6 +35,7 @@ debug {
     skip-cursor-only-updates-during-vrr
     deactivate-unfocused-windows
     disable-10bit-output
+    nested-show-host-cursor
 }
 
 binds {
@@ -161,13 +163,28 @@ debug {
 }
 ```
 
+### `disable-pipewire-dmabuf`
+
+<sup>Since: next release</sup>
+
+禁用 PipeWire 屏幕录制的 DMA-BUF 共享，强制改用共享内存缓冲区。
+
+用于测试基于共享内存（shm）的屏幕录制。
+
+```kdl
+debug {
+    disable-pipewire-dmabuf
+}
+```
+
 ### `dbus-interfaces-in-non-session-instances`
 
 让 niri 即使未以 `--session` 启动，也创建其 D-Bus 接口。
 
 方便调试录屏相关改动，无需重登录。
 
-当您关闭测试实例时，主 niri 实例目前*不会*回收接口，因此最终您需要重新登录才能使屏幕录制再次工作。
+<sup>Since: next release</sup>
+主 niri 实例会在新实例退出后自动回收这些接口。
 
 ```kdl
 debug {
@@ -381,5 +398,17 @@ binds {
 ```kdl
 binds {
     Mod+Shift+Ctrl+D { debug-toggle-damage; }
+}
+```
+
+### `nested-show-host-cursor`
+
+<sup>Since: next release</sup>
+
+当 niri 作为嵌套窗口运行时，在嵌套 niri 的光标之上显示宿主机光标。
+
+```kdl
+debug {
+    nested-show-host-cursor
 }
 ```

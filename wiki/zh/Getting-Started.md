@@ -1,24 +1,25 @@
 ## 快速开始
 
-使用以下命令安装 niri 并搭配 [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell) 以获得接近开箱即用的体验。
+使用以下命令安装 niri 并搭配 [Dux Modular Shell](https://github.com/duxlabs-dev/dux-shell) 以获得接近开箱即用的体验。
 
 Fedora:
 ```shell
-sudo dnf copr enable avengemedia/dms
+sudo dnf copr enable duxlabs/dms
 sudo dnf install niri dms
 systemctl --user add-wants niri.service dms
 ```
 
 Arch Linux:
 ```
-sudo pacman -Syu niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk alacritty dms-shell-niri matugen cava qt6-multimedia-ffmpeg
+sudo pacman -Syu niri xwayland-satellite xdg-desktop-portal-gnome xdg-desktop-portal-gtk alacritty dux-shell matugen cava qt6-multimedia-ffmpeg
 systemctl --user add-wants niri.service dms
 ```
 
 Ubuntu 25.10 及以上:
 ```shell
-sudo add-apt-repository ppa:avengemedia/danklinux
-sudo add-apt-repository ppa:avengemedia/dms
+sudo add-apt-repository ppa:duxlabs/dux-repo
+sudo add-apt-repository ppa:duxlabs/dms
+sudo apt update
 sudo apt install niri dms
 ```
 
@@ -28,7 +29,7 @@ sudo apt install niri dms
 默认的 niri 配置会启动 Waybar，因此屏幕上可能会出现两个状态栏。  
 解决办法：先执行 `pkill waybar` 停止 Waybar，然后打开 `~/.config/niri/config.kdl`，删除其中的 `spawn-at-startup "waybar"` 一行即可。
 
-查看 DankMaterialShell 的 [合成器设置页面](https://danklinux.com/docs/dankmaterialshell/compositors#niri-configuration)，了解如何配置特定于 DMS 的绑定和其他 niri 集成。
+查看 Dux Modular Shell 的 [合成器设置页面](https://duxlabs.dev/docs/dms/compositors#niri-configuration)，了解如何配置特定于 DMS 的绑定和其他 niri 集成。
 
 ## 更慢但更稳妥的开始
 
@@ -46,6 +47,10 @@ sudo apt install niri dms
 `--session` 标志会让 niri 将其环境变量全局导入到系统管理器和 D-Bus，并启动其 D-Bus 服务。
 `niri-session` 脚本将额外将 niri 作为 systemd/dinit 服务启动，该服务会启动某些服务（如 Portals）所需的图形会话目标。
 
+> [!WARNING]
+> 直接在 TTY 中运行 niri 意味着一旦退出或崩溃，用户将直接退回到无保护、未锁屏的 shell 提示符界面。
+> 建议配合显示管理器使用以规避此安全隐患。
+
 您也可以在现有的桌面会话中运行 `niri`。
 然后它将作为一个窗口打开，您可以在其中试用它。
 请注意，此窗口模式主要用于开发，因此存在一些错误（特别是快捷键方面的问题）。
@@ -61,8 +66,16 @@ sudo apt install niri dms
 
 - [LXQt](https://lxqt-project.org/) 官方支持 niri，有关设置详情，请参阅 [他们的 wiki](https://github.com/lxqt/lxqt/wiki/ConfigWaylandSettings#general)。
 - 许多 [XFCE](https://www.xfce.org/) 组件可以在 Wayland 上运行，包括 niri。有关详情，请参阅 [他们的 wiki](https://wiki.xfce.org/releng/wayland_roadmap#component_specific_status)。
-- 有一些基于 Quickshell 的完整桌面 shell 支持 niri，例如 [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell) 和 [Noctalia](https://github.com/noctalia-dev/noctalia-shell)。
+- 有一些完整的桌面 shell 支持 niri，例如 [Dux Modular Shell](https://github.com/duxlabs-dev/dux-shell) 和 [Noctalia](https://github.com/noctalia-dev/noctalia-shell)。
 - 您可以使用 [cosmic-ext-extra-sessions](https://github.com/Drakulix/cosmic-ext-extra-sessions) 在 niri 上运行 [COSMIC](https://system76.com/cosmic/) 会话。
+
+### 默认应用程序
+
+如果您将 niri 与 GNOME 或 KDE 一并安装，并希望保留它们的默认应用关联（例如使用哪个图片查看器或视频播放器），可以像这样为它们的 `mimeapps.list` 创建符号链接：
+
+```
+ln -s /usr/share/applications/gnome-mimeapps.list ~/.local/share/applications/niri-mimeapps.list
+```
 
 ### NVIDIA
 

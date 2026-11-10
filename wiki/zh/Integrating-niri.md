@@ -61,7 +61,7 @@ Niri 的默认配置会启动 [Waybar](https://github.com/Alexays/Waybar)，这�
 
 - [LXQt](https://lxqt-project.org/) 官方支持 niri，有关设置详情，请参阅[他们的 wiki](https://lxqt-project.org/wiki/Wayland-Session)。
 - 许多 [XFCE](https://www.xfce.org/) 组件可以在 Wayland 上运行，包括 niri。有关详情，请参阅[他们的 wiki](https://wiki.xfce.org/releng/wayland_roadmap#component_specific_status)。
-- 有一些基于 Quickshell 的完整桌面 shell 支持 niri，例如 [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell) 和 [Noctalia](https://github.com/noctalia-dev/noctalia-shell)。
+- 有一些完整的桌面 shell 支持 niri，例如 [Dux Modular Shell](https://github.com/duxlabs-dev/dux-shell) 和 [Noctalia](https://github.com/noctalia-dev/noctalia-shell)。
 - 您可以使用 [cosmic-ext-extra-sessions](https://github.com/Drakulix/cosmic-ext-extra-sessions) 在 niri 上运行 [COSMIC](https://system76.com/cosmic/) 会话。
 
 ### 安全模型

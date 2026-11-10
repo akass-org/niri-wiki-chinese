@@ -38,7 +38,8 @@ niri 的文档文件位于 `docs/wiki/` 目录下，并且至少可以在三个�
 
 ### 链接
 
-除非是外部链接，否则链接在任何情况下都应该是相对路径（例如 `./FAQ.md`）。如果链接旨在引导用户访问页面上的特定部分，则应使用锚点（例如 `./Getting-Started.md#nvidia`）。
+除非是外部链接，否则链接在任何情况下都应该是相对路径（例如 `./FAQ.md`）。
+如果链接旨在引导用户访问页面上的特定部分，则应使用锚点（例如 `./Getting-Started.md#nvidia`）。
 
 > [!TIP]
 > 如果相对链接指向不存在的文档或不存在的锚点，mkdocs 将终止。
@@ -50,7 +51,6 @@ niri 的文档文件位于 `docs/wiki/` 目录下，并且至少可以在三个�
 > 这与您可能遇到的其他基于 `mkdocs` 的文档有重要的区别。
 
 告诫，或警示应该按照 [GitHub 的定义方式](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts)编写。
-
 上面的警示信息是这样写的：
 
 ```

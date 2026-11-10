@@ -12,6 +12,7 @@ layout {
     empty-workspace-above-first
     default-column-display "tabbed"
     background-color "#003300"
+    fullscreen-backdrop-color "#000000ff"
 
     preset-column-widths {
         proportion 0.33333
@@ -561,3 +562,19 @@ layout {
 ```
 
 您还可以在每个输出的[输出配置](./Configuration:-Outputs.md#layout-config-overrides)中设置颜色。
+
+### `fullscreen-backdrop-color`
+
+<sup>Since: next release</sup>
+
+设置 niri 在全屏窗口背后绘制的背景色。
+默认为黑色。
+
+您可以将其设置为 `"transparent"`，或任意带有 Alpha 通道的半透明颜色，从而允许全屏窗口呈现透明效果。
+
+```kdl
+// 让全屏窗口呈半透明。
+layout {
+    fullscreen-backdrop-color "transparent"
+}
+```

@@ -14,7 +14,8 @@ niri 认为在宿主机上以非沙盒方式运行的程序是**受信任的**�
 
 任何能够访问 niri 的 Wayland 套接字的程序，可以执行以下操作（包括但不限于）：
 
-- 通过 [wlr-screencopy](https://wayland.app/protocols/wlr-screencopy-unstable-v1) 录制用户屏幕。
+- 通过 [ext-image-copy-capture](https://wayland.app/protocols/ext-image-copy-capture-v1) 或 [wlr-screencopy](https://wayland.app/protocols/wlr-screencopy-unstable-v1) 录制用户屏幕。
+- 通过 [ext-image-copy-capture](https://wayland.app/protocols/ext-image-copy-capture-v1) 追踪鼠标指针的图像和位置。
 - 通过 [wlr-virtual-pointer](https://wayland.app/protocols/wlr-virtual-pointer-unstable-v1) 和 [virtual-keyboard](https://wayland.app/protocols/virtual-keyboard-unstable-v1) 模拟输入。
 - 通过 [wlr-data-control](https://wayland.app/protocols/ext-data-control-v1) 获取用户的剪贴板内容。
 - 通过 [wlr-layer-shell](https://wayland.app/protocols/wlr-layer-shell-unstable-v1) 创建任意全屏表面，可以窃取用户输入、伪装成密码输入界面或将用户锁定在会话之外。
@@ -52,8 +53,11 @@ niri 认为在宿主机上以非沙盒方式运行的程序是**受信任的**�
 仅允许执行一小部分安全操作。
 特别地，生成（spawn）操作将不可用，但显式配置了 `allow-when-locked=true` 的绑定除外。
 
+<sup>Until: next release</sup>
 需要注意的是，**退出**操作是被允许的——即使处于锁屏状态，你也可以随时退出 niri。
-因此，你必须确保退出 niri 不会将你置入一个不受保护的 TTY 命令行环境。
+
+如果你允许**退出**操作，或者你的锁屏界面有办法退出 niri，请务必小心。
+你必须确保退出 niri 不会将你置入一个不受保护的 TTY 命令行环境。
 通常，显示管理器（例如 GDM）会为你处理这个问题：当 niri 退出时（无论是通过退出绑定还是崩溃），它会将你带回到一个安全的密码提示界面。
 
 除了退出之外，离开锁屏的唯一方式是由锁屏客户端通知 niri 解锁会话。

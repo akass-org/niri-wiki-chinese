@@ -76,7 +76,7 @@ environment {
 }
 ```
 
-请注意，niri 的环境配置不会传播到由 systemd 启动的应用程序和 shell，例如 DankMaterialShell 及其应用程序启动器。
+请注意，niri 的环境配置不会传播到由 systemd 启动的应用程序和 shell，例如 Dux Modular Shell 及其应用程序启动器。
 您可以改为在登录 shell 配置中设置变量（即 `~/.bash_profile`），但请注意，这样一来它将为所有合成器设置，而不仅仅是 niri。
 
 ### 全屏游戏

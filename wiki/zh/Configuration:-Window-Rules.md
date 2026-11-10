@@ -58,6 +58,7 @@ window-rule {
     default-column-display "tabbed"
     default-floating-position x=100 y=200 relative-to="bottom-left"
     scroll-factor 0.75
+    pinch-sensitivity 1.25
     on-xdg-activate "focus"
 
     focus-ring {
@@ -667,6 +668,18 @@ window-rule {
 }
 ```
 
+<sup>Since: next release</sup> 您可以将 `variable-refresh-rate` 设置为 `"fullscreen-only"`，使得只有当此窗口在该输出上全屏时才启用按需 VRR。
+此时窗口必须覆盖整个屏幕（即 niri 隐藏顶层 layer-shell 层时）。
+
+即使全屏窗口之上有覆盖层，此模式也会生效。
+
+```kdl
+// 当任意窗口全屏时启用按需 VRR。
+window-rule {
+    variable-refresh-rate "fullscreen-only"
+}
+```
+
 #### `default-column-display`
 
 <sup>Since: 25.02</sup>
@@ -755,6 +768,23 @@ window-rule {
     match app-id="firefox$"
 
     scroll-factor 0.75
+}
+```
+
+#### `pinch-sensitivity`
+
+<sup>Since: next release</sup>
+
+设置传递给该窗口的双指捏合手势灵敏度。
+
+该数值会与[输入配置](./Configuration:-Input.md#pointing-devices)中为触摸板设置的捏合灵敏度相乘叠加。
+
+```kdl
+// 让 Firefox 中的捏合手势更灵敏。
+window-rule {
+    match app-id="firefox$"
+
+    pinch-sensitivity 1.25
 }
 ```
 

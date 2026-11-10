@@ -440,6 +440,20 @@ animations {
 }
 ```
 
+### 按路径指定 `custom-shader`
+
+<sup>Since: next release</sup>
+
+对于支持 `custom-shader` 的动画，除了直接在配置中内联编写着色器代码，您也可以通过文件路径来指定外部着色器。
+
+```kdl,must-fail
+animations {
+    window-open {
+        custom-shader path="./my-shader.glsl"
+    }
+}
+```
+
 ### 同步动画
 
 <sup>Since: 0.1.5</sup>
